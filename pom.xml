@@ -8,11 +8,11 @@
         <version>2.7.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>org.schulradar</groupId>
+    <groupId>org.haupt.chemicals</groupId>
     <artifactId>api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>SchulradarSpring</name>
-    <description>SchulradarSpring</description>
+    <name>HauptChemicalsSpring</name>
+    <description>HauptChemicalsSpring</description>
     <properties>
         <java.version>17</java.version>
     </properties>
