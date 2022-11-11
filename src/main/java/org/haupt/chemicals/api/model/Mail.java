@@ -24,4 +24,6 @@ public class Mail {
     @Id
     @NotNull
     private String email;
+
+    private String password;
 }
