@@ -1,0 +1,14 @@
+{
+  "tests": [
+    {
+      "name": "automated test",
+      "setup": "",
+      "run": "./mvnw test",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": null
+    }
+  ]
+}
