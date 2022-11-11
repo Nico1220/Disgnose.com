@@ -1,0 +1,64 @@
+name: GitHub Actions Main
+on:
+  push:
+    branches:
+      - feature/*
+jobs:
+  UnitTests:
+    runs-on: windows-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Unit Test
+        run: cd .\src\test && dotnet test
+
+  mergeMain:
+    name: Merge to Main
+    runs-on: windows-latest
+    needs:
+      - UnitTests
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: merge to main
+        id: cpr
+        uses: peter-evans/create-pull-request@v3
+        with:
+          branch: main
+
+
+  DeleteRemoteFeature:
+    name: Delete the Remote Feature
+
+    runs-on: windows-latest
+    needs:
+      - mergeMain
+    steps:
+      - name: switch to
+        uses: actions/checkout@v2
+        with:
+          ref: main
+      - name: delete the Remote Feature
+        id: cpr
+        uses: peter-evans/create-pull-request@v3
+        with:
+          branch: feature/jaroslav
+          delete-branch: true
+
+  notifyFail:
+    name: "Notify Slack Channel #fail"
+    runs-on: windows-latest
+    if: ${{ failure() }}
+    needs:
+      - UnitTests
+      - mergeMain
+      - DeleteRemoteFeature
+    steps:
+      - name: Google Chat Notification
+        uses: Co-qn/google-chat-notification@releases/v1
+        with:
+          name: Build
+          url: https://chat.googleapis.com/v1/spaces/AAAAKZ_kPJI/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=UxrXeTsszQ2GFfUglk1hH9qZuH_o6zastOP1UF2NDU0%3D
+          status: failure
+
+
