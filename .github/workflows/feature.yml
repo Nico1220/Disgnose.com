@@ -14,7 +14,7 @@ jobs:
 
   mergeMain:
     name: Merge to Main
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     needs:
       - UnitTests
     steps:
@@ -30,7 +30,7 @@ jobs:
   DeleteRemoteFeature:
     name: Delete the Remote Feature
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     needs:
       - mergeMain
     steps:
@@ -42,7 +42,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v3
         with:
-          branch: feature/jaroslav
+          branch: feature/*
           delete-branch: true
 
   notifyFail:
