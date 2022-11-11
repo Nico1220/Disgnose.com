@@ -73,18 +73,18 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-#  notifyFail:
-#    name: "Notify Slack Channel #fail"
-#    runs-on: ubuntu-latest
-#    if: ${{ failure() }}
-#    needs:
-#      - Autograding
-#      - release-build-and-push
-#    steps:
-#      - name: Google Chat Notification
-#        uses: Co-qn/google-chat-notification@releases/v1
-#        with:
-#          name: Build
-#          url: https://chat.googleapis.com/v1/spaces/AAAAKZ_kPJI/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=UxrXeTsszQ2GFfUglk1hH9qZuH_o6zastOP1UF2NDU0%3D
-#          status: failure
+  notifyFail:
+    name: "Notify Slack Channel #fail"
+    runs-on: ubuntu-latest
+    if: ${{ failure() }}
+    needs:
+      - Autograding
+      - release-build-and-push
+    steps:
+      - name: Google Chat Notification
+        uses: Co-qn/google-chat-notification@releases/v1
+        with:
+          name: Build
+          url: https://chat.googleapis.com/v1/spaces/AAAAKZ_kPJI/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=UxrXeTsszQ2GFfUglk1hH9qZuH_o6zastOP1UF2NDU0%3D
+          status: failure
 
