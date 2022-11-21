@@ -47,10 +47,9 @@ jobs:
         with:
           ref: main
       - name: delete the Remote Feature
-        id: cpr
-        uses: beatlabs/delete-old-branches-action@v0.0.9
+        uses: koj-co/delete-merged-action@master
         with:
-          branches: feature/*
+          branches: "!master", "!main", "feature/*"
 
 
   notifyFail:
