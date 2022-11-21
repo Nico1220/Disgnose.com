@@ -48,9 +48,9 @@ jobs:
           ref: main
       - name: delete the Remote Feature
         id: cpr
-        uses: dawidd6/action-delete-branch@v3
+        uses: beatlabs/delete-old-branches-action@v0.0.9
         with:
-          prefix: feature/
+          branches: feature/*
 
 
   notifyFail:
