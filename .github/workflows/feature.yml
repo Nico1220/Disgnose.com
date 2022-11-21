@@ -5,12 +5,19 @@ on:
       - feature/*
 jobs:
   UnitTests:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '18'
+          cache: 'maven'
       - name: Unit Test
-        run: cd .\src\test && dotnet test
+        run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
+
 
   mergeMain:
     name: Merge to Main
@@ -47,7 +54,7 @@ jobs:
 
   notifyFail:
     name: "Notify Slack Channel #fail"
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     if: ${{ failure() }}
     needs:
       - UnitTests
