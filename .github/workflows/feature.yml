@@ -46,7 +46,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: main
-      - name: delete the Remote Feature
+      - name: Delete the merged Remote Feature
         uses: koj-co/delete-merged-action@master
         with:
           branches: "!master", "!main", "feature/*"
