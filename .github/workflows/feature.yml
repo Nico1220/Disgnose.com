@@ -16,7 +16,7 @@ jobs:
           java-version: '18'
           cache: 'maven'
       - name: Unit Test
-        run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
+        run: dotnet test --logger "trx;LogFileName=test-results.trx" || true
 
 
   mergeMain:
