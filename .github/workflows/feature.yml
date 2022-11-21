@@ -1,4 +1,4 @@
-name: GitHub Actions Main
+name: GitHub Actions Feature
 on:
   push:
     branches:
@@ -45,20 +45,20 @@ jobs:
           branch: feature/*
           delete-branch: true
 
-#  notifyFail:
-#    name: "Notify Slack Channel #fail"
-#    runs-on: windows-latest
-#    if: ${{ failure() }}
-#    needs:
-#      - UnitTests
-#      - mergeMain
-#      - DeleteRemoteFeature
-#    steps:
-#      - name: Google Chat Notification
-#        uses: Co-qn/google-chat-notification@releases/v1
-#        with:
-#          name: Build
-#          url: https://chat.googleapis.com/v1/spaces/AAAAKZ_kPJI/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=UxrXeTsszQ2GFfUglk1hH9qZuH_o6zastOP1UF2NDU0%3D
-#          status: failure
+  notifyFail:
+    name: "Notify Slack Channel #fail"
+    runs-on: windows-latest
+    if: ${{ failure() }}
+    needs:
+      - UnitTests
+      - mergeMain
+      - DeleteRemoteFeature
+    steps:
+      - name: Microsoft Teams Notification
+        uses: skitionek/notify-microsoft-teams@master
+        with:
+          name: Build
+          webhook_url: ${{ secrets.MSTEAMS_WEBHOOK }}
+          status: failure
 
 
