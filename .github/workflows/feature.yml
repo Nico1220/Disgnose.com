@@ -42,14 +42,8 @@ jobs:
     needs:
       - mergeMain
     steps:
-      - name: switch to
-        uses: actions/checkout@v2
-        with:
-          ref: main
-      - name: Delete the merged Remote Feature
-        uses: koj-co/delete-merged-action@master
-        with:
-          branches: "!master", "!main", "feature/*"
+      - name: delete branch
+        uses: SvanBoxel/delete-merged-branch@main
 
 
   notifyFail:
