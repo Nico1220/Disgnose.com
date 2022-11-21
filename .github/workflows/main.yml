@@ -4,11 +4,7 @@ on:
     tags:
       - '*'
     branches:
-      - main
-
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{github.repository}}
+      main
 
 jobs:
   UnitTests:
@@ -76,8 +72,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ failure() }}
     needs:
-      - build
-      - release-build-and-push
+      - UnitTests
     steps:
       - name: Microsoft Teams Notification
         uses: skitionek/notify-microsoft-teams@master
