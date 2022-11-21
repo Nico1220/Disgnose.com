@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - feature/*
+
+  env:
+    prepo: ${{github.repository}}
+
 jobs:
   UnitTests:
     runs-on: ubuntu-latest
@@ -16,7 +20,7 @@ jobs:
           java-version: '18'
           cache: 'maven'
       - name: Unit Test
-        run: dotnet test --logger "trx;LogFileName=test-results.trx" || true
+        run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
 
 
   mergeMain:
@@ -47,10 +51,10 @@ jobs:
           ref: main
       - name: delete the Remote Feature
         id: cpr
-        uses: peter-evans/create-pull-request@v3
+        uses: dawidd6/action-delete-branch@v3
         with:
-          branch: feature/*
-          delete-branch: true
+          prefix: feature/
+
 
   notifyFail:
     name: "Notify Slack Channel #fail"
