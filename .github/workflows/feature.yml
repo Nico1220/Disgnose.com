@@ -4,9 +4,6 @@ on:
     branches:
       - feature/*
 
-  env:
-    prepo: ${{github.repository}}
-
 jobs:
   UnitTests:
     runs-on: ubuntu-latest
