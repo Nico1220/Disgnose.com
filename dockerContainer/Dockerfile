@@ -1,3 +1,6 @@
-FROM eclipse-temurin
-COPY target/api-v0.0.1.jar haupt-b2b-store.jar
-ENTRYPOINT ["java", "-jar", "haupt-b2b-store.jar"]
+FROM openjdk:18
+RUN addgroup -S spring && adduser -S spring -G spring
+USER spring:spring
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
