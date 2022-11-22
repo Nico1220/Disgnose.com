@@ -26,11 +26,9 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - build
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
-
       - name: Create a new tag
         uses: phish108/autotag-action@1.1.37
         id: autotag
