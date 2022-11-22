@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.haupt.chemicals</groupId>
-    <artifactId>api</artifactId>
+    <artifactId>haupt-store</artifactId>
     <version>v0.0.1</version>
     <name>HauptChemicalsSpring</name>
     <description>HauptChemicalsSpring</description>
@@ -123,16 +123,6 @@
                 <configuration>
                     <skipTests>true</skipTests>
                 </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.2</version>
-                <executions>
-                    <execution>
-                        <id>default-jar</id>
-                        <phase>none</phase>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
