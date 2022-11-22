@@ -1,5 +1,7 @@
 name: GitHub Actions Main
 on:
+  schedule:
+    - cron: '31 10 * * *'
   push:
     tags:
       - '*'
@@ -30,6 +32,10 @@ jobs:
   release-build-and-push:
     name: Release
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
     needs:
       - UnitTests
     steps:
