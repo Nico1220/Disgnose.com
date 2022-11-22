@@ -2,7 +2,7 @@ FROM maven:3.8.6 as build
 # maven jar erstellen
 COPY ./src src
 COPY ./pom.xml .
-RUN mvn -f pom.xml clean install
+RUN mvn clean install
 
 FROM openjdk:8-jre
 ## taget jar
