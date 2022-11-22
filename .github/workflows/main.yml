@@ -1,7 +1,5 @@
 name: GitHub Actions Main
 on:
-  schedule:
-    - cron: '31 10 * * *'
   push:
     tags:
       - '*'
