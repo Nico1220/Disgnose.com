@@ -67,7 +67,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: dokerContainer/Dockerfile
+          file: dockerContainer/Dockerfile
           push: true
           tags: user/app:latest
       - name: Sign the published Docker image
