@@ -1,7 +1,7 @@
 FROM maven:3.8.6 as build
 # maven jar erstellen
-COPY ./src src
-COPY ./pom.xml .
+COPY src .
+COPY pom.xml .
 RUN mvn -f pom.xml clean package install
 
 FROM openjdk:8-jre
