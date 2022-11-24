@@ -6,4 +6,4 @@ RUN mvn clean package -DskipTests
 FROM openjdk:19-alpine
 COPY --from=build /target /target
 WORKDIR /target
-RUN ["java", "-jar", "haupt-store-v0.0.1.jar"]
+CMD ["java", "-jar", "haupt-store-v0.0.1.jar"]
