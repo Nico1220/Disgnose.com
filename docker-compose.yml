@@ -4,13 +4,13 @@ services:
   app:
     build: .
 
-  #mariadb:
-  #  image: mariadb:10.9
-  #  restart: always
-  #  environment:
-  #    MARIADB_RANDOM_ROOT_PASSWORD: "yes"
-  ##    MARIADB_DATABASE: haupt-chemicals
-   #   MARIADB_USER: haupt-chemicals
-   #   MARIADB_PASSWORD: haupt-chemicals
-   # ports:
-    #  - "3306:3306"
+  mariadb:
+    image: mariadb:10.9
+    restart: always
+    environment:
+      MARIADB_RANDOM_ROOT_PASSWORD: "yes"
+      MARIADB_DATABASE: haupt-chemicals
+      MARIADB_USER: haupt-chemicals
+      MARIADB_PASSWORD: haupt-chemicals
+    ports:
+      - "3306:3306"
