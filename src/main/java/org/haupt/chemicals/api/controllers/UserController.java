@@ -34,6 +34,11 @@ public class UserController {
         return "no-sidebar";
     }
 
+    @GetMapping("login")
+    public String login() {
+        return "login";
+    }
+
     @GetMapping("/impressum.html")
     public String impressum() {
         return "impressum";
