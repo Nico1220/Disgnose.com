@@ -63,22 +63,10 @@ public class WebSecurityConfig {
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
-                        .usernameParameter("email")
-                        .passwordParameter("password")
                         .defaultSuccessUrl("/")
                         .permitAll()
                 )
-//                .sessionManagement((session)->session
-//                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-//                        .maximumSessions(2)
-//                        .expiredUrl("/sessionExpired.html")
-//
-//                )
 
-//                .formLogin((form) -> form
-//                        .loginPage("/login")
-//                        .permitAll()
-//                )
                 .logout((logout) -> logout.permitAll());
 
         return http.build();
