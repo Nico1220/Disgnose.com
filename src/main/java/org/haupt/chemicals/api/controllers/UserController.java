@@ -4,77 +4,99 @@ import org.haupt.chemicals.api.model.Mail;
 import org.haupt.chemicals.api.model.User;
 import org.haupt.chemicals.api.repository.UserRepository;
 import org.haupt.chemicals.api.repository.SendingMail;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
+import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
-@RequestMapping(path = "")
-@Controller
+@RequestMapping(path = "api/user")
+@RestController
+@CrossOrigin
 public class UserController {
     @Autowired
-    private UserRepository userRepo;
+    private UserRepository userRepository;
 
-    SendingMail sendingMail;
-
-    @GetMapping("/")
-    public String index() {
-        return "index";
+    @GetMapping
+    public @ResponseBody
+    Iterable<User> getAllUser() {
+        return userRepository.findAll();
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUser(@PathVariable Long id) {
+        return userRepository
+                .findById(id)
+                .map(user -> ResponseEntity.ok().body(user))
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/no-sidebar.html")
-    public String erklärung() {
-        return "no-sidebar";
+    @PostMapping()
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
+        user.setId(null);
+        var saved = userRepository.save(user);
+        return ResponseEntity.created(URI.create("/api/user/" + saved.getId())).body(saved);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable(value = "id") Long userId, @RequestBody User userDetails) {
+        return userRepository.findById(userId).map(user -> {
+                    user.setFirstName(userDetails.getFirstName());
+                    user.setLastName(userDetails.getLastName());
+                    user.setEmail(userDetails.getEmail());
+                    user.setPassword(userDetails.getPassword());
+//                    user.setAdmin(userDetails.getAdmin());
+                    User updatedUser = userRepository.save(user);
+                    return ResponseEntity.ok(updatedUser);
+                }
+        ).orElseGet(() -> createUser(userDetails));
     }
 
-    @GetMapping("login")
-    public String login() {
-        return "login";
+    @DeleteMapping("/{id}")
+    public ResponseEntity<User> deleteUser(@PathVariable(value =
+            "id") Long userId) {
+        return userRepository
+                .findById(userId)
+                .map(
+                        user -> {
+                            userRepository.delete(user);
+                            return ResponseEntity.ok().<User>build();
+                        })
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/impressum.html")
-    public String impressum() {
-        return "impressum";
-    }
-    @GetMapping("/register")
-    public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new User());
-        return "signup_form";
-    }
-
-    @PostMapping("/process_register")
-    public String processRegister(User user) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-        userRepo.save(user);
-
-        return "index";
-    }
-
-    @GetMapping("/contact.html")
-    public String contactGet(Model model) {
-        model.addAttribute("mail", new Mail());
-        return "contact";
-    }
-
-    @PostMapping("/contact.html")
-    public String contactPost(@Valid Mail mail, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            return "contact";
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public Map<String, String> onConstraintValidationException(
+            ConstraintViolationException e) {
+        Map<String, String> errors = new HashMap<>();
+        for (ConstraintViolation violation : e.getConstraintViolations()) {
+            errors.put(violation.getPropertyPath().toString(), violation.getMessage());
         }
-
-        model.addAttribute("noErrors", true);
-        model.addAttribute("user", mail);
-        String subject = mail.getName() + " " + mail.getEmail() + " "+ mail.getSubject() +" sent you a message";
-        sendingMail.sendMail(subject, mail.getMessage());
-        return "contact";
+        return errors;
     }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public Map<String, String> onMethodArgumentNotValidException(
+            MethodArgumentNotValidException e) {
+        Map<String, String> errors = new HashMap<>();
+        for (FieldError fieldError : e.getBindingResult().getFieldErrors()) {
+            errors.put(fieldError.getField() , fieldError.getDefaultMessage());
+        }
+        return errors;
+    }
+
 }
