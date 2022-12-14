@@ -3,8 +3,8 @@ package org.haupt.chemicals.api.model;
 import com.sun.istack.NotNull;
 import lombok.*;
 
-import javax.management.relation.Role;
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -38,9 +38,9 @@ public class User {
     @Column(name = "u_lastName", nullable = false, length = 20)
     private String lastName;
 
-
-    @Column(name = "u_role", nullable = true, length = 20)
-    private String role;
+    @OneToMany
+    @JoinColumn(name = "u_role")
+    private List<Role> role;
 
 }
 
