@@ -4,7 +4,9 @@ import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -40,7 +42,8 @@ public class User {
 
     @OneToMany
     @JoinColumn(name = "u_role")
-    private List<Role> role;
+    private Set<Role> roles = new HashSet<>();
+
 
 }
 

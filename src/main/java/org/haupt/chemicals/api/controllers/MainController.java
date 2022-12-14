@@ -2,6 +2,7 @@ package org.haupt.chemicals.api.controllers;
 
 import org.haupt.chemicals.api.model.Mail;
 import org.haupt.chemicals.api.model.User;
+import org.haupt.chemicals.api.repository.RoleRepository;
 import org.haupt.chemicals.api.repository.SendingMail;
 import org.haupt.chemicals.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +13,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.HashSet;
+
 @RequestMapping(path = "")
 @Controller
 public class MainController {
     @Autowired
     private UserRepository userRepo;
 
+    @Autowired
+    private RoleRepository roleRepository;
 //    SendingMail sendingMail;
 
     @GetMapping("/")
@@ -50,6 +55,7 @@ public class MainController {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
+        user.setRoles(new HashSet<>(roleRepository.findByName("USER")));
         userRepo.save(user);
 
         return "index";
