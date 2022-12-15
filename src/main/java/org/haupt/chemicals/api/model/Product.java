@@ -4,6 +4,8 @@ import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -22,25 +24,19 @@ public class Product {
     private Long id;
 
     @NotNull
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "pr_u_id",nullable = false)
-    private User user;
-
-    @NotNull
-    @Column(name = "pr_titel", nullable = false, length = 45)
+    @Column(name = "pr_titel", nullable = false)
     private String titel;
 
-    @NotNull
-    @Column(name = "pr_quantity", nullable = false, length = 64)
+    @Column(name = "pr_quantity", nullable = true, length = 64)
     private int quantity;
 
     @NotNull
     @Column(name = "pr_createdAt", nullable = false, length = 20)
-    private Date created;
+    private LocalDateTime created;
 
     @NotNull
     @Column(name = "pr_updatedAt", nullable = false, length = 20)
-    private Date updated;
+    private LocalDateTime updated;
 
 //    @NotNull
 //    @Column(name = "first_name", nullable = false, length = 20)
@@ -50,13 +46,12 @@ public class Product {
     @Column(name = "pr_content", nullable = false, length = 20)
     private String content;
 
-    @NotNull
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "pr_ca_id",nullable = false)
+    @JoinColumn(name = "pr_ca_id",nullable = true)
     private List<Category> categories;
 
-    @NotNull
+
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "pr_t_id",nullable = false)
+    @JoinColumn(name = "pr_t_id",nullable = true)
     private Tag tag;
 }

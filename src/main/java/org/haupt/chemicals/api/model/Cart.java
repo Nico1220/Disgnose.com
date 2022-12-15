@@ -40,7 +40,7 @@ public class Cart {
 
     @NotNull
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ca_products", nullable = false)
+    @Column(name = "ca_products", nullable = false)
     private List<Product> products;
 
 

@@ -34,7 +34,7 @@ public class Category {
 
     @NotNull
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ca_pr_id",nullable = false)
+    @Column(name = "ca_pr_id",nullable = false)
     private List<Product> products;
 
 }

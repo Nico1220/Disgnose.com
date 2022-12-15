@@ -35,6 +35,6 @@ public class Order {
 
     @NotNull
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "or_u_id",nullable = false, unique = true)
+    @Column(name = "or_pr_id",nullable = false, unique = true)
     private List<Product> products;
 }

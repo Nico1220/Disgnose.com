@@ -45,7 +45,6 @@ public class ProductController {
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable(value = "id") Long productId, @RequestBody Product productDetails) {
         return productRepository.findById(productId).map(product -> {
-                    product.setUser(productDetails.getUser());
                     product.setTitel(productDetails.getTitel());
                     product.setQuantity(productDetails.getQuantity());
                     product.setCreated(productDetails.getCreated());
