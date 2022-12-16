@@ -83,8 +83,8 @@ public class MainController {
         return "product";}
     @PostMapping("/product_eingetragen")
     public String product_eingetragen(Product product) {
-        product.setCreated(LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))));
-        product.setUpdated(LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))));
+        product.setCreated(LocalDateTime.now());
+        product.setUpdated(LocalDateTime.now());
         productRepository.save(product);
         return "product";
     }
