@@ -48,10 +48,30 @@
                     </thead>
 
                     <tbody id="users">
-
                     </tbody>
                 </table>
             </div>
+        </section>
+    </article>
+    <article>
+        <section class="wrapper style4 special container medium">
+
+            <!-- Content -->
+            <div class="content">
+                <form th:action="@{deleteUser}" method="post">
+                    <div class="row gtr-50">
+                        <div class="col-12">
+                            <input type="text" th:field="*{user.email}" placeholder="Email" required minlength="2"/>
+                        </div>
+                        <div class="col-12">
+                            <ul class="buttons">
+                                <li><input type="submit" class="special" value="Löschen" /></li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
         </section>
     </article>
 

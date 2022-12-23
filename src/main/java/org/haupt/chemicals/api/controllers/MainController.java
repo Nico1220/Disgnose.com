@@ -114,12 +114,15 @@ public class MainController {
 //                }).orElseThrow(() -> new Benutzernichtgefundenexception(id));
 //    }
 //
-    @DeleteMapping("/user/{id}")
-    String deleteUser(@PathVariable Long id){
-//        if(!userRepo.existsById(id)){
-//            throw new Benutzernichtgefundenexception(id);
-//        }
-        userRepo.deleteById(id);
-        return  "User with id "+id+" has been deleted success.";
+    @PostMapping("/deleteUser")
+    String deleteUser(User user){
+        userRepo.delete(userRepo.findByEmail(user.getEmail()));
+        return  "users";
+    }
+
+    @PostMapping("/deleteProduct")
+    String deleteProduct(Product product){
+        productRepository.delete(productRepository.findByTitel(product.getTitel()));
+        return  "users";
     }
 }
