@@ -24,7 +24,7 @@ public class Product {
     private Long id;
 
     @NotNull
-    @Column(name = "pr_titel", nullable = false, length = 64)
+    @Column(name = "pr_titel", nullable = false, length = 64, unique = true)
     private String titel;
 
     @Column(name = "pr_quantity", nullable = true, length = 64)

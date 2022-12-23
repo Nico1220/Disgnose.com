@@ -123,6 +123,6 @@ public class MainController {
     @PostMapping("/deleteProduct")
     String deleteProduct(Product product){
         productRepository.delete(productRepository.findByTitel(product.getTitel()));
-        return  "users";
+        return  "product";
     }
 }
