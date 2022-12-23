@@ -11,16 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Null;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 @RequestMapping(path = "")
 @Controller
@@ -45,7 +43,7 @@ public class MainController {
         return "no-sidebar";
     }
 
-    @RequestMapping("login")
+    @RequestMapping("/login")
     public String login() {
         return "login";
     }
@@ -62,9 +60,9 @@ public class MainController {
 
     @PostMapping("/process_register")
     public String processRegister(User user) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
+//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//        String encodedPassword = passwordEncoder.encode(user.getPassword());
+//        user.setPassword(encodedPassword);
         user.setRoles(new HashSet<>(roleRepository.findByName("USER")));
         userRepo.save(user);
 
@@ -87,5 +85,41 @@ public class MainController {
         product.setUpdated(LocalDateTime.now());
         productRepository.save(product);
         return "product";
+    }
+
+
+    @GetMapping("/users")
+    public String users(User user){
+        return "users";
+    }
+//    List<User> getAllUsers() {
+//        userRepo.findAll();
+//
+//    }
+//
+//    @GetMapping("/user/{id}")
+//    User getUserById(@PathVariable Long id) {
+//        return userRepo.findById(id)
+//                .orElseThrow(() -> new Benutzernichtgefundenexception(id));
+//    }
+//
+//    @PutMapping("/user/{id}")
+//    User updateUser(@RequestBody User newUser, @PathVariable Long id) {
+//        return userRepo.findById(id)
+//                .map(user -> {
+//                    user.setUsername(newUser.getUsername());
+//                    user.setName(newUser.getName());
+//                    user.setEmail(newUser.getEmail());
+//                    return userRepository.save(user);
+//                }).orElseThrow(() -> new Benutzernichtgefundenexception(id));
+//    }
+//
+    @DeleteMapping("/user/{id}")
+    String deleteUser(@PathVariable Long id){
+//        if(!userRepo.existsById(id)){
+//            throw new Benutzernichtgefundenexception(id);
+//        }
+        userRepo.deleteById(id);
+        return  "User with id "+id+" has been deleted success.";
     }
 }

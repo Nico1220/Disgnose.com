@@ -41,7 +41,7 @@ public class User {
     private String lastName;
 
     @OneToMany
-    @JoinColumn(name = "u_role")
+    @Column(name = "u_role")
     private Set<Role> roles = new HashSet<>();
 
 
