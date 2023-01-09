@@ -7,6 +7,7 @@ import org.haupt.chemicals.api.repository.ProductRepository;
 import org.haupt.chemicals.api.repository.RoleRepository;
 import org.haupt.chemicals.api.repository.SendingMail;
 import org.haupt.chemicals.api.repository.UserRepository;
+import org.haupt.chemicals.api.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -16,9 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.Null;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @RequestMapping(path = "")
 @Controller
@@ -32,6 +31,8 @@ public class MainController {
     @Autowired
     private ProductRepository productRepository;
 //    SendingMail sendingMail;
+    @Autowired
+    private ProductService productService;
 
     @GetMapping("/")
     public String index() {
@@ -79,6 +80,22 @@ public class MainController {
     public String getProduct(Model product) {
         product.addAttribute("product", new Product());
         return "product";}
+
+    @GetMapping({"/product.html", "/product.html{titel}" })
+    public String suchfunktion(@ModelAttribute("titel") @RequestParam("titel") Optional<String> titel, Model model, Product product){
+        if(titel.isPresent()){
+            List<Product> ProductList = productService.findProductByTitel(titel.get());
+            model.addAttribute("product",product);
+            model.addAttribute("product2", ProductList);
+
+            return "product";
+        }
+        else {
+            return "product";
+        }
+    }
+
+
     @PostMapping("/product_eingetragen")
     public String product_eingetragen(Product product) {
         product.setCreated(LocalDateTime.now());
@@ -122,7 +139,11 @@ public class MainController {
 
     @PostMapping("/deleteProduct")
     String deleteProduct(Product product){
-        productRepository.delete(productRepository.findByTitel(product.getTitel()));
+        List<Product> products = new ArrayList<>();
+        productRepository.findByTitel(product.getTitel())
+                .forEach(products::add);
+        for(Product productx:products)
+            productRepository.delete(productx);
         return  "product";
     }
 }

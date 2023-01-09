@@ -35,7 +35,65 @@
 
     <!-- Main -->
     <article id="main">
+
         <section class="wrapper style4 special container medium">
+            <div class="content">
+                <div class="col-12">
+                    <form action="#" th:action="@{/product.html{titel}(titel=${titel})}" th:object="${product}">
+                        <div class="row gtr-50">
+                            <div class="col-12">
+                                <label for="titel">Suche Produkte</label>
+                            </div>
+                            <div class="col-12">
+                                <input type="text" id="titel" name="titel" th:value="${titel}" placeholder="Name des Produktes"/>
+                            </div>
+                            <div class="col-12">
+                                <input type="submit" value="Search"/>
+                            </div>
+
+                            <table id="table1" th:object="${product2}">
+                                <tr>
+                                    <th>Titel</th>
+                                    <th>Content</th>
+                                    <th>Updated</th>
+                                </tr>
+                                <tr th:each="carte, state :${product2}" id="tr1"
+                                    th:classappend="${state.odd}?'odd-row':'even-row'">
+                                    <td th:text="${carte.titel}">title</td>
+                                    <td th:text="${carte.content}">content</td>
+                                    <td th:text="${carte.updated}">updated</td>
+                                </tr>
+                            </table>
+                            <!--    <a th:href="@{/update(idNumber=${reader?.idNumber},firstname=${reader?.firstname})}" th:field="*{firstname}">Update</a>
+                                <a th:href="@{/delete(idNumber=${reader?.idNumber})}" th:value="${reader?.idNumber}">Delete</a>
+                           -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </article>
+
+    <article>
+        <section class="wrapper style4 special container medium">
+            <div class="content">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <td>Titel</td>
+                        <td>Content</td>
+                        <td>Updated</td>
+                    </tr>
+                    </thead>
+
+                    <tbody id="eingabeliste">
+                    <a href="" type="submit" class="special" value="Delete"></a>
+                    </tbody>
+                </table>
+            </div>
+<!--        </section>-->
+<!--        <section class="wrapper style4 special container medium">-->
 
             <!-- Content -->
             <div class="content">
@@ -56,36 +114,14 @@
                 </form>
             </div>
 
-        </section>
-    </article>
-
-    <article>
-        <section class="wrapper style4 special container medium">
-            <div class="content">
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <td>Titel</td>
-                        <td>Content</td>
-                        <td>Updated</td>
-                    </tr>
-                    </thead>
-
-                    <tbody id="eingabeliste">
-                    <a href="" type="submit" class="special" value="Delete"></a>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-    </article>
-
-    <article>
-        <section class="wrapper style4 special container medium">
+<!--        </section>-->
+<!--        <section class="wrapper style4 special container medium">-->
 
             <!-- Content -->
             <div class="content">
                 <form th:action="@{deleteProduct}" method="post">
                     <div class="row gtr-50">
+                        <p></p>
                         <div class="col-12">
                             <input type="text" th:field="*{product.titel}" placeholder="Titel" required minlength="2"/>
                         </div>
