@@ -51,7 +51,7 @@
                                 <input type="submit" value="Search"/>
                             </div>
 
-                            <table id="table1" th:object="${product2}">
+                            <table id="table1" th:object="${product2}" th:unless="${#lists.isEmpty(product2)}">
                                 <tr>
                                     <th>Titel</th>
                                     <th>Content</th>
@@ -62,6 +62,11 @@
                                     <td th:text="${carte.titel}">title</td>
                                     <td th:text="${carte.content}">content</td>
                                     <td th:text="${carte.updated}">updated</td>
+                                    <td>
+                                        <!--                            <a th:href="@{/showUpdateForm(productId=${carte.id})}" class="btn btn-info">Update</a>-->
+
+                                        <a th:href="@{/deleteProduct(productId=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
+                                    </td>
                                 </tr>
                             </table>
                             <!--    <a th:href="@{/update(idNumber=${reader?.idNumber},firstname=${reader?.firstname})}" th:field="*{firstname}">Update</a>
@@ -71,69 +76,39 @@
                     </form>
                 </div>
             </div>
-        </section>
-
-    </article>
-
-    <article>
-        <section class="wrapper style4 special container medium">
-            <div class="content">
-                <table class="table table-hover">
-                    <thead>
+            <p></p>
+            <div class="content" >
+                <table class="table table-hover" th:object="${productAll}" th:unless="${#lists.isEmpty(productAll)}">
                     <tr>
                         <td>Titel</td>
                         <td>Content</td>
                         <td>Updated</td>
                     </tr>
-                    </thead>
+                    <tr th:each="carte, state :${productAll}" id="tr1"
+                        th:classappend="${state.odd}?'odd-row':'even-row'">
+                        <td th:text="${carte.titel}">title</td>
+                        <td th:text="${carte.content}">content</td>
+                        <td th:text="${carte.updated}">updated</td>
+                        <td>
+                            <a th:href="@{/showUpdateProduct(productId=${carte.id})}" class="btn btn-info">Update</a>
 
-                    <tbody id="eingabeliste">
-                    <a href="" type="submit" class="special" value="Delete"></a>
-                    </tbody>
+                            <a th:href="@{/deleteProduct(productId=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
+                        </td>
+                    </tr>
                 </table>
             </div>
 <!--        </section>-->
 <!--        <section class="wrapper style4 special container medium">-->
 
-            <!-- Content -->
+             Content
             <div class="content">
-                <form th:action="@{product_eingetragen}" method="post">
-                    <div class="row gtr-50">
-                        <div class="col-12">
-                            <input type="text" th:field="*{product.titel}" placeholder="Titel" required minlength="2"/>
-                        </div>
-                        <div class="col-12">
-                            <input type="text" th:field="*{product.content}" placeholder="Content" required minlength="2"/>
-                        </div>
-                        <div class="col-12">
-                            <ul class="buttons">
-                                <li><input type="submit" class="special" value="Hinzufügen" /></li>
-                            </ul>
-                        </div>
-                    </div>
-                </form>
+                <a th:href="@{/addProduct}" class="btn btn-primary">Add Employee</a>
             </div>
 
 <!--        </section>-->
 <!--        <section class="wrapper style4 special container medium">-->
 
             <!-- Content -->
-            <div class="content">
-                <form th:action="@{deleteProduct}" method="post">
-                    <div class="row gtr-50">
-                        <p></p>
-                        <div class="col-12">
-                            <input type="text" th:field="*{product.titel}" placeholder="Titel" required minlength="2"/>
-                        </div>
-                        <div class="col-12">
-                            <ul class="buttons">
-                                <li><input type="submit" class="special" value="Löschen" /></li>
-                            </ul>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
         </section>
     </article>
 

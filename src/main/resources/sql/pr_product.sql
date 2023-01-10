@@ -1,0 +1,27 @@
+insert into hauptchemicals.pr_product(pr_id, pr_titel, pr_created_at, pr_quantity, pr_content, pr_updated_at)
+values(1, "Maleinsäureanhydrid", now(), 0, "(MSA)", now()),
+(2, "Phthalsäureanhydrid", now(), 0, "(PSA)", now()),
+(3, "Trimellitsäureanhydrid", now(), 0, "(TMA)", now()),
+(4, "Hexahydrophthalsäureanhydrid", now(), 0, "(HHPA)", now()),
+(5, "Methylhexahydrophthalsäureanhydrid", now(), 0, "(MHHPA)", now()),
+(6, "Monoethanolamin", now(), 0, "85% W", now()),
+(7, "Monoethanolamin", now(), 0, "99,4%", now()),
+(8, "Triethanolamin", now(), 0, "85%", now()),
+(9, "Triethanolamin", now(), 0, "85% W", now()),
+(10, "Triethanolamin", now(), 0, "99%", now()),
+(11, "Diethylenglykol ", now(), 0, "(DEG)", now()),
+(12, "1,2-Propandiol", now(), 0, "(MPG)", now()),
+(13, "Neopentylglykol ", now(), 0, "(NPG)", now()),
+(14, "1,10-Decandiol", now(), 0, "", now()),
+(15, "HDI Biureth", now(), 0, "", now()),
+(16, "HDI Trimer", now(), 0, "", now()),
+(17, "HDI Geblockt", now(), 0, "", now()),
+(18, "HDI Wässrig", now(), 0, "", now()),
+(19, "TDI TMP", now(), 0, "", now()),
+(20, "Caprylsäure", now(), 0, "(C8)", now()),
+(21, "Laurinsäure", now(), 0, "(C12)", now()),
+(22, "Stearinsäure", now(), 0, "(C16-18)", now()),
+(23, "Ölsäure", now(), 0, "(C16-18)", now()),
+(24, "Palmkernfettsäure ", now(), 0, "(C12-18)", now())
+#Ab Phosphonate eintragen
+;

@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.constraints.Null;
 import java.time.LocalDateTime;
@@ -91,59 +92,49 @@ public class MainController {
             return "product";
         }
         else {
+            List<Product> ProductListAll = productRepository.findAll();
+            model.addAttribute("model", new Product());
+            model.addAttribute("productAll", ProductListAll);
             return "product";
         }
     }
 
-
-    @PostMapping("/product_eingetragen")
-    public String product_eingetragen(Product product) {
-        product.setCreated(LocalDateTime.now());
-        product.setUpdated(LocalDateTime.now());
-        productRepository.save(product);
-        return "product";
+    @GetMapping("/addproduct")
+    public ModelAndView product_eingetragen() {
+        ModelAndView mav = new ModelAndView("add-product-form");
+        Product newProduct = new Product();
+        mav.addObject("product", newProduct);
+        return mav;
     }
 
+    @PostMapping("/saveProduct")
+    public String saveProduct(@ModelAttribute Product product) {
+        productRepository.save(product);
+        return "redirect:/product.html";
+    }
+
+    @GetMapping("/showUpdateProduct")
+    public ModelAndView showUpdateProduct(@RequestParam Long productId) {
+        ModelAndView mav = new ModelAndView("add-product-form");
+        Product product = productRepository.findById(productId).get();
+        mav.addObject("product", product);
+        return mav;
+    }
+
+    @GetMapping("/deleteProduct")
+    String deleteProduct(@RequestParam Long productId){
+        productRepository.deleteById(productId);
+        return  "redirect:/product.html";
+    }
 
     @GetMapping("/users")
     public String users(User user){
         return "users";
     }
-//    List<User> getAllUsers() {
-//        userRepo.findAll();
-//
-//    }
-//
-//    @GetMapping("/user/{id}")
-//    User getUserById(@PathVariable Long id) {
-//        return userRepo.findById(id)
-//                .orElseThrow(() -> new Benutzernichtgefundenexception(id));
-//    }
-//
-//    @PutMapping("/user/{id}")
-//    User updateUser(@RequestBody User newUser, @PathVariable Long id) {
-//        return userRepo.findById(id)
-//                .map(user -> {
-//                    user.setUsername(newUser.getUsername());
-//                    user.setName(newUser.getName());
-//                    user.setEmail(newUser.getEmail());
-//                    return userRepository.save(user);
-//                }).orElseThrow(() -> new Benutzernichtgefundenexception(id));
-//    }
-//
+
     @PostMapping("/deleteUser")
     String deleteUser(User user){
         userRepo.delete(userRepo.findByEmail(user.getEmail()));
         return  "users";
-    }
-
-    @PostMapping("/deleteProduct")
-    String deleteProduct(Product product){
-        List<Product> products = new ArrayList<>();
-        productRepository.findByTitel(product.getTitel())
-                .forEach(products::add);
-        for(Product productx:products)
-            productRepository.delete(productx);
-        return  "product";
     }
 }

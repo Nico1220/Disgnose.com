@@ -24,7 +24,7 @@ public class Product {
     private Long id;
 
     @NotNull
-    @Column(name = "pr_titel", nullable = false, length = 64, unique = true)
+    @Column(name = "pr_titel", nullable = false, length = 64)
     private String titel;
 
     @Column(name = "pr_quantity", nullable = true, length = 64)
@@ -43,7 +43,7 @@ public class Product {
 //    private Date published;
 
     @NotNull
-    @Column(name = "pr_content", nullable = false, length = 64)
+    @Column(name = "pr_content",length = 64)
     private String content;
 
     @OneToMany(cascade = CascadeType.ALL)
