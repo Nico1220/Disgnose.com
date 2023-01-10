@@ -56,7 +56,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .antMatchers("/contact").hasRole("USER")
                         .antMatchers("/","/register","process_register").permitAll()
-                        .and()
+//                        .and()
 
                 )
                 .formLogin((form) -> form

@@ -38,7 +38,8 @@
 
         <header class="special container">
             <span class="icon solid fa-envelope"></span>
-            <h2>Product bearbeiten</h2>
+            <h2 th:if="${#httpServletRequest.requestURI == '/addProduct'}">Product hinzufügen</h2>
+            <h2 th:if="${#httpServletRequest.requestURI == '/showUpdateProduct'}">Product bearbeiten</h2>
         </header>
 
         <!-- One -->
@@ -46,13 +47,19 @@
 
             <!-- Content -->
             <div class="content">
-                <form action="#" th:action="@{/saveProduct}" th:object="${product}">
+                <form action="#" th:action="@{/saveProduct}" method="POST">
                     <div class="row gtr-50">
                         <div class="col-6 col-12-mobile">
-                            <input type="text" th:field="*{product.titel}" placeholder="Titel" required minlength="2"/>
+                            <input type="text" th:field="*{product.titel}" placeholder="Titel"/>
                         </div>
                         <div class="col-6 col-12-mobile">
-                            <input type="text" th:field="*{product.content}" placeholder="Content" required minlength="5"/>
+                            <input type="text" th:field="*{product.content}" placeholder="Content"/>
+                        </div>
+                        <div class="col-6 col-12-mobile">
+                            <h1 th:unless="${productId != null}">Updated</h1>
+                        </div>
+                        <div class="col-6 col-12-mobile">
+                            <h1 th:text="*{product.updated}" th:unless="${productId != null}"/>
                         </div>
                         <div class="col-12">
                             <ul class="buttons">

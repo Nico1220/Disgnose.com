@@ -2,6 +2,7 @@ package org.haupt.chemicals.api.model;
 
 import com.sun.istack.NotNull;
 import lombok.*;
+import org.hibernate.annotations.SQLInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,7 +19,6 @@ import java.util.List;
 @Table(name="pr_product")
 public class Product {
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pr_id", nullable = false, unique = true, length = 45)
     private Long id;

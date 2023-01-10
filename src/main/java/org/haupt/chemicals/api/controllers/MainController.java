@@ -5,19 +5,14 @@ import org.haupt.chemicals.api.model.Product;
 import org.haupt.chemicals.api.model.User;
 import org.haupt.chemicals.api.repository.ProductRepository;
 import org.haupt.chemicals.api.repository.RoleRepository;
-import org.haupt.chemicals.api.repository.SendingMail;
 import org.haupt.chemicals.api.repository.UserRepository;
 import org.haupt.chemicals.api.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.constraints.Null;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @RequestMapping(path = "")
@@ -99,26 +94,25 @@ public class MainController {
         }
     }
 
-    @GetMapping("/addproduct")
-    public ModelAndView product_eingetragen() {
-        ModelAndView mav = new ModelAndView("add-product-form");
-        Product newProduct = new Product();
-        mav.addObject("product", newProduct);
-        return mav;
+    @GetMapping("/addProduct")
+    public String addProduct(Model model) {
+        model.addAttribute("product", new Product());
+        return "addProductForm";
     }
 
     @PostMapping("/saveProduct")
     public String saveProduct(@ModelAttribute Product product) {
+        product.setCreated(LocalDateTime.now());
+        product.setUpdated(LocalDateTime.now());
         productRepository.save(product);
         return "redirect:/product.html";
     }
 
-    @GetMapping("/showUpdateProduct")
-    public ModelAndView showUpdateProduct(@RequestParam Long productId) {
-        ModelAndView mav = new ModelAndView("add-product-form");
+    @GetMapping({"/showUpdateProduct", "/showUpdateProduct{productId}"})
+    public String showUpdateProduct(@RequestParam Long productId, Model model) {
         Product product = productRepository.findById(productId).get();
-        mav.addObject("product", product);
-        return mav;
+        model.addAttribute("product", product);
+        return "addProductForm";
     }
 
     @GetMapping("/deleteProduct")

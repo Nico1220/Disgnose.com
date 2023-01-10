@@ -55,15 +55,15 @@
                                 <tr>
                                     <th>Titel</th>
                                     <th>Content</th>
-                                    <th>Updated</th>
+<!--                                    <th>Updated</th>-->
                                 </tr>
                                 <tr th:each="carte, state :${product2}" id="tr1"
                                     th:classappend="${state.odd}?'odd-row':'even-row'">
                                     <td th:text="${carte.titel}">title</td>
                                     <td th:text="${carte.content}">content</td>
-                                    <td th:text="${carte.updated}">updated</td>
+<!--                                    <td th:text="${carte.updated}">updated</td>-->
                                     <td>
-                                        <!--                            <a th:href="@{/showUpdateForm(productId=${carte.id})}" class="btn btn-info">Update</a>-->
+                                        <a th:href="@{/showUpdateProduct(productId=${carte.id})}" class="btn btn-info">Update</a>
 
                                         <a th:href="@{/deleteProduct(productId=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
                                     </td>
@@ -82,13 +82,13 @@
                     <tr>
                         <td>Titel</td>
                         <td>Content</td>
-                        <td>Updated</td>
+<!--                        <td>Updated</td>-->
                     </tr>
                     <tr th:each="carte, state :${productAll}" id="tr1"
                         th:classappend="${state.odd}?'odd-row':'even-row'">
                         <td th:text="${carte.titel}">title</td>
                         <td th:text="${carte.content}">content</td>
-                        <td th:text="${carte.updated}">updated</td>
+<!--                        <td th:text="${carte.updated}">updated</td>-->
                         <td>
                             <a th:href="@{/showUpdateProduct(productId=${carte.id})}" class="btn btn-info">Update</a>
 
@@ -100,9 +100,8 @@
 <!--        </section>-->
 <!--        <section class="wrapper style4 special container medium">-->
 
-             Content
-            <div class="content">
-                <a th:href="@{/addProduct}" class="btn btn-primary">Add Employee</a>
+            <div class="content" th:if="${#lists.isEmpty(productAll) and #lists.isEmpty(product2)}">
+                <a th:href="@{/addProduct}" class="btn btn-primary">Produkt hinzufügen</a>
             </div>
 
 <!--        </section>-->
