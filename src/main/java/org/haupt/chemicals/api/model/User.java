@@ -20,11 +20,6 @@ public class User {
 
     @Id
     @NotNull
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "u_id",nullable = false, unique = true, length = 45)
-    private Long id;
-
-    @NotNull
     @Column(name = "u_email", nullable = false, unique = true, length = 45)
     private String email;
 
@@ -40,9 +35,9 @@ public class User {
     @Column(name = "u_lastName", nullable = false, length = 20)
     private String lastName;
 
-    @OneToMany
+    @NotNull
     @Column(name = "u_role")
-    private Set<Role> roles = new HashSet<>();
+    private String roles;
 
 
 }

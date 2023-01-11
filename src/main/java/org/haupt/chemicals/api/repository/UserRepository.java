@@ -4,7 +4,12 @@ import org.haupt.chemicals.api.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<User, String> {
     @Query("SELECT u FROM User u WHERE u.email = ?1")
-    public User findByEmail(String email);
+    public Optional<User> findByEmail(String email);
+
+    @Query("SELECT u FROM User u WHERE u.email = ?1")
+    public User findByMail(String email);
 }

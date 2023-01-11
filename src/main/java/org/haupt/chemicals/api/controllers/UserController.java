@@ -36,7 +36,7 @@ public class UserController {
         return userRepository.findAll();
     }
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Long id) {
+    public ResponseEntity<User> getUser(@PathVariable String id) {
         return userRepository
                 .findById(id)
                 .map(user -> ResponseEntity.ok().body(user))
@@ -45,12 +45,12 @@ public class UserController {
 
     @PostMapping()
     public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        user.setId(null);
+        user.setFirstName(null);
         var saved = userRepository.save(user);
-        return ResponseEntity.created(URI.create("/api/user/" + saved.getId())).body(saved);
+        return ResponseEntity.created(URI.create("/api/user/" + saved.getFirstName())).body(saved);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable(value = "id") Long userId, @RequestBody User userDetails) {
+    public ResponseEntity<User> updateUser(@PathVariable(value = "id") String userId, @RequestBody User userDetails) {
         return userRepository.findById(userId).map(user -> {
                     user.setFirstName(userDetails.getFirstName());
                     user.setLastName(userDetails.getLastName());
@@ -65,7 +65,7 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<User> deleteUser(@PathVariable(value =
-            "id") Long userId) {
+            "id") String userId) {
         return userRepository
                 .findById(userId)
                 .map(
