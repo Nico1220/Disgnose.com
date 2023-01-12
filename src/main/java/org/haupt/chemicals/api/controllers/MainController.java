@@ -30,18 +30,21 @@ public class MainController {
     private ProductService productService;
 
     @GetMapping("/")
-    public String index() {
+    public String index(Model model) {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
-        String workingUser = authentication.getName();
-        System.out.println(workingUser);
+        User user = userRepo.findByMail(authentication.getName());
+        System.out.println(user.getRoles());
+        model.addAttribute("role", user.getRoles());
+        model.addAttribute("authentication", authentication.getName());
         return "index";
     }
 
     @GetMapping("/no-sidebar.html")
-    public String erklärung() {
+    public String erklärung(Model model) {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String workingUser = authentication.getName();
         System.out.println(workingUser);
+        model.addAttribute("authentication", authentication.getName());
         return "no-sidebar";
     }
 
@@ -54,7 +57,12 @@ public class MainController {
 //    }
 
     @GetMapping("/impressum.html")
-    public String impressum() {
+    public String impressum(Model model)
+    {
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        String workingUser = authentication.getName();
+        System.out.println(workingUser);
+        model.addAttribute("authentication", authentication.getName());
         return "impressum";
     }
     @GetMapping("/register")
@@ -62,6 +70,7 @@ public class MainController {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String workingUser = authentication.getName();
         System.out.println(workingUser);
+        model.addAttribute("authentication", authentication.getName());
         model.addAttribute("user", new User());
         return "signup_form";
     }
@@ -77,14 +86,22 @@ public class MainController {
         return "index";
     }
 
-    @PostMapping("/contact.html")
+    @GetMapping("/contact.html")
     public String contactGet(Model model) {
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        String workingUser = authentication.getName();
+        System.out.println(workingUser);
+        model.addAttribute("authentication", authentication.getName());
         model.addAttribute("mail", new Mail());
         return "contact";
     }
 
     @GetMapping(value = "/product.html")
     public String getProduct(Model product) {
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        String workingUser = authentication.getName();
+        System.out.println(workingUser);
+        product.addAttribute("authentication", authentication.getName());
         product.addAttribute("product", new Product());
         return "product";}
 
@@ -97,11 +114,15 @@ public class MainController {
             Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
             String workingUser = authentication.getName();
             System.out.println(workingUser);
-            model.addAttribute("workingUser", workingUser);
+            model.addAttribute("authentication", authentication.getName());
             return "product";
         }
         else {
             List<Product> ProductListAll = productRepository.findAll();
+            Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+            String workingUser = authentication.getName();
+            System.out.println(workingUser);
+            model.addAttribute("authentication", authentication.getName());
             model.addAttribute("model", new Product());
             model.addAttribute("productAll", ProductListAll);
             return "product";
@@ -110,12 +131,20 @@ public class MainController {
 
     @GetMapping("/addProduct")
     public String addProduct(Model model) {
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        String workingUser = authentication.getName();
+        System.out.println(workingUser);
+        model.addAttribute("authentication", authentication.getName());
         model.addAttribute("product", new Product());
         return "addProductForm";
     }
 
     @PostMapping("/saveProduct")
-    public String saveProduct(@ModelAttribute Product product) {
+    public String saveProduct(@ModelAttribute Product product, Model model) {
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        String workingUser = authentication.getName();
+        System.out.println(workingUser);
+        model.addAttribute("authentication", authentication.getName());
         product.setCreated(LocalDateTime.now());
         product.setUpdated(LocalDateTime.now());
         productRepository.save(product);
@@ -126,25 +155,38 @@ public class MainController {
     public String showUpdateProduct(@RequestParam Long productId, Model model) {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String workingUser = authentication.getName();
+        System.out.println(workingUser);
+        model.addAttribute("authentication", authentication.getName());
         Product product = productRepository.findById(productId).get();
-        model.addAttribute("workingUser", workingUser);
         model.addAttribute("product", product);
         return "addProductForm";
     }
 
     @GetMapping("/deleteProduct")
-    String deleteProduct(@RequestParam Long productId){
+    String deleteProduct(@RequestParam Long productId, Model model){
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        String workingUser = authentication.getName();
+        System.out.println(workingUser);
+        model.addAttribute("authentication", authentication.getName());
         productRepository.deleteById(productId);
         return  "redirect:/product.html";
     }
 
     @GetMapping("/users")
-    public String users(User user){
+    public String users(User user, Model model){
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        String workingUser = authentication.getName();
+        System.out.println(workingUser);
+        model.addAttribute("authentication", authentication.getName());
         return "users";
     }
 
     @PostMapping("/deleteUser")
-    String deleteUser(User user){
+    String deleteUser(User user, Model model){
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        String workingUser = authentication.getName();
+        System.out.println(workingUser);
+        model.addAttribute("authentication", authentication.getName());
         userRepo.delete(userRepo.findByMail(user.getEmail()));
         return  "users";
     }

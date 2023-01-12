@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="de">
+<html lang="de" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 	<head>
 		<link rel="icon" href="images/H-ICON.jpg">
 		<title>HAUPT-Chemicals.COM</title>
@@ -28,8 +28,8 @@
 									<li><a href="impressum.html">Impressum</a></li>
 								</ul>
 							</li>
-<!--							{if session=True}-->
-							<li><a href="/register" class="button primary">Sign Up</a></li>
+							<li th:unless="${authentication != 'anonymousUser'}"><a href="/register" class="button primary">Sign Up</a></li>
+							<li th:unless="${authentication == 'anonymousUser'}"><a href="/logout" class="button primary">Logout</a></li>
 						</ul>
 					</nav>
 				</header>
