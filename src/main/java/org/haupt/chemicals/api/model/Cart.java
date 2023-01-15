@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -28,15 +29,11 @@ public class Cart {
 
     @NotNull
     @Column(name = "ca_createdAt", nullable = false, length = 20)
-    private Date created;
+    private LocalDateTime created;
 
     @NotNull
     @Column(name = "ca_updatedAt", nullable = false, length = 20)
-    private Date updated;
-
-    @NotNull
-    @Column(name = "ca_content", nullable = false, length = 20)
-    private String content;
+    private LocalDateTime updated;
 
     @NotNull
     @OneToMany(cascade = CascadeType.ALL)

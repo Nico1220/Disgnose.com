@@ -37,44 +37,71 @@
 
     <article id="main">
         <section class="wrapper style4 special container medium">
-            <div class="content">
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <td>Email</td>
-                        <td>Vorname</td>
-                        <td>Nachname</td>
-                        <td>Rolle</td>
-                    </tr>
-                    </thead>
-
-                    <tbody id="users">
-                    </tbody>
-                </table>
-            </div>
-        </section>
-    </article>
-    <article>
-        <section class="wrapper style4 special container medium">
-
-            <!-- Content -->
-            <div class="content">
-                <form th:action="@{deleteUser}" method="post">
+            <div class="col-12">
+                <form action="#" th:action="@{/users.html{email}(email=${email})}" th:object="${user}">
                     <div class="row gtr-50">
                         <div class="col-12">
-                            <input type="text" th:field="*{user.email}" placeholder="Email" required minlength="2"/>
+                            <label for="email">Suche User</label>
                         </div>
                         <div class="col-12">
-                            <ul class="buttons">
-                                <li><input type="submit" class="special" value="Löschen" /></li>
-                            </ul>
+                            <input type="text" id="email" name="email" th:value="${email}" placeholder="E-Mail Adresse"/>
                         </div>
+                        <div class="col-12">
+                            <input type="submit" value="Search"/>
+                        </div>
+
+                        <table id="table1" th:object="${userx}" th:unless="${#lists.isEmpty(userx)}">
+                            <tr>
+                                <th>Email</th>
+                                <th>Vorname</th>
+                                <th>Nachname</th>
+                                <th>Rolle</th>
+                            </tr>
+                            <tr th:each="carte, state :${userx}" id="tr1"
+                                th:classappend="${state.odd}?'odd-row':'even-row'">
+                                <td th:text="${carte.email}">email</td>
+                                <td th:text="${carte.firstName}">firstName</td>
+                                <td th:text="${carte.lastName}">lastName</td>
+                                <td th:text="${carte.roles}">roles</td>
+                                <td>
+                                    <a th:href="@{/showUpdateUser(email=${carte.email})}" class="btn btn-info">Update</a>
+
+                                    <a th:href="@{/deleteUser(email=${carte.email})}" class="btn btn-danger ml-2">Delete</a>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </form>
             </div>
+            <p></p>
+            <div class="content" >
+                <table class="table table-hover" th:object="${userAll}" th:unless="${#lists.isEmpty(userAll)}">
+                    <tr>
+                        <th>Email</th>
+                        <th>Vorname</th>
+                        <th>Nachname</th>
+                        <th>Rolle</th>
+                    </tr>
+                    <tr th:each="carte, state :${userAll}" id="tr1"
+                        th:classappend="${state.odd}?'odd-row':'even-row'">
+                        <td th:text="${carte.email}">email</td>
+                        <td th:text="${carte.firstName}">firstName</td>
+                        <td th:text="${carte.lastName}">lastName</td>
+                        <td th:text="${carte.roles}">roles</td>
+                        <td>
+                            <a th:href="@{/showUpdateUser(email=${carte.email})}" class="btn btn-info">Update</a>
 
+                            <a th:href="@{/deleteUser(email=${carte.email})}" class="btn btn-danger ml-2">Delete</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="content" th:if="${#lists.isEmpty(userAll) and #lists.isEmpty(userx)}">
+                <a style="border-color: red" class="btn btn-primary">No User found</a>
+            </div>
         </section>
     </article>
+
 
     <!-- Footer -->
     <footer id="footer">

@@ -48,7 +48,6 @@ public class CartController {
                     cart.setUser(cartDetails.getUser());
                     cart.setCreated(cartDetails.getCreated());
                     cart.setUpdated(cartDetails.getUpdated());
-                    cart.setContent(cartDetails.getContent());
                     cart.setProducts(cartDetails.getProducts());
                     Cart updatedCart = cartRepository.save(cart);
                     return ResponseEntity.ok(updatedCart);

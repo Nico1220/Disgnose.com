@@ -34,7 +34,7 @@ public class UserRepositoryTests {
 
         User savedUser = repo.save(user);
 
-        User existUser = entityManager.find(User.class, savedUser.getId());
+        User existUser = entityManager.find(User.class, savedUser.getFirstName());
 
         assertThat(user.getEmail()).isEqualTo(existUser.getEmail());
 
@@ -46,6 +46,6 @@ public class UserRepositoryTests {
         User user1 = new User();
         user1.setEmail("name@hauptchemicals.at");
 
-        assertThat(user1.getEmail()).isEqualTo(valueOf(repo.findByEmail(email)));
+        assertThat(user1.getEmail()).isEqualTo(valueOf(repo.findById(email)));
     }
 }
