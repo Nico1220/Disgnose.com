@@ -48,7 +48,7 @@
                         <td th:text="${carte.titel}">title</td>
                         <td th:text="${carte.content}">content</td>
                         <td>
-                            <a th:href="@{/deleteWarenkorb(productId=${carte.titel})}" class="btn btn-danger ml-2">Delete</a>
+                            <a th:href="@{/deleteWarenkorb(productId=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
                         </td>
                 </table>
             </div>

@@ -43,11 +43,11 @@ public class MainController {
     @GetMapping("/")
     public String index(Model model) {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
-        if(authentication.getName()!="anonymousUser"){
-            User user = userRepo.findByMail(authentication.getName());
-            System.out.println(user.getRoles());
-            model.addAttribute("role", user.getRoles());
-        }
+//        if(authentication.getName()!="anonymousUser"){
+//            User user = userRepo.findByMail(authentication.getName());
+//            System.out.println(user.getRoles());
+//            model.addAttribute("role", user.getRoles());
+//        }
         model.addAttribute("authentication", authentication.getName());
         return "index";
     }
@@ -275,28 +275,26 @@ public class MainController {
     }
 
     @GetMapping("/addWarenkorb")
-    String addWarenkorb(@RequestParam String productId, Model model){
+    String addWarenkorb(@RequestParam long productId, Model model){
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String workingUser = authentication.getName();
         System.out.println(workingUser);
         model.addAttribute("authentication", authentication.getName());
         Cart cart = cartRepository.findByUser(authentication.getName());
-        List<Product> products = productRepository.findByTitel(productId);
-        cart.setProducts(products);
+        Product products = productRepository.findById(productId);
+        cart.getProducts().add(products);
         cartRepository.save(cart);
         return  "redirect:/warenkorb";
     }
 
     @GetMapping("/deleteWarenkorb")
-    String deleteWarenkorb(@RequestParam String productId, Model model){
+    String deleteWarenkorb(@RequestParam long productId, Model model){
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String workingUser = authentication.getName();
         System.out.println(workingUser);
         model.addAttribute("authentication", authentication.getName());
         Cart cart = cartRepository.findByUser(authentication.getName());
-        List<Product> products =cart.getProducts();
-        products.remove(productRepository.findByTitel(productId));
-        cart.setProducts(products);
+        cart.getProducts().remove(productRepository.findById(productId));
         cartRepository.save(cart);
         return  "redirect:/warenkorb";
     }
