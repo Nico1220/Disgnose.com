@@ -48,7 +48,7 @@ public class OrderController {
         return orderRepository.findById(orderId).map(order -> {
                     order.setUser(orderDetails.getUser());
                     order.setStatus(orderDetails.getStatus());
-                    order.setContent(orderDetails.getContent());
+//                    order.setContent(orderDetails.getContent());
                     order.setProducts(orderDetails.getProducts());
                     Order updatedOrder = orderRepository.save(order);
                     return ResponseEntity.ok(updatedOrder);

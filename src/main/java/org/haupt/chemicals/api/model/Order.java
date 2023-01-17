@@ -22,16 +22,17 @@ public class Order {
 
     @NotNull
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "or_u_id",nullable = false, unique = true)
+    @JoinColumn(name = "or_u_id",nullable = false)
     private User user;
 
     @NotNull
     @Column(name = "or_status", nullable = false, length = 20)
     private String status;
 
-    @NotNull
-    @Column(name = "or_content", nullable = false, length = 20)
-    private String content;
+//    Wozu ist der Content?
+//    @NotNull
+//    @Column(name = "or_content", nullable = false, length = 20)
+//    private String content;
 
     @NotNull
     @OneToMany(cascade = CascadeType.ALL)

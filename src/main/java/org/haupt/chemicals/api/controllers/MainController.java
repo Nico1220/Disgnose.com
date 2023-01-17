@@ -1,10 +1,8 @@
 package org.haupt.chemicals.api.controllers;
 
-import org.haupt.chemicals.api.model.Cart;
-import org.haupt.chemicals.api.model.Mail;
-import org.haupt.chemicals.api.model.Product;
-import org.haupt.chemicals.api.model.User;
+import org.haupt.chemicals.api.model.*;
 import org.haupt.chemicals.api.repository.CartRepository;
+import org.haupt.chemicals.api.repository.OrderRepository;
 import org.haupt.chemicals.api.repository.ProductRepository;
 import org.haupt.chemicals.api.repository.UserRepository;
 import org.haupt.chemicals.api.service.ProductService;
@@ -36,18 +34,23 @@ public class MainController {
     private ProductService productService;
 
     @Autowired
+    private OrderRepository orderRepository;
+
+    @Autowired
     private UserService userService;
+
+
 
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @GetMapping("/")
     public String index(Model model) {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
-//        if(authentication.getName()!="anonymousUser"){
-//            User user = userRepo.findByMail(authentication.getName());
-//            System.out.println(user.getRoles());
-//            model.addAttribute("role", user.getRoles());
-//        }
+        if(authentication.getName()!="anonymousUser"){
+            User user = userRepo.findByMail(authentication.getName());
+            System.out.println(user.getRoles());
+            model.addAttribute("role", user.getRoles());
+        }
         model.addAttribute("authentication", authentication.getName());
         return "index";
     }
@@ -270,7 +273,7 @@ public class MainController {
         }
         else{
             model.addAttribute("products", new Product());
-            return "redirect/:login";
+            return "redirect:/login";
         }
     }
 
@@ -279,12 +282,18 @@ public class MainController {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String workingUser = authentication.getName();
         System.out.println(workingUser);
-        model.addAttribute("authentication", authentication.getName());
-        Cart cart = cartRepository.findByUser(authentication.getName());
-        Product products = productRepository.findById(productId);
-        cart.getProducts().add(products);
-        cartRepository.save(cart);
-        return  "redirect:/warenkorb";
+        if(workingUser.equals("anonymousUser")){
+            return "redirect:/login";
+        }
+        else{
+            model.addAttribute("authentication", authentication.getName());
+            Cart cart = cartRepository.findByUser(authentication.getName());
+            Product products = productRepository.findById(productId);
+            cart.getProducts().add(products);
+            cart.setUpdated(LocalDateTime.now());
+            cartRepository.save(cart);
+            return  "redirect:/warenkorb";
+        }
     }
 
     @GetMapping("/deleteWarenkorb")
@@ -299,5 +308,45 @@ public class MainController {
         return  "redirect:/warenkorb";
     }
 
+    @GetMapping("/bestellen")
+    String bestellen(){
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        String workingUser = authentication.getName();
+        System.out.println(workingUser);
+        Cart cart = cartRepository.findByUser(authentication.getName());
+        Order order = new Order();
+        order.setProducts(List.copyOf(cart.getProducts()));
+        order.setUser(userRepo.findByMail(authentication.getName()));
+        order.setStatus("BESTELLT");
+        orderRepository.save(order);
+        cartRepository.delete(cart);
+        Cart cartNew = new Cart();
+        cartNew.setUser(userRepo.findByMail(authentication.getName()));
+        cartNew.setCreated(LocalDateTime.now());
+        cartNew.setUpdated(LocalDateTime.now());
+        cartRepository.save(cartNew);
+        return  "redirect:/";
+    }
 
+    @GetMapping({"/bestellungen", "bestellungen{email}"})
+    public String bestellungen(@ModelAttribute("email") @RequestParam("email") Optional<String> email, User user, Model model){
+        if(email.isPresent() && email.get() != ""){
+            Order oderByUser = orderRepository.findOderByUser(email.get());
+            model.addAttribute("oderByUser",oderByUser);
+            Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+            String workingUser = authentication.getName();
+            System.out.println(workingUser);
+            model.addAttribute("authentication", authentication.getName());
+            return "bestellungen";
+        }
+        else{
+            List<Order> OrderListAll = orderRepository.findAll();
+            Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+            String workingUser = authentication.getName();
+            System.out.println(workingUser);
+            model.addAttribute("authentication", authentication.getName());
+            model.addAttribute("OrderListAll", OrderListAll);
+            return "bestellungen";
+        }
+    }
 }

@@ -22,9 +22,11 @@
 								<ul>
 									<li><a href="no-sidebar.html">Erklärung</a></li>
 									<li><a href="product.html">Produkte</a></li>
+									<li><a href="warenkorb">Warenkorb</a></li>
+									<li th:if="${role == 'ADMIN'}"><a href="bestellungen">Bestellungen</a></li>
 									<li><a href="users">Users</a></li>
 									<li><a href="contact.html" >Contact</a></li>
-									<li><a href="#FAQ">FAQ</a></li>
+									<!--									<li><a href="#FAQ">FAQ</a></li>-->
 									<li><a href="impressum.html">Impressum</a></li>
 								</ul>
 							</li>

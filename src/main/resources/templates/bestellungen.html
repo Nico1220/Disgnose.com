@@ -1,14 +1,14 @@
-<!DOCTYPE HTML>
-<html lang="de">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <link rel="icon" href="images/H-ICON.jpg">
-  <title>HAUPT Chemicals - Sign Up Success</title>
+  <title>HAUPT-Chemicals.COM</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <link rel="stylesheet" href="/css/main.css" />
   <noscript><link rel="stylesheet" href="/css/noscript.css" /></noscript>
 </head>
-<body class="no-sidebar is-preload">
+<body>
 <div id="page-wrapper">
 
   <!-- Header -->
@@ -36,38 +36,66 @@
     </nav>
   </header>
 
-  <!-- Main -->
+
   <article id="main">
     <section class="wrapper style4 special container medium">
-
-      <!-- Content -->
-      <div class="content">
-        <form th:action="@{login}" method="post">
+      <div class="col-12">
+        <form action="#" th:action="@{/bestellungen.html{email}(email=${email})}" th:object="${user}">
           <div class="row gtr-50">
-<!--            <div class="col-12">-->
-<!--              <h3 th:unless="${#httpServletRequest.requestURI == '/login?error'}">Wrong Username or Passwort</h3>-->
-<!--            </div>-->
             <div class="col-12">
-              <label for="email">
-                <input type="email" name="username" id="email" placeholder="E-Mail" required minlength="5"/>
-              </label>
+              <label for="email">Suche User</label>
             </div>
             <div class="col-12">
-              <label for="password">
-                <input type="password" name="password" id="password" placeholder="Password" required minlength="8"/>
-              </label>
+              <input type="text" id="email" name="email" th:value="${email}" placeholder="E-Mail Adresse"/>
             </div>
             <div class="col-12">
-              <ul class="buttons">
-                <li><input type="submit" class="special" value="SIGN IN" /></li>
-              </ul>
+              <input type="submit" value="Search"/>
             </div>
+
+            <table id="table1" th:object="${oderByUser}" th:unless="${#lists.isEmpty(oderByUser)}">
+              <tr>
+                <th>User</th>
+                <th>Status</th>
+              </tr>
+              <tr th:each="carte, state :${oderByUser}" id="tr1"
+                  th:classappend="${state.odd}?'odd-row':'even-row'">
+                <td th:text="${carte.user.email}">user</td>
+                <td th:text="${carte.status}">status</td>
+<!--                <td>-->
+<!--                  <a th:href="@{/showUpdateUser(email=${carte.email})}" class="btn btn-info">Update</a>-->
+
+<!--                  <a th:href="@{/deleteUser(email=${carte.email})}" class="btn btn-danger ml-2">Delete</a>-->
+<!--                </td>-->
+              </tr>
+            </table>
           </div>
         </form>
       </div>
+      <p></p>
+      <div class="content" >
+        <table class="table table-hover" th:object="${OrderListAll}" th:unless="${#lists.isEmpty(OrderListAll)}">
+          <tr>
+            <th>User</th>
+            <th>Status</th>
+          </tr>
+          <tr th:each="carte, state :${OrderListAll}" id="tr1"
+              th:classappend="${state.odd}?'odd-row':'even-row'">
+            <td th:text="${carte.user.email}">user</td>
+            <td th:text="${carte.status}">status</td>
+            <!--                <td>-->
+            <!--                  <a th:href="@{/showUpdateUser(email=${carte.email})}" class="btn btn-info">Update</a>-->
 
+            <!--                  <a th:href="@{/deleteUser(email=${carte.email})}" class="btn btn-danger ml-2">Delete</a>-->
+            <!--                </td>-->
+          </tr>
+        </table>
+      </div>
+      <div class="content" th:if="${#lists.isEmpty(oderByUser) and #lists.isEmpty(OrderListAll)}">
+        <a style="border-color: red" class="btn btn-primary">No User found</a>
+      </div>
     </section>
   </article>
+
 
   <!-- Footer -->
   <footer id="footer">
@@ -87,6 +115,7 @@
 </div>
 
 <!-- Scripts -->
+<script src="/js/users.js"></script>
 <script src="/js/jquery.min.js"></script>
 <script src="/js/jquery.dropotron.min.js"></script>
 <script src="/js/jquery.scrolly.min.js"></script>
@@ -96,6 +125,5 @@
 <script src="/js/breakpoints.min.js"></script>
 <script src="/js/util.js"></script>
 <script src="/js/main.js"></script>
-
 </body>
 </html>

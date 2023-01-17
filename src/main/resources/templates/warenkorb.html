@@ -22,9 +22,11 @@
                     <ul>
                         <li><a href="no-sidebar.html">Erklärung</a></li>
                         <li><a href="product.html">Produkte</a></li>
+                        <li><a href="warenkorb">Warenkorb</a></li>
+                        <li th:if="${role == 'ADMIN'}"><a href="bestellungen">Bestellungen</a></li>
                         <li><a href="users">Users</a></li>
                         <li><a href="contact.html" >Contact</a></li>
-                        <li><a href="#FAQ">FAQ</a></li>
+                        <!--									<li><a href="#FAQ">FAQ</a></li>-->
                         <li><a href="impressum.html">Impressum</a></li>
                     </ul>
                 </li>
@@ -37,21 +39,26 @@
 
     <article id="main">
         <section class="wrapper style4 special container medium">
-            <div class="content" >
-                <table class="table table-hover" th:object="${products}" th:unless="${#lists.isEmpty(products)}">
-                    <tr>
-                        <td>Titel</td>
-                        <td>Content</td>
-                    </tr>
-                    <tr th:each="carte, state :${products}" id="tr1"
-                        th:classappend="${state.odd}?'odd-row':'even-row'">
-                        <td th:text="${carte.titel}">title</td>
-                        <td th:text="${carte.content}">content</td>
-                        <td>
-                            <a th:href="@{/deleteWarenkorb(productId=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
-                        </td>
-                </table>
-            </div>
+            <form action="#" th:action="@{/bestellen}">
+                <div class="content" >
+                    <table class="table table-hover" th:object="${products}" th:unless="${#lists.isEmpty(products)}">
+                        <tr>
+                            <td>Titel</td>
+                            <td>Content</td>
+                        </tr>
+                        <tr th:each="carte, state :${products}" id="tr1"
+                            th:classappend="${state.odd}?'odd-row':'even-row'">
+                            <td th:text="${carte.titel}">title</td>
+                            <td th:text="${carte.content}">content</td>
+                            <td>
+                                <a th:href="@{/deleteWarenkorb(productId=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
+                            </td>
+                    </table>
+                </div>
+                <div class="col-12">
+                    <input type="submit" value="Bestellen"/>
+                </div>
+            </form>
             <div class="content" th:if="${#lists.isEmpty(products) and #lists.isEmpty(userx)}">
                 <a style="border-color: red" class="btn btn-primary">No Product found</a>
             </div>
