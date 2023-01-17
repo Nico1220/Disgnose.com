@@ -60,6 +60,11 @@ public class MainController {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String workingUser = authentication.getName();
         System.out.println(workingUser);
+        if(authentication.getName()!="anonymousUser"){
+            User user = userRepo.findByMail(authentication.getName());
+            System.out.println(user.getRoles());
+            model.addAttribute("role", user.getRoles());
+        }
         model.addAttribute("authentication", authentication.getName());
         return "no-sidebar";
     }
@@ -78,6 +83,11 @@ public class MainController {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String workingUser = authentication.getName();
         System.out.println(workingUser);
+        if(authentication.getName()!="anonymousUser"){
+            User user = userRepo.findByMail(authentication.getName());
+            System.out.println(user.getRoles());
+            model.addAttribute("role", user.getRoles());
+        }
         model.addAttribute("authentication", authentication.getName());
         return "impressum";
     }
@@ -86,6 +96,11 @@ public class MainController {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String workingUser = authentication.getName();
         System.out.println(workingUser);
+        if(authentication.getName()!="anonymousUser"){
+            User user = userRepo.findByMail(authentication.getName());
+            System.out.println(user.getRoles());
+            model.addAttribute("role", user.getRoles());
+        }
         model.addAttribute("authentication", authentication.getName());
         model.addAttribute("user", new User());
         return "signup_form";
@@ -110,6 +125,11 @@ public class MainController {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String workingUser = authentication.getName();
         System.out.println(workingUser);
+        if(authentication.getName()!="anonymousUser"){
+            User user = userRepo.findByMail(authentication.getName());
+            System.out.println(user.getRoles());
+            model.addAttribute("role", user.getRoles());
+        }
         model.addAttribute("authentication", authentication.getName());
         model.addAttribute("mail", new Mail());
         return "contact";
@@ -120,6 +140,11 @@ public class MainController {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String workingUser = authentication.getName();
         System.out.println(workingUser);
+        if(authentication.getName()!="anonymousUser"){
+            User user = userRepo.findByMail(authentication.getName());
+            System.out.println(user.getRoles());
+            product.addAttribute("role", user.getRoles());
+        }
         product.addAttribute("authentication", authentication.getName());
         product.addAttribute("product", new Product());
         return "product";}
@@ -133,6 +158,11 @@ public class MainController {
             Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
             String workingUser = authentication.getName();
             System.out.println(workingUser);
+            if(authentication.getName()!="anonymousUser"){
+                User user = userRepo.findByMail(authentication.getName());
+                System.out.println(user.getRoles());
+                model.addAttribute("role", user.getRoles());
+            }
             model.addAttribute("authentication", authentication.getName());
             return "product";
         }
@@ -141,6 +171,11 @@ public class MainController {
             Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
             String workingUser = authentication.getName();
             System.out.println(workingUser);
+            if(authentication.getName()!="anonymousUser"){
+                User user = userRepo.findByMail(authentication.getName());
+                System.out.println(user.getRoles());
+                model.addAttribute("role", user.getRoles());
+            }
             model.addAttribute("authentication", authentication.getName());
             model.addAttribute("model", new Product());
             model.addAttribute("productAll", ProductListAll);
@@ -153,6 +188,11 @@ public class MainController {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String workingUser = authentication.getName();
         System.out.println(workingUser);
+        if(authentication.getName()!="anonymousUser"){
+            User user = userRepo.findByMail(authentication.getName());
+            System.out.println(user.getRoles());
+            model.addAttribute("role", user.getRoles());
+        }
         model.addAttribute("authentication", authentication.getName());
         model.addAttribute("product", new Product());
         return "addProductForm";
@@ -163,6 +203,11 @@ public class MainController {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String workingUser = authentication.getName();
         System.out.println(workingUser);
+        if(authentication.getName()!="anonymousUser"){
+            User user = userRepo.findByMail(authentication.getName());
+            System.out.println(user.getRoles());
+            model.addAttribute("role", user.getRoles());
+        }
         model.addAttribute("authentication", authentication.getName());
         product.setCreated(LocalDateTime.now());
         product.setUpdated(LocalDateTime.now());
@@ -175,6 +220,11 @@ public class MainController {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String workingUser = authentication.getName();
         System.out.println(workingUser);
+        if(authentication.getName()!="anonymousUser"){
+            User user = userRepo.findByMail(authentication.getName());
+            System.out.println(user.getRoles());
+            model.addAttribute("role", user.getRoles());
+        }
         model.addAttribute("authentication", authentication.getName());
         Product product = productRepository.findById(productId).get();
         model.addAttribute("product", product);
@@ -186,6 +236,11 @@ public class MainController {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String workingUser = authentication.getName();
         System.out.println(workingUser);
+        if(authentication.getName()!="anonymousUser"){
+            User user = userRepo.findByMail(authentication.getName());
+            System.out.println(user.getRoles());
+            model.addAttribute("role", user.getRoles());
+        }
         model.addAttribute("authentication", authentication.getName());
         productRepository.deleteById(productId);
         return  "redirect:/product.html";
@@ -199,6 +254,10 @@ public class MainController {
             Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
             String workingUser = authentication.getName();
             System.out.println(workingUser);
+            if(authentication.getName()!="anonymousUser"){
+                System.out.println(user.getRoles());
+                model.addAttribute("role", user.getRoles());
+            }
             model.addAttribute("authentication", authentication.getName());
             return "users";
         }
@@ -207,6 +266,10 @@ public class MainController {
             Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
             String workingUser = authentication.getName();
             System.out.println(workingUser);
+            if(authentication.getName()!="anonymousUser"){
+                System.out.println(user.getRoles());
+                model.addAttribute("role", user.getRoles());
+            }
             model.addAttribute("authentication", authentication.getName());
             model.addAttribute("model", new User());
             model.addAttribute("userAll", UserListAll);
@@ -238,6 +301,10 @@ public class MainController {
         System.out.println(workingUser);
         model.addAttribute("authentication", authentication.getName());
         User user = userRepo.findById(email).get();
+        if(authentication.getName()!="anonymousUser"){
+            System.out.println(user.getRoles());
+            model.addAttribute("role", user.getRoles());
+        }
         model.addAttribute("user", user);
         return "addUserForm";
     }
@@ -248,9 +315,15 @@ public class MainController {
             return "redirect:/users.html";
         }
         else{
+
             Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
             String workingUser = authentication.getName();
             System.out.println(workingUser);
+            if(authentication.getName()!="anonymousUser"){
+                User user = userRepo.findByMail(authentication.getName());
+                System.out.println(user.getRoles());
+                model.addAttribute("role", user.getRoles());
+            }
             model.addAttribute("authentication", authentication.getName());
             userRepo.deleteById(email);
             return  "redirect:/users.html";
@@ -263,6 +336,11 @@ public class MainController {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String workingUser = authentication.getName();
         System.out.println(workingUser);
+        if(authentication.getName()!="anonymousUser"){
+            User user = userRepo.findByMail(authentication.getName());
+            System.out.println(user.getRoles());
+            model.addAttribute("role", user.getRoles());
+        }
         model.addAttribute("authentication", authentication.getName());
         if(cartRepository.findByUser(authentication.getName()) != null){
             Cart cart = cartRepository.findByUser(authentication.getName());
@@ -282,6 +360,11 @@ public class MainController {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String workingUser = authentication.getName();
         System.out.println(workingUser);
+        if(authentication.getName()!="anonymousUser"){
+            User user = userRepo.findByMail(authentication.getName());
+            System.out.println(user.getRoles());
+            model.addAttribute("role", user.getRoles());
+        }
         if(workingUser.equals("anonymousUser")){
             return "redirect:/login";
         }
@@ -336,6 +419,11 @@ public class MainController {
             Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
             String workingUser = authentication.getName();
             System.out.println(workingUser);
+            if(authentication.getName()!="anonymousUser"){
+                user = userRepo.findByMail(authentication.getName());
+                System.out.println(user.getRoles());
+                model.addAttribute("role", user.getRoles());
+            }
             model.addAttribute("authentication", authentication.getName());
             return "bestellungen";
         }
@@ -344,6 +432,11 @@ public class MainController {
             Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
             String workingUser = authentication.getName();
             System.out.println(workingUser);
+            if(authentication.getName()!="anonymousUser"){
+                user = userRepo.findByMail(authentication.getName());
+                System.out.println(user.getRoles());
+                model.addAttribute("role", user.getRoles());
+            }
             model.addAttribute("authentication", authentication.getName());
             model.addAttribute("OrderListAll", OrderListAll);
             return "bestellungen";

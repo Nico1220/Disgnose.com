@@ -21,7 +21,7 @@ public class Order {
     private Long id;
 
     @NotNull
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "or_u_id",nullable = false)
     private User user;
 
@@ -35,7 +35,7 @@ public class Order {
 //    private String content;
 
     @NotNull
-    @OneToMany(cascade = CascadeType.ALL)
-    @Column(name = "or_pr_id",nullable = false, unique = true)
+    @ManyToMany(cascade = CascadeType.ALL)
+    @Column(name = "or_pr_id",nullable = false)
     private List<Product> products;
 }
