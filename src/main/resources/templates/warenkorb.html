@@ -56,7 +56,8 @@
                     </table>
                 </div>
                 <div class="col-12">
-                    <input type="submit" value="Bestellen"/>
+                    <input th:if="${role=='CUSTOMER'}" type="submit" value="Bestellen"/>
+                    <a th:unless="${role=='CUSTOMER'}">Sie sind noch kein zertifizierter Kunde</a>
                 </div>
             </form>
             <div class="content" th:if="${#lists.isEmpty(products) and #lists.isEmpty(userx)}">

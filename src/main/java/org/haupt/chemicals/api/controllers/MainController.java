@@ -5,7 +5,9 @@ import org.haupt.chemicals.api.repository.CartRepository;
 import org.haupt.chemicals.api.repository.OrderRepository;
 import org.haupt.chemicals.api.repository.ProductRepository;
 import org.haupt.chemicals.api.repository.UserRepository;
+import org.haupt.chemicals.api.service.OrderService;
 import org.haupt.chemicals.api.service.ProductService;
+import org.haupt.chemicals.api.service.UserODService;
 import org.haupt.chemicals.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -37,7 +39,10 @@ public class MainController {
     private OrderRepository orderRepository;
 
     @Autowired
-    private UserService userService;
+    private UserODService userService;
+
+    @Autowired
+    private OrderService orderService;
 
 
 
@@ -117,7 +122,7 @@ public class MainController {
         cart.setCreated(LocalDateTime.now());
         cart.setUpdated(LocalDateTime.now());
         cartRepository.save(cart);
-        return "index";
+        return "redirect:/login";
     }
 
     @GetMapping("/contact.html")
@@ -249,7 +254,7 @@ public class MainController {
     @GetMapping({"/users", "/users{email}"})
     public String users(@ModelAttribute("email") @RequestParam("email") Optional<String> email, User user, Model model){
         if(email.isPresent() && email.get() != ""){
-            User userx = userRepo.findByMail(email.get());
+            List<User> userx = userService.findUsersByEmil(email.get());
             model.addAttribute("userx",userx);
             Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
             String workingUser = authentication.getName();
@@ -414,7 +419,7 @@ public class MainController {
     @GetMapping({"/bestellungen", "bestellungen{email}"})
     public String bestellungen(@ModelAttribute("email") @RequestParam("email") Optional<String> email, User user, Model model){
         if(email.isPresent() && email.get() != ""){
-            Order oderByUser = orderRepository.findOderByUser(email.get());
+            List<Order> oderByUser = orderService.findOrderByUser(email.get());
             model.addAttribute("oderByUser",oderByUser);
             Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
             String workingUser = authentication.getName();

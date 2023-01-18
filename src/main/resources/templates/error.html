@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="images/H-ICON.jpg">
+    <title>HAUPT-Chemicals.COM</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" href="/css/main.css"/>
+    <noscript>
+        <link rel="stylesheet" href="/css/noscript.css"/>
+    </noscript>
+</head>
+<body>
+<div id="page-wrapper">
+
+    <!-- Header -->
+    <header id="header">
+        <h1 id="logo"><a href="/">HAUPT-Chemicals.COM</a></h1>
+        <nav id="nav">
+            <ul>
+                <li class="current"><a href="/">Home</a></li>
+                <li class="submenu">
+                    <a href="#">Menu</a>
+                    <ul>
+                        <li><a href="no-sidebar.html">Erklärung</a></li>
+                        <li><a href="product.html">Produkte</a></li>
+                        <li><a href="warenkorb">Warenkorb</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="impressum.html">Impressum</a></li>
+                    </ul>
+                </li>
+                <li th:unless="${authentication != 'anonymousUser'}"><a href="/register" class="button primary">Sign
+                    Up</a></li>
+                <li th:unless="${authentication == 'anonymousUser'}"><a href="/logout" class="button primary">Logout</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <article id="main">
+        <section class="wrapper style4 special container medium">
+            <h1>Something went wrong! </h1>
+            <h2>Our Engineers are on it</h2>
+            <a href="/">Go Home</a>
+        </section>
+    </article>
+    <!-- Footer -->
+    <footer id="footer">
+
+        <ul class="icons">
+            <li><a href="#" class="icon brands circle fa-twitter"><span class="label">Twitter</span></a></li>
+            <li><a href="#" class="icon brands circle fa-facebook-f"><span class="label">Facebook</span></a></li>
+            <li><a href="#" class="icon brands circle fa-instagram"><span class="label">Instagram</span></a></li>
+        </ul>
+
+        <ul class="copyright">
+            <li>&copy;<a href="https://www.haupt-chemicals.com/">HAUPT Chemicals GmbH </a></li>
+        </ul>
+
+    </footer>
+
+</div>
+
+<!-- Scripts -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.dropotron.min.js"></script>
+<script src="/js/jquery.scrolly.min.js"></script>
+<script src="/js/jquery.scrollex.min.js"></script>
+<script src="/js/browser.min.js"></script>
+<script src="/js/breakpoints.min.js"></script>
+<script src="/js/util.js"></script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>

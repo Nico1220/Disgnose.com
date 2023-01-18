@@ -22,8 +22,9 @@ public class WebSecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
-                        .antMatchers("/contact").hasRole("USER")
+                        .antMatchers("/contact.html").hasRole("USER")
                         .antMatchers("/","/register","process_register").permitAll()
+                        .antMatchers("/users").hasRole("MITARBEITER")
 //                        .and()
 
                 )
