@@ -25,6 +25,7 @@ public class WebSecurityConfig {
                         .antMatchers("/contact.html").hasRole("USER")
                         .antMatchers("/","/register","process_register").permitAll()
                         .antMatchers("/users").hasRole("MITARBEITER")
+                        .antMatchers("/api/**").hasRole("ADMIN")
 //                        .and()
 
                 )
