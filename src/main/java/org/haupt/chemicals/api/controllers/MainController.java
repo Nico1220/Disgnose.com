@@ -447,4 +447,53 @@ public class MainController {
             return "bestellungen";
         }
     }
+
+    @PostMapping("/saveOrder")
+    public String saveOrder(@ModelAttribute Order order, Model model) {
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        String workingUser = authentication.getName();
+        System.out.println(workingUser);
+        if(authentication.getName()!="anonymousUser"){
+            User user = userRepo.findByMail(authentication.getName());
+            System.out.println(user.getRoles());
+            model.addAttribute("role", user.getRoles());
+        }
+        model.addAttribute("authentication", authentication.getName());
+        orderRepository.save(order);
+        return "redirect:/bestellungen";
+    }
+
+    @GetMapping("/showSpecificOrder{id}")
+    public String showSpecificOrder(@RequestParam Long id, Model model) {
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        String workingUser = authentication.getName();
+        System.out.println(workingUser);
+        if(authentication.getName()!="anonymousUser"){
+            User user = userRepo.findByMail(authentication.getName());
+            System.out.println(user.getRoles());
+            model.addAttribute("role", user.getRoles());
+        }
+        model.addAttribute("authentication", authentication.getName());
+        Order order = orderRepository.findById(id).get();
+        List products = order.getProducts();
+        model.addAttribute("products", products);
+        model.addAttribute("order", order);
+        return "addOrderForm";
+    }
+
+    @GetMapping("/deleteOrder")
+    String deleteOrder(@RequestParam Long id, Model model){
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        String workingUser = authentication.getName();
+        System.out.println(workingUser);
+        if(authentication.getName()!="anonymousUser"){
+            User user = userRepo.findByMail(authentication.getName());
+            System.out.println(user.getRoles());
+            model.addAttribute("role", user.getRoles());
+        }
+        model.addAttribute("authentication", authentication.getName());
+        orderRepository.deleteById(id);
+        return  "redirect:/bestellungen";
+
+    }
 }

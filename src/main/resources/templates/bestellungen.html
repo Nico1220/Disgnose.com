@@ -61,11 +61,11 @@
                   th:classappend="${state.odd}?'odd-row':'even-row'">
                 <td th:text="${carte.user.email}">user</td>
                 <td th:text="${carte.status}">status</td>
-<!--                <td>-->
-<!--                  <a th:href="@{/showUpdateUser(email=${carte.email})}" class="btn btn-info">Update</a>-->
+                <td>
+                  <a th:href="@{/showSpecificOrder(id=${carte.id})}" class="btn btn-info">Show</a>
 
-<!--                  <a th:href="@{/deleteUser(email=${carte.email})}" class="btn btn-danger ml-2">Delete</a>-->
-<!--                </td>-->
+                  <a th:href="@{/deleteOrder(id=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
+                </td>
               </tr>
             </table>
           </div>
@@ -82,16 +82,16 @@
               th:classappend="${state.odd}?'odd-row':'even-row'">
             <td th:text="${carte.user.email}">user</td>
             <td th:text="${carte.status}">status</td>
-            <!--                <td>-->
-            <!--                  <a th:href="@{/showUpdateUser(email=${carte.email})}" class="btn btn-info">Update</a>-->
+            <td>
+              <a th:href="@{/showSpecificOrder(id=${carte.id})}" class="btn btn-info">Show</a>
 
-            <!--                  <a th:href="@{/deleteUser(email=${carte.email})}" class="btn btn-danger ml-2">Delete</a>-->
-            <!--                </td>-->
+              <a th:href="@{/deleteOrder(id=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
+            </td>
           </tr>
         </table>
       </div>
       <div class="content" th:if="${#lists.isEmpty(oderByUser) and #lists.isEmpty(OrderListAll)}">
-        <a style="border-color: red" class="btn btn-primary">No User found</a>
+        <a style="border-color: red" class="btn btn-primary">No Order found</a>
       </div>
     </section>
   </article>

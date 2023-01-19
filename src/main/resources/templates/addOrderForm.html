@@ -50,24 +50,39 @@
 
             <!-- Content -->
             <div class="content">
-                <form action="#" th:action="@{/saveProduct}" method="POST">
+                <form action="#" th:action="@{/saveOrder}" method="POST">
                     <div class="row gtr-50">
                         <div class="col-6 col-12-mobile">
-                            <input type="text" th:field="*{product.titel}" placeholder="Titel"/>
+                            <input type="text" th:text="*{order.titel}" placeholder="Titel"/>
                         </div>
                         <div class="col-6 col-12-mobile">
-                            <input type="text" th:field="*{product.content}" placeholder="Content"/>
+                            <label for="status">
+
+                            </label>
+                            <select id="status" th:field="*{order.status}">
+                                <option value="PROCESS">In Arbeit</option>
+                                <option value="DONE">Erledigt</option>
+                                <option value="BESTELLT">Bestellt</option>
+                                <option value="ABGELEHNT">Ablehnen</option>
+                            </select>
                         </div>
-                        <div class="col-6 col-12-mobile">
-                            <h1 th:unless="${productId == null}">Updated</h1>
-                        </div>
-                        <div class="col-6 col-12-mobile">
-                            <h1 th:text="*{product.updated}" th:unless="${productId == null}"/>
+                        <div class="row gtr-50">
+                            <table class="table table-hover" th:object="${products}" th:unless="${#lists.isEmpty(products)}">
+                                <tr>
+                                    <td>Titel</td>
+                                    <td>Content</td>
+                                </tr>
+                                <tr th:each="carte, state :${products}" id="tr1"
+                                    th:classappend="${state.odd}?'odd-row':'even-row'">
+                                    <td th:text="${carte.titel}">title</td>
+                                    <td th:text="${carte.content}">content</td>
+                                </tr>
+                            </table>
                         </div>
                         <div class="col-12">
                             <ul class="buttons">
                                 <li><input type="submit" class="special" value="Save" />
-                                    <input type="hidden" th:field="*{product.id}" /></li>
+                                    <input type="hidden" th:field="*{order.id}" /></li>
                             </ul>
                         </div>
                     </div>
