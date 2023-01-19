@@ -2,8 +2,11 @@ package org.haupt.chemicals.api.model;
 
 import com.sun.istack.NotNull;
 import lombok.*;
+import net.bytebuddy.TypeCache;
+import org.springframework.data.domain.Sort;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -33,6 +36,10 @@ public class Order {
 //    @NotNull
 //    @Column(name = "or_content", nullable = false, length = 20)
 //    private String content;
+
+    @NotNull
+    @Column(name = "or_createdAt", nullable = false, length = 20)
+    private LocalDateTime created;
 
     @NotNull
     @ManyToMany(cascade = CascadeType.ALL)

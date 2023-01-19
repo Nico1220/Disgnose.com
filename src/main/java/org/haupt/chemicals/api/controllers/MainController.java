@@ -406,6 +406,7 @@ public class MainController {
         order.setProducts(List.copyOf(cart.getProducts()));
         order.setUser(userRepo.findByMail(authentication.getName()));
         order.setStatus("BESTELLT");
+        order.setCreated(LocalDateTime.now());
         orderRepository.save(order);
         cartRepository.delete(cart);
         Cart cartNew = new Cart();
@@ -449,7 +450,7 @@ public class MainController {
     }
 
     @PostMapping("/saveOrder")
-    public String saveOrder(@ModelAttribute Order order, Model model) {
+    public String saveOrder(@RequestParam Long id, @ModelAttribute Order order, Model model) {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String workingUser = authentication.getName();
         System.out.println(workingUser);
@@ -458,6 +459,10 @@ public class MainController {
             System.out.println(user.getRoles());
             model.addAttribute("role", user.getRoles());
         }
+        Order details = orderRepository.findById(id).get();
+        order.setUser(details.getUser());
+        order.setCreated(details.getCreated());
+        order.setProducts(details.getProducts());
         model.addAttribute("authentication", authentication.getName());
         orderRepository.save(order);
         return "redirect:/bestellungen";
