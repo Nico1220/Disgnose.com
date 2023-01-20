@@ -39,6 +39,12 @@
     <!-- Main -->
     <article id="main">
 
+        <header class="special container">
+            <span class="icon solid fa-flask"></span>
+            <h2>PRODUKTPROGRAMM</h2>
+            <p>Hier können Sie all unsere Produkte finden</p>
+        </header>
+
         <section class="wrapper style4 special container medium">
             <div class="content">
                 <div class="col-12">
@@ -64,17 +70,13 @@
                                     th:classappend="${state.odd}?'odd-row':'even-row'">
                                     <td th:text="${carte.titel}">title</td>
                                     <td th:text="${carte.content}">content</td>
-<!--                                    <td th:text="${carte.updated}">updated</td>-->
                                     <td>
-                                        <a th:href="@{/showUpdateProduct(productId=${carte.id})}" class="btn btn-info">Update</a>
-
-                                        <a th:href="@{/deleteProduct(productId=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
+                                        <a th:if="${(authentication != 'anonymousUser') and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/showUpdateProduct(productId=${carte.id})}" class="btn btn-info">Update</a>
+                                        <a th:if="${authentication != 'anonymousUser' and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/deleteProduct(productId=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
+                                        <a th:href="@{/addWarenkorb(productId=${carte.id})}" class="icon solid fa-shopping-cart"></a>
                                     </td>
                                 </tr>
                             </table>
-                            <!--    <a th:href="@{/update(idNumber=${reader?.idNumber},firstname=${reader?.firstname})}" th:field="*{firstname}">Update</a>
-                                <a th:href="@{/delete(idNumber=${reader?.idNumber})}" th:value="${reader?.idNumber}">Delete</a>
-                           -->
                         </div>
                     </form>
                 </div>
@@ -91,8 +93,8 @@
                         <td th:text="${carte.titel}">title</td>
                         <td th:text="${carte.content}">content</td>
                         <td>
-                            <a th:href="@{/showUpdateProduct(productId=${carte.id})}" class="btn btn-info">Update</a>
-                            <a th:href="@{/deleteProduct(productId=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
+                            <a th:if="${(authentication != 'anonymousUser') and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/showUpdateProduct(productId=${carte.id})}" class="btn btn-info">Update</a>
+                            <a th:if="${authentication != 'anonymousUser' and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/deleteProduct(productId=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
                             <a th:href="@{/addWarenkorb(productId=${carte.id})}" class="icon solid featured fad fa-shopping-cart"></a>
                         </td>
                     </tr>

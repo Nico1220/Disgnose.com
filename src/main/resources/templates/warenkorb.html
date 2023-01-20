@@ -38,6 +38,12 @@
 
 
     <article id="main">
+
+        <header class="special container">
+            <span class="icon solid fa-shopping-cart"></span>
+            <h2>Ihr Warenkorb</h2>
+        </header>
+
         <section class="wrapper style4 special container medium">
             <form action="#" th:action="@{/bestellen}">
                 <div class="content" >
@@ -55,13 +61,13 @@
                             </td>
                     </table>
                 </div>
-                <div class="col-12">
+                <div class="col-12" th:unless="${#lists.isEmpty(products)}">
                     <input th:if="${role!='USER'}" type="submit" value="Bestellen"/>
                     <a th:unless="${role!='USER'}">Sie sind noch kein zertifizierter Kunde</a>
                 </div>
             </form>
-            <div class="content" th:if="${#lists.isEmpty(products) and #lists.isEmpty(userx)}">
-                <a style="border-color: red" class="btn btn-primary">No Product found</a>
+            <div class="content" th:if="${#lists.isEmpty(products)}">
+                <a style="border-color: red" class="btn btn-primary" href="/product.html">No Products found</a>
             </div>
         </section>
     </article>

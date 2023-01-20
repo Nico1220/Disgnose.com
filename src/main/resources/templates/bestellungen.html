@@ -38,6 +38,13 @@
 
 
   <article id="main">
+
+    <header class="special container">
+      <span class="icon solid fa-truck-moving"></span>
+      <h2>BESTELLUNGEN</h2>
+      <p>Hier können Sie alle Bestellungen finden</p>
+    </header>
+
     <section class="wrapper style4 special container medium">
       <div class="col-12">
         <form action="#" th:action="@{/bestellungen.html{email}(email=${email})}" th:object="${user}">
@@ -62,7 +69,7 @@
                   th:classappend="${state.odd}?'odd-row':'even-row'">
                 <td th:text="${carte.user.email}">user</td>
                 <td th:text="${carte.status}">status</td>
-                <td th:text="${carte.created}">created</td>
+                <td th:text="${#temporals.format(carte.created, 'dd-MM-yyyy HH:mm')}">created</td>
                 <td>
                   <a th:href="@{/showSpecificOrder(id=${carte.id})}" class="btn btn-info">Show</a>
 
@@ -85,7 +92,7 @@
               th:classappend="${state.odd}?'odd-row':'even-row'">
             <td th:text="${carte.user.email}">user</td>
             <td th:text="${carte.status}">status</td>
-            <td th:text="${carte.created}">created</td>
+            <td th:text="${#temporals.format(carte.created, 'dd-MM-yyyy HH:mm')}">created</td>
             <td>
               <a th:href="@{/showSpecificOrder(id=${carte.id})}" class="btn btn-info">Show</a>
 

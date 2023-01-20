@@ -40,7 +40,7 @@
     <article id="main">
 
         <header class="special container">
-            <span class="icon solid fa-envelope"></span>
+            <span class="icon solid fa-flask"></span>
             <h2 th:if="${#httpServletRequest.requestURI == '/addProduct'}">Product hinzufügen</h2>
             <h2 th:if="${#httpServletRequest.requestURI == '/showUpdateProduct'}">Product bearbeiten</h2>
         </header>
@@ -62,7 +62,7 @@
                             <h1 th:unless="${productId == null}">Updated</h1>
                         </div>
                         <div class="col-6 col-12-mobile">
-                            <h1 th:text="*{product.updated}" th:unless="${productId == null}"/>
+                            <h1 th:text="${#temporals.format(product.updated, 'dd-MM-yyyy HH:mm')}" th:unless="${productId == null}"/>
                         </div>
                         <div class="col-12">
                             <ul class="buttons">

@@ -1,17 +1,11 @@
 package org.haupt.chemicals.api.controllers;
 
-import org.haupt.chemicals.api.model.Mail;
 import org.haupt.chemicals.api.model.User;
 import org.haupt.chemicals.api.repository.UserRepository;
-import org.haupt.chemicals.api.repository.SendingMail;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;

@@ -38,15 +38,19 @@
 
   <!-- Main -->
   <article id="main">
+
+    <header class="special container">
+    <span class="icon solid fa-user"></span>
+    <h2>PRODUKTPROGRAMM</h2>
+    <p>Hier können Sie all unsere Produkte finden</p>
+  </header>
+
     <section class="wrapper style4 special container medium">
 
       <!-- Content -->
       <div class="content">
         <form th:action="@{login}" method="post">
           <div class="row gtr-50">
-<!--            <div class="col-12">-->
-<!--              <h3 th:unless="${#httpServletRequest.requestURI == '/login?error'}">Wrong Username or Passwort</h3>-->
-<!--            </div>-->
             <div class="col-12">
               <label for="email">
                 <input type="email" name="username" id="email" placeholder="E-Mail" required minlength="5"/>

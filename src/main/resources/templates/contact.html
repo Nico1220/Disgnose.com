@@ -50,19 +50,16 @@
 
 							<!-- Content -->
 								<div class="content">
-									<form>
+									<form action="#" th:action="@{send}">
 										<div class="row gtr-50">
 											<div class="col-6 col-12-mobile">
 												<input type="text" th:field="*{mail.name}" placeholder="Name" required minlength="2"/>
-											</div>
-											<div class="col-6 col-12-mobile">
-												<input type="text" th:field="*{mail.email}" placeholder="Email" required minlength="5"/>
 											</div>
 											<div class="col-12">
 												<input type="text" th:field="*{mail.subject}" placeholder="Subject" required minlength="2"/>
 											</div>
 											<div class="col-12">
-												<textarea th:field="*{mail.message}" placeholder="Message" rows="7" required minlength="8"></textarea>
+												<textarea th:field="*{mail.body}" placeholder="Message" rows="7" required minlength="8"></textarea>
 											</div>
 											<div class="col-12">
 												<ul class="buttons">

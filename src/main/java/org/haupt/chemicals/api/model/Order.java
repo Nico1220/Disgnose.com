@@ -2,8 +2,6 @@ package org.haupt.chemicals.api.model;
 
 import com.sun.istack.NotNull;
 import lombok.*;
-import net.bytebuddy.TypeCache;
-import org.springframework.data.domain.Sort;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

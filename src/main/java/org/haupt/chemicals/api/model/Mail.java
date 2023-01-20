@@ -11,19 +11,20 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name="m_mail")
 public class Mail {
-    @NotNull
-    private String name;
-
-    @NotNull
-    private String message;
-
-    @NotNull
-    private String subject;
 
     @Id
     @NotNull
-    private String email;
+    @Column(name = "m_name",nullable = false)
+    private String name;
 
-    private String password;
+    @NotNull
+    @Column(name = "m_subject",nullable = false)
+    private String subject;
+
+    @NotNull
+    @Column(name = "m_body",nullable = false)
+    private String body;
+
 }

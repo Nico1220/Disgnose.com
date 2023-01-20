@@ -10,6 +10,8 @@ import org.haupt.chemicals.api.service.ProductService;
 import org.haupt.chemicals.api.service.UserODService;
 import org.haupt.chemicals.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @RequestMapping(path = "")
@@ -44,7 +47,10 @@ public class MainController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private JavaMailSender javaMailSender;
 
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -119,8 +125,8 @@ public class MainController {
         userRepo.save(user);
         Cart cart = new Cart();
         cart.setUser(userRepo.findByMail(user.getEmail()));
-        cart.setCreated(LocalDateTime.now());
-        cart.setUpdated(LocalDateTime.now());
+        cart.setCreated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
+        cart.setUpdated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
         cartRepository.save(cart);
         return "redirect:/login";
     }
@@ -139,6 +145,19 @@ public class MainController {
         model.addAttribute("mail", new Mail());
         return "contact";
     }
+
+    @GetMapping("/send")
+    public String sendEmail(Mail mail) {
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo("str19724@spengergasse.at");
+        message.setFrom(authentication.getName());
+        message.setSubject(mail.getSubject());
+        message.setText(mail.getBody());
+        javaMailSender.send(message);
+        return "redirect:/";
+    }
+
 
     @GetMapping(value = "/product.html")
     public String getProduct(Model product) {
@@ -214,8 +233,8 @@ public class MainController {
             model.addAttribute("role", user.getRoles());
         }
         model.addAttribute("authentication", authentication.getName());
-        product.setCreated(LocalDateTime.now());
-        product.setUpdated(LocalDateTime.now());
+        product.setCreated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
+        product.setUpdated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
         productRepository.save(product);
         return "redirect:/product.html";
     }
@@ -233,6 +252,7 @@ public class MainController {
         model.addAttribute("authentication", authentication.getName());
         Product product = productRepository.findById(productId).get();
         model.addAttribute("product", product);
+        model.addAttribute("productId", productId);
         return "addProductForm";
     }
 
@@ -378,7 +398,7 @@ public class MainController {
             Cart cart = cartRepository.findByUser(authentication.getName());
             Product products = productRepository.findById(productId);
             cart.getProducts().add(products);
-            cart.setUpdated(LocalDateTime.now());
+            cart.setUpdated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
             cartRepository.save(cart);
             return  "redirect:/warenkorb";
         }
@@ -406,13 +426,13 @@ public class MainController {
         order.setProducts(List.copyOf(cart.getProducts()));
         order.setUser(userRepo.findByMail(authentication.getName()));
         order.setStatus("BESTELLT");
-        order.setCreated(LocalDateTime.now());
+        order.setCreated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
         orderRepository.save(order);
         cartRepository.delete(cart);
         Cart cartNew = new Cart();
         cartNew.setUser(userRepo.findByMail(authentication.getName()));
-        cartNew.setCreated(LocalDateTime.now());
-        cartNew.setUpdated(LocalDateTime.now());
+        cartNew.setCreated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
+        cartNew.setUpdated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
         cartRepository.save(cartNew);
         return  "redirect:/";
     }
