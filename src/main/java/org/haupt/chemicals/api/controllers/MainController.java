@@ -1,5 +1,13 @@
 package org.haupt.chemicals.api.controllers;
 
+import com.mailjet.client.ClientOptions;
+import com.mailjet.client.MailjetClient;
+import com.mailjet.client.MailjetRequest;
+import com.mailjet.client.MailjetResponse;
+import com.mailjet.client.errors.MailjetException;
+import com.mailjet.client.errors.MailjetSocketTimeoutException;
+import com.mailjet.client.resource.Emailv31;
+import freemarker.core.Environment;
 import org.haupt.chemicals.api.model.*;
 import org.haupt.chemicals.api.repository.CartRepository;
 import org.haupt.chemicals.api.repository.OrderRepository;
@@ -9,6 +17,8 @@ import org.haupt.chemicals.api.service.OrderService;
 import org.haupt.chemicals.api.service.ProductService;
 import org.haupt.chemicals.api.service.UserODService;
 import org.haupt.chemicals.api.service.UserService;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -19,6 +29,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -47,8 +60,7 @@ public class MainController {
     @Autowired
     private OrderService orderService;
 
-    @Autowired
-    private JavaMailSender javaMailSender;
+    Properties properties = new Properties();
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -147,14 +159,50 @@ public class MainController {
     }
 
     @GetMapping("/send")
-    public String sendEmail(Mail mail) {
+    public String sendEmail(Mail mail) throws MailjetException, MailjetSocketTimeoutException {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo("str19724@spengergasse.at");
-        message.setFrom(authentication.getName());
-        message.setSubject(mail.getSubject());
-        message.setText(mail.getBody());
-        javaMailSender.send(message);
+        MailjetClient client;
+        MailjetRequest request;
+        MailjetResponse response;
+        client = new MailjetClient("8fd19615d4fb53ac63307f16e7472de8", "601cde2dbd0aeb64db9250e0d47ed55d", new ClientOptions("v3.1"));
+        request = new MailjetRequest(Emailv31.resource)
+                .property(Emailv31.MESSAGES, new JSONArray()
+                        .put(new JSONObject()
+                                .put(Emailv31.Message.FROM, new JSONObject()
+                                        .put("Email", authentication.getName())
+                                        .put("Name", authentication.getName()))
+                                .put(Emailv31.Message.TO, new JSONArray()
+                                        .put(new JSONObject()
+                                                .put("Email", "str19724@spengergasse.at")
+                                                .put("Name", "str19724")))
+                                .put(Emailv31.Message.SUBJECT, mail.getSubject())
+                                .put(Emailv31.Message.TEXTPART, mail.getBody())
+                                .put(Emailv31.Message.HTMLPART, "<h3>Dear passenger 1, welcome to <a href='https://www.mailjet.com/'>Mailjet</a>!</h3><br />May the delivery force be with you!")
+                                .put(Emailv31.Message.CUSTOMID, "AppGettingStartedTest")));
+        response = client.post(request);
+        System.out.println(response.getStatus());
+        System.out.println(response.getData());
+//        MailjetClient client;
+//        MailjetRequest request;
+//        MailjetResponse response;
+//        client = new MailjetClient("8fd19615d4fb53ac63307f16e7472de8", "601cde2dbd0aeb64db9250e0d47ed55d", new ClientOptions("v3.1"));
+//        request = new MailjetRequest(Emailv31.resource)
+//                .property(Emailv31.MESSAGES, new JSONArray()
+//                        .put(new JSONObject()
+//                                .put(Emailv31.Message.FROM, new JSONObject()
+//                                        .put("Email", "wro19770@spengergasse.at")
+//                                        .put("Name", "Ala"))
+//                                .put(Emailv31.Message.TO, new JSONArray()
+//                                        .put(new JSONObject()
+//                                                .put("Email", "wro19770@spengergasse.at")
+//                                                .put("Name", "Ala")))
+//                                .put(Emailv31.Message.SUBJECT, "Greetings from Mailjet.")
+//                                .put(Emailv31.Message.TEXTPART, "My first Mailjet email")
+//                                .put(Emailv31.Message.HTMLPART, "<h3>Dear passenger 1, welcome to <a href='https://www.mailjet.com/'>Mailjet</a>!</h3><br />May the delivery force be with you!")
+//                                .put(Emailv31.Message.CUSTOMID, "AppGettingStartedTest")));
+//        response = client.post(request);
+//        System.out.println(response.getStatus());
+//        System.out.println(response.getData());
         return "redirect:/";
     }
 
