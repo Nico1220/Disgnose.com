@@ -8,6 +8,7 @@ import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import com.mailjet.client.resource.Emailv31;
 import freemarker.core.Environment;
+
 import org.haupt.chemicals.api.model.*;
 import org.haupt.chemicals.api.repository.CartRepository;
 import org.haupt.chemicals.api.repository.OrderRepository;
@@ -20,6 +21,7 @@ import org.haupt.chemicals.api.service.UserService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
@@ -59,6 +61,12 @@ public class MainController {
 
     @Autowired
     private OrderService orderService;
+
+    @Value("${app.apiKey}")
+    private String apiKey;
+
+    @Value("${app.apiSecret}")
+    private String apiSecret;
 
     Properties properties = new Properties();
 
@@ -164,7 +172,7 @@ public class MainController {
         MailjetClient client;
         MailjetRequest request;
         MailjetResponse response;
-        client = new MailjetClient("8fd19615d4fb53ac63307f16e7472de8", "601cde2dbd0aeb64db9250e0d47ed55d", new ClientOptions("v3.1"));
+        client = new MailjetClient(apiKey, apiSecret, new ClientOptions("v3.1"));
         request = new MailjetRequest(Emailv31.resource)
                 .property(Emailv31.MESSAGES, new JSONArray()
                         .put(new JSONObject()
