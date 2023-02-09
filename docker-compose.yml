@@ -4,11 +4,14 @@ services:
   app:
     build: .
     restart: always
+    environment:
+      API_KEY: "8fd19615d4fb53ac63307f16e7472de8"
+      API_SECRET: "601cde2dbd0aeb64db9250e0d47ed55d"
     ports:
-      - "8080:8080"
+        - "8080:8080"
 
   mariadb:
-    image: mariadb:10.9
+    image: mariadb:latest
     restart: always
     environment:
       MARIADB_RANDOM_ROOT_PASSWORD: "yes"
