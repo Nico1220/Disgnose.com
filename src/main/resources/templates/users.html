@@ -41,8 +41,8 @@
 
         <header class="special container">
             <span class="icon solid fa-user"></span>
-            <h2>PRODUKTPROGRAMM</h2>
-            <p>Hier können Sie all unsere Produkte finden</p>
+            <h2>USER</h2>
+            <p>Hier können Sie all User finden und verwalten</p>
         </header>
 
         <section class="wrapper style4 special container medium">
@@ -58,7 +58,6 @@
                         <div class="col-12">
                             <input type="submit" value="Search"/>
                         </div>
-
                         <table id="table1" th:object="${userx}" th:unless="${#lists.isEmpty(userx)}">
                             <tr>
                                 <th>Email</th>
@@ -83,7 +82,7 @@
                 </form>
             </div>
             <p></p>
-            <div class="content" >
+            <div class="content">
                 <table class="table table-hover" th:object="${userAll}" th:unless="${#lists.isEmpty(userAll)}">
                     <tr>
                         <th>Email</th>

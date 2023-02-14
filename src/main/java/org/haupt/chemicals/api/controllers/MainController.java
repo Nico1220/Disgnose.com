@@ -17,13 +17,10 @@ import org.haupt.chemicals.api.repository.UserRepository;
 import org.haupt.chemicals.api.service.OrderService;
 import org.haupt.chemicals.api.service.ProductService;
 import org.haupt.chemicals.api.service.UserODService;
-import org.haupt.chemicals.api.service.UserService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,9 +29,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -310,7 +304,7 @@ public class MainController {
         return  "redirect:/product.html";
     }
 
-    @PreAuthorize("hasRole('ADMIN') or hasRole('MITARBEITER')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping({"/users", "/users{email}"})
     public String users(@ModelAttribute("email") @RequestParam("email") Optional<String> email, User user, Model model){
         if(email.isPresent() && email.get() != ""){
