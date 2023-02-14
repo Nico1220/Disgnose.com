@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -151,6 +152,8 @@ public class MainController {
         return "redirect:/login";
     }
 
+
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/contact.html")
     public String contactGet(Model model) {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
@@ -307,6 +310,7 @@ public class MainController {
         return  "redirect:/product.html";
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MITARBEITER')")
     @GetMapping({"/users", "/users{email}"})
     public String users(@ModelAttribute("email") @RequestParam("email") Optional<String> email, User user, Model model){
         if(email.isPresent() && email.get() != ""){
