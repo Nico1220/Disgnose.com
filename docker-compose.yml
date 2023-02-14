@@ -8,6 +8,7 @@ services:
       DB_CONN: "jdbc:mariadb://mariadb:3306/hauptchemicals"
       DB_USER: "hauptchemicals"
       DB_PSWD: "hauptchemicals"
+      CWDB: "none"
       API_KEY: "8fd19615d4fb53ac63307f16e7472de8"
       API_SECRET: "601cde2dbd0aeb64db9250e0d47ed55d"
     ports:
