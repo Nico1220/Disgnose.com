@@ -5,6 +5,9 @@ services:
     build: .
     restart: always
     environment:
+      DB_CONN: "jdbc:mariadb://mariadb:3306/hauptchemicals"
+      DB_USER: "hauptchemicals"
+      DB_PSWD: "hauptchemicals"
       API_KEY: "8fd19615d4fb53ac63307f16e7472de8"
       API_SECRET: "601cde2dbd0aeb64db9250e0d47ed55d"
     ports:
@@ -15,8 +18,8 @@ services:
     restart: always
     environment:
       MARIADB_RANDOM_ROOT_PASSWORD: "yes"
-      MARIADB_DATABASE: hauptchemicals
-      MARIADB_USER: hauptchemicals
-      MARIADB_PASSWORD: hauptchemicals
+      MARIADB_DATABASE: "hauptchemicals"
+      MARIADB_USER: "hauptchemicals"
+      MARIADB_PASSWORD: "hauptchemicals"
     ports:
       - "3306:3306"
