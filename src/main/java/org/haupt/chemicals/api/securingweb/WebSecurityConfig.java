@@ -26,8 +26,8 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .antMatchers("/contact.html").hasRole("USER")
                         .antMatchers("/","/register","process_register").permitAll()
-                        .antMatchers("/users").hasRole("MITARBEITER")
-                        .antMatchers("/api/**", "/users").hasRole("ADMIN")
+                        .antMatchers("/users").hasAnyRole("MITARBEITER","ADMIN")
+                        .antMatchers("/api/**", "/users")
 //                        .and()
 
                 )

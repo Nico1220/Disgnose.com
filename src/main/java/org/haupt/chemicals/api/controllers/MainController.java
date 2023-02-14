@@ -304,7 +304,7 @@ public class MainController {
         return  "redirect:/product.html";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('MITARBEITER', 'ADMIN')")
     @GetMapping({"/users", "/users{email}"})
     public String users(@ModelAttribute("email") @RequestParam("email") Optional<String> email, User user, Model model){
         if(email.isPresent() && email.get() != ""){
