@@ -1,127 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" href="images/H-ICON.jpg">
-  <title>HAUPT-Chemicals.COM</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-  <link rel="stylesheet" href="/css/main.css" />
-  <noscript><link rel="stylesheet" href="/css/noscript.css" /></noscript>
+    <link rel="icon" href="images/H-ICON.jpg">
+    <title>HAUPT-Chemicals.COM</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" href="/css/main.css"/>
+    <noscript>
+        <link rel="stylesheet" href="/css/noscript.css"/>
+    </noscript>
 </head>
 <body>
 <div id="page-wrapper">
 
-  <!-- Header -->
-  <header id="header">
-    <h1 id="logo"><a href="/">HAUPT-Chemicals.COM</a></h1>
-    <nav id="nav">
-      <ul>
-        <li class="current"><a href="/">Home</a></li>
-        <li class="submenu">
-          <a href="#">Menu</a>
-          <ul>
-            <li><a href="no-sidebar.html">Erklärung</a></li>
-            <li><a href="product.html">Produkte</a></li>
-            <li><a href="warenkorb">Warenkorb</a></li>
-            <li th:if="${(role == 'ADMIN') or (role =='MITARBEITER')}"><a href="bestellungen">Bestellungen</a></li>
-            <li th:if="${(role == 'ADMIN') or (role =='MITARBEITER')}"><a href="users">Users</a></li>
-            <li><a href="contact.html" >Contact</a></li>
-            <!--									<li><a href="#FAQ">FAQ</a></li>-->
-            <li><a href="impressum.html">Impressum</a></li>
-          </ul>
-        </li>
-        <li th:unless="${authentication != 'anonymousUser'}"><a href="/register" class="button primary">Sign Up</a></li>
-        <li th:unless="${authentication == 'anonymousUser'}"><a href="/logout" class="button primary">Logout</a></li>
-      </ul>
-    </nav>
-  </header>
-
-
-  <article id="main">
-
-    <header class="special container">
-      <span class="icon solid fa-truck-moving"></span>
-      <h2>BESTELLUNGEN</h2>
-      <p>Hier können Sie alle Bestellungen finden</p>
+    <!-- Header -->
+    <header id="header">
+        <h1 id="logo"><a href="/">HAUPT-Chemicals.COM</a></h1>
+        <nav id="nav">
+            <ul>
+                <li class="current"><a href="/">Home</a></li>
+                <li class="submenu">
+                    <a href="#">Menu</a>
+                    <ul>
+                        <li><a href="no-sidebar.html">Erklärung</a></li>
+                        <li><a href="product.html">Produkte</a></li>
+                        <li><a href="warenkorb">Warenkorb</a></li>
+                        <li th:if="${(role == 'ADMIN') or (role =='MITARBEITER')}"><a
+                                href="bestellungen">Bestellungen</a></li>
+                        <li th:if="${(role == 'ADMIN') or (role =='MITARBEITER')}"><a href="users">Users</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <!--									<li><a href="#FAQ">FAQ</a></li>-->
+                        <li><a href="impressum.html">Impressum</a></li>
+                    </ul>
+                </li>
+                <li th:unless="${authentication != 'anonymousUser'}"><a href="/register" class="button primary">Sign
+                    Up</a></li>
+                <li th:unless="${authentication == 'anonymousUser'}"><a href="/logout" class="button primary">Logout</a>
+                </li>
+            </ul>
+        </nav>
     </header>
 
-    <section class="wrapper style4 special container medium">
-      <div class="col-12">
-        <form action="#" th:action="@{/bestellungen.html{email}(email=${email})}" th:object="${user}">
-          <div class="row gtr-50">
+
+    <article id="main">
+
+        <header class="special container">
+            <span class="icon solid fa-truck-moving"></span>
+            <h2>BESTELLUNGEN</h2>
+            <p>Hier können Sie alle Bestellungen finden</p>
+        </header>
+
+        <section class="wrapper style4 special container medium">
             <div class="col-12">
-              <label for="email">Suche User</label>
-            </div>
-            <div class="col-12">
-              <input type="text" id="email" name="email" th:value="${email}" placeholder="E-Mail Adresse"/>
-            </div>
-            <div class="col-12">
-              <input type="submit" value="Search"/>
+                <form action="#" th:action="@{/bestellungen.html{email}(email=${email})}" th:object="${user}">
+                    <div class="row gtr-50">
+                        <div class="col-12">
+                            <label for="email">Suche User</label>
+                        </div>
+                        <div class="col-12">
+                            <input type="text" id="email" name="email" th:value="${email}"
+                                   placeholder="E-Mail Adresse"/>
+                        </div>
+                        <div class="col-12">
+                            <input type="submit" value="Search"/>
+                        </div>
+                        <p></p>
+                        <table id="table1" th:object="${oderByUser}" th:unless="${#lists.isEmpty(oderByUser)}">
+                            <tr>
+                                <th>User</th>
+                                <th>Status</th>
+                                <th>Bestelldatum</th>
+                            </tr>
+                            <tr th:each="carte, state :${oderByUser}" id="tr1"
+                                th:classappend="${state.odd}?'odd-row':'even-row'">
+                                <td th:text="${carte.user.email}">user</td>
+                                <td th:text="${carte.status}">status</td>
+                                <td th:text="${#temporals.format(carte.created, 'dd-MM-yyyy HH:mm')}">created</td>
+                                <td>
+                                    <a th:href="@{/showSpecificOrder(id=${carte.id})}" class="btn btn-info">Show</a>
+
+                                    <a th:href="@{/deleteOrder(id=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </form>
             </div>
             <p></p>
-            <table id="table1" th:object="${oderByUser}" th:unless="${#lists.isEmpty(oderByUser)}">
-              <tr>
-                <th>User</th>
-                <th>Status</th>
-                <th>Bestelldatum</th>
-              </tr>
-              <tr th:each="carte, state :${oderByUser}" id="tr1"
-                  th:classappend="${state.odd}?'odd-row':'even-row'">
-                <td th:text="${carte.user.email}">user</td>
-                <td th:text="${carte.status}">status</td>
-                <td th:text="${#temporals.format(carte.created, 'dd-MM-yyyy HH:mm')}">created</td>
-                <td>
-                  <a th:href="@{/showSpecificOrder(id=${carte.id})}" class="btn btn-info">Show</a>
+            <div class="content">
+                <table class="table table-hover" th:object="${OrderListAll}"
+                       th:unless="${#lists.isEmpty(OrderListAll)}">
+                    <tr>
+                        <th>User</th>
+                        <th>Status</th>
+                        <th>Bestelldatum</th>
+                    </tr>
+                    <tr th:each="carte, state :${OrderListAll}" id="tr2"
+                        th:classappend="${state.odd}?'odd-row':'even-row'">
+                        <td th:text="${carte.user.email}">user</td>
+                        <td th:text="${carte.status}">status</td>
+                        <td th:text="${#temporals.format(carte.created, 'dd-MM-yyyy HH:mm')}">created</td>
+                        <td>
+                            <a th:href="@{/showSpecificOrder(id=${carte.id})}" class="btn btn-info">Show</a>
 
-                  <a th:href="@{/deleteOrder(id=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </form>
-      </div>
-      <p></p>
-      <div class="content" >
-        <table class="table table-hover" th:object="${OrderListAll}" th:unless="${#lists.isEmpty(OrderListAll)}">
-          <tr>
-            <th>User</th>
-            <th>Status</th>
-            <th>Bestelldatum</th>
-          </tr>
-          <tr th:each="carte, state :${OrderListAll}" id="tr1"
-              th:classappend="${state.odd}?'odd-row':'even-row'">
-            <td th:text="${carte.user.email}">user</td>
-            <td th:text="${carte.status}">status</td>
-            <td th:text="${#temporals.format(carte.created, 'dd-MM-yyyy HH:mm')}">created</td>
-            <td>
-              <a th:href="@{/showSpecificOrder(id=${carte.id})}" class="btn btn-info">Show</a>
-
-              <a th:href="@{/deleteOrder(id=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
-            </td>
-          </tr>
-        </table>
-      </div>
-      <div class="content" th:if="${#lists.isEmpty(oderByUser) and #lists.isEmpty(OrderListAll)}">
-        <a style="border-color: red" class="btn btn-primary">No Order found</a>
-      </div>
-    </section>
-  </article>
+                            <a th:href="@{/deleteOrder(id=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="content" th:if="${#lists.isEmpty(oderByUser) and #lists.isEmpty(OrderListAll)}">
+                <a style="border-color: red" class="btn btn-primary">No Order found</a>
+            </div>
+        </section>
+    </article>
 
 
-  <!-- Footer -->
-  <footer id="footer">
+    <!-- Footer -->
+    <footer id="footer">
 
-    <ul class="icons">
-      <li><a href="#" class="icon brands circle fa-twitter"><span class="label">Twitter</span></a></li>
-      <li><a href="#" class="icon brands circle fa-facebook-f"><span class="label">Facebook</span></a></li>
-      <li><a href="#" class="icon brands circle fa-instagram"><span class="label">Instagram</span></a></li>
-    </ul>
+        <ul class="icons">
+            <li><a href="#" class="icon brands circle fa-twitter"><span class="label">Twitter</span></a></li>
+            <li><a href="#" class="icon brands circle fa-facebook-f"><span class="label">Facebook</span></a></li>
+            <li><a href="#" class="icon brands circle fa-instagram"><span class="label">Instagram</span></a></li>
+        </ul>
 
-    <ul class="copyright">
-      <li>&copy;<a href="https://www.haupt-chemicals.com/">HAUPT Chemicals GmbH </a></li>
-    </ul>
+        <ul class="copyright">
+            <li>&copy;<a href="https://www.haupt-chemicals.com/">HAUPT Chemicals GmbH </a></li>
+        </ul>
 
-  </footer>
+    </footer>
 
 </div>
 

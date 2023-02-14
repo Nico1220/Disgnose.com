@@ -3,10 +3,12 @@
 <head>
     <link rel="icon" href="images/H-ICON.jpg">
     <title>HAUPT-Chemicals.COM</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="/css/main.css" />
-    <noscript><link rel="stylesheet" href="/css/noscript.css" /></noscript>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" href="/css/main.css"/>
+    <noscript>
+        <link rel="stylesheet" href="/css/noscript.css"/>
+    </noscript>
 </head>
 <body>
 <div id="page-wrapper">
@@ -23,15 +25,18 @@
                         <li><a href="no-sidebar.html">Erklärung</a></li>
                         <li><a href="product.html">Produkte</a></li>
                         <li><a href="warenkorb">Warenkorb</a></li>
-                        <li th:if="${(role == 'ADMIN') or (role =='MITARBEITER')}"><a href="bestellungen">Bestellungen</a></li>
+                        <li th:if="${(role == 'ADMIN') or (role =='MITARBEITER')}"><a
+                                href="bestellungen">Bestellungen</a></li>
                         <li th:if="${(role == 'ADMIN') or (role =='MITARBEITER')}"><a href="users">Users</a></li>
-                        <li><a href="contact.html" >Contact</a></li>
+                        <li><a href="contact.html">Contact</a></li>
                         <!--									<li><a href="#FAQ">FAQ</a></li>-->
                         <li><a href="impressum.html">Impressum</a></li>
                     </ul>
                 </li>
-                <li th:unless="${authentication != 'anonymousUser'}"><a href="/register" class="button primary">Sign Up</a></li>
-                <li th:unless="${authentication == 'anonymousUser'}"><a href="/logout" class="button primary">Logout</a></li>
+                <li th:unless="${authentication != 'anonymousUser'}"><a href="/register" class="button primary">Sign
+                    Up</a></li>
+                <li th:unless="${authentication == 'anonymousUser'}"><a href="/logout" class="button primary">Logout</a>
+                </li>
             </ul>
         </nav>
     </header>
@@ -53,7 +58,8 @@
                             <label for="email">Suche User</label>
                         </div>
                         <div class="col-12">
-                            <input type="text" id="email" name="email" th:value="${email}" placeholder="E-Mail Adresse"/>
+                            <input type="text" id="email" name="email" th:value="${email}"
+                                   placeholder="E-Mail Adresse"/>
                         </div>
                         <div class="col-12">
                             <input type="submit" value="Search"/>
@@ -72,9 +78,11 @@
                                 <td th:text="${carte.lastName}">lastName</td>
                                 <td th:text="${carte.roles}">roles</td>
                                 <td>
-                                    <a th:href="@{/showUpdateUser(email=${carte.email})}" class="btn btn-info">Update</a>
+                                    <a th:href="@{/showUpdateUser(email=${carte.email})}"
+                                       class="btn btn-info">Update</a>
 
-                                    <a th:href="@{/deleteUser(email=${carte.email})}" class="btn btn-danger ml-2">Delete</a>
+                                    <a th:href="@{/deleteUser(email=${carte.email})}"
+                                       class="btn btn-danger ml-2">Delete</a>
                                 </td>
                             </tr>
                         </table>
@@ -90,7 +98,7 @@
                         <th>Nachname</th>
                         <th>Rolle</th>
                     </tr>
-                    <tr th:each="carte, state :${userAll}" id="tr1"
+                    <tr th:each="carte, state :${userAll}" id="tr2"
                         th:classappend="${state.odd}?'odd-row':'even-row'">
                         <td th:text="${carte.email}">email</td>
                         <td th:text="${carte.firstName}">firstName</td>
