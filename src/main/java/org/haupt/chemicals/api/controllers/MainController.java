@@ -177,14 +177,14 @@ public class MainController {
                 .property(Emailv31.MESSAGES, new JSONArray()
                         .put(new JSONObject()
                                 .put(Emailv31.Message.FROM, new JSONObject()
-                                        .put("Email", authentication.getName())
-                                        .put("Name", authentication.getName()))
+                                        .put("Email", "wro19770@spengergasse.at")
+                                        .put("Name", "Ala"))
                                 .put(Emailv31.Message.TO, new JSONArray()
                                         .put(new JSONObject()
                                                 .put("Email", "wro19770@spengergasse.at")
                                                 .put("Name", "Ala")))
                                 .put(Emailv31.Message.SUBJECT, mail.getSubject())
-                                .put(Emailv31.Message.TEXTPART, mail.getBody())
+                                .put(Emailv31.Message.TEXTPART, mail.getBody() + "/From: " + authentication.getName())
                                 .put(Emailv31.Message.HTMLPART, "<h3>Dear passenger 1, welcome to <a href='https://www.mailjet.com/'>Mailjet</a>!</h3><br />May the delivery force be with you!")
                                 .put(Emailv31.Message.CUSTOMID, "AppGettingStartedTest")));
         response = client.post(request);
