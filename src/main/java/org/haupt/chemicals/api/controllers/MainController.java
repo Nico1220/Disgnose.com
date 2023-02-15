@@ -374,7 +374,6 @@ public class MainController {
             return "redirect:/users.html";
         }
         else{
-
             Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
             String workingUser = authentication.getName();
             System.out.println(workingUser);
@@ -384,6 +383,8 @@ public class MainController {
                 model.addAttribute("role", user.getRoles());
             }
             model.addAttribute("authentication", authentication.getName());
+            Cart cart = cartRepository.findByUser(authentication.getName());
+            cartRepository.delete(cart);
             userRepo.deleteById(email);
             return  "redirect:/users.html";
         }
