@@ -14,6 +14,7 @@ import org.haupt.chemicals.api.repository.CartRepository;
 import org.haupt.chemicals.api.repository.OrderRepository;
 import org.haupt.chemicals.api.repository.ProductRepository;
 import org.haupt.chemicals.api.repository.UserRepository;
+import org.haupt.chemicals.api.service.MailJetTemplate;
 import org.haupt.chemicals.api.service.OrderService;
 import org.haupt.chemicals.api.service.ProductService;
 import org.haupt.chemicals.api.service.UserODService;
@@ -56,6 +57,8 @@ public class MainController {
 
     @Autowired
     private OrderService orderService;
+
+    MailJetTemplate mailJetTemplate = new MailJetTemplate();
 
     @Value("${app.apiKey}")
     private String apiKey;
@@ -452,7 +455,7 @@ public class MainController {
     }
 
     @GetMapping("/bestellen")
-    String bestellen(){
+    String bestellen() throws MailjetException, MailjetSocketTimeoutException {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String workingUser = authentication.getName();
         System.out.println(workingUser);
@@ -463,6 +466,7 @@ public class MainController {
         order.setStatus("BESTELLT");
         order.setCreated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
         orderRepository.save(order);
+        mailJetTemplate.mailTemplate(authentication.getName(), authentication.getName(), cart.getProducts(), apiKey, apiSecret);
         cartRepository.delete(cart);
         Cart cartNew = new Cart();
         cartNew.setUser(userRepo.findByMail(authentication.getName()));
