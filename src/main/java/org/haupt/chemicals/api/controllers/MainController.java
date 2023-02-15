@@ -147,7 +147,7 @@ public class MainController {
     }
 
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER' ,'ADMIN', 'MITARBEITER', 'CUSTOMER')")
     @GetMapping("/contact.html")
     public String contactGet(Model model) {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
@@ -368,9 +368,9 @@ public class MainController {
         return "addUserForm";
     }
 
-    @GetMapping("/deleteUser")
+    @GetMapping({"/deleteUser", "deleteUser{email}"})
     String deleteUser(@RequestParam String email, Model model){
-        if(email == SecurityContextHolder.getContext().getAuthentication().getName()){
+        if(email.equals(SecurityContextHolder.getContext().getAuthentication().getName())){
             return "redirect:/users.html";
         }
         else{

@@ -95,7 +95,7 @@
                         <td>
                             <a th:if="${(authentication != 'anonymousUser') and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/showUpdateProduct(productId=${carte.id})}" class="btn btn-info">Update</a>
                             <a th:if="${authentication != 'anonymousUser' and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/deleteProduct(productId=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
-                            <a th:href="@{/addWarenkorb(productId=${carte.id})}" class="icon solid featured fad fa-shopping-cart"></a>
+                            <a th:href="@{/addWarenkorb(productId=${carte.id})}" class="icon solid fa-shopping-cart"></a>
                         </td>
                     </tr>
                 </table>

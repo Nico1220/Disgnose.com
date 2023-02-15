@@ -24,7 +24,7 @@ public class WebSecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
-                        .antMatchers("/contact.html").hasRole("USER")
+                        .antMatchers("/contact.html").hasAnyRole("USER" ,"ADMIN", "MITARBEITER", "CUSTOMER")
                         .antMatchers("/","/register","process_register").permitAll()
                         .antMatchers("/users").hasAnyRole("MITARBEITER","ADMIN")
                         .antMatchers("/api/**", "/users")

@@ -36,7 +36,7 @@ public class Cart {
     private LocalDateTime updated;
 
     @NotNull
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     @Column(name = "ca_products", nullable = false)
     private List<Product> products;
 
