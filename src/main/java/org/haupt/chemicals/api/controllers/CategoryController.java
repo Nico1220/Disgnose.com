@@ -40,7 +40,7 @@ public class CategoryController {
     @PostMapping()
     public ResponseEntity<Category> createCategory(@Valid @RequestBody Category category) {
         category.setId(null);
-        var saved = categoryRepository.save(category);
+        Category saved = categoryRepository.save(category);
         return ResponseEntity.created(URI.create("/api/category/" + saved.getId())).body(saved);
     }
     @PutMapping("/{id}")

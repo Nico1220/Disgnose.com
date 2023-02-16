@@ -39,7 +39,7 @@ public class ProductController {
     @PostMapping()
     public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product) {
         product.setId(null);
-        var saved = productRepository.save(product);
+        Product saved = productRepository.save(product);
         return ResponseEntity.created(URI.create("/api/product/" + saved.getId())).body(saved);
     }
     @PutMapping("/{id}")

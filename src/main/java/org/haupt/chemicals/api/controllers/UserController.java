@@ -40,7 +40,7 @@ public class UserController {
     @PostMapping()
     public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
         user.setFirstName(null);
-        var saved = userRepository.save(user);
+        User saved = userRepository.save(user);
         return ResponseEntity.created(URI.create("/api/user/" + saved.getFirstName())).body(saved);
     }
     @PutMapping("/{id}")

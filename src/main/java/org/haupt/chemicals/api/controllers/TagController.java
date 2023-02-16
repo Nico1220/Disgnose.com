@@ -40,7 +40,7 @@ public class TagController {
     @PostMapping()
     public ResponseEntity<Tag> createTag(@Valid @RequestBody Tag tag) {
         tag.setId(null);
-        var saved = tagRepository.save(tag);
+        Tag saved = tagRepository.save(tag);
         return ResponseEntity.created(URI.create("/api/tag/" + saved.getId())).body(saved);
     }
     @PutMapping("/{id}")

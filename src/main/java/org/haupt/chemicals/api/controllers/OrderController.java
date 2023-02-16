@@ -40,7 +40,7 @@ public class OrderController {
     @PostMapping()
     public ResponseEntity<Order> createOrder(@Valid @RequestBody Order order) {
         order.setId(null);
-        var saved = orderRepository.save(order);
+        Order saved = orderRepository.save(order);
         return ResponseEntity.created(URI.create("/api/order/" + saved.getId())).body(saved);
     }
     @PutMapping("/{id}")

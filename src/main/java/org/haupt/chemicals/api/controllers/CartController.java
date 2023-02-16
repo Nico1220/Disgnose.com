@@ -39,7 +39,7 @@ public class CartController {
     @PostMapping()
     public ResponseEntity<Cart> createCart(@Valid @RequestBody Cart cart) {
         cart.setId(null);
-        var saved = cartRepository.save(cart);
+        Cart saved = cartRepository.save(cart);
         return ResponseEntity.created(URI.create("/api/cart/" + saved.getId())).body(saved);
     }
     @PutMapping("/{id}")
