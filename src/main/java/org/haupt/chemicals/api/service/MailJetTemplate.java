@@ -1,7 +1,6 @@
 package org.haupt.chemicals.api.service;
 
 import com.mailjet.client.errors.MailjetException;
-import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import com.mailjet.client.MailjetClient;
 import com.mailjet.client.MailjetRequest;
 import com.mailjet.client.MailjetResponse;
@@ -18,11 +17,11 @@ public class MailJetTemplate {
     /**
      * This call sends a message to the given recipient with vars and custom vars.
      */
-    public static void mailTemplate(String email, String name, List<Product> products, String apikey, String apiSecret) throws MailjetException, MailjetSocketTimeoutException {
+    public static void mailTemplate(String email, String name, List<Product> products, String apikey, String apiSecret) throws MailjetException {
         MailjetClient client;
         MailjetRequest request;
         MailjetResponse response;
-        client = new MailjetClient(apikey, apiSecret, new ClientOptions("v3.1"));
+        client = new MailjetClient(ClientOptions.builder().apiKey(apikey).apiSecretKey(apiSecret).build());
         request = new MailjetRequest(Emailv31.resource)
                 .property(Emailv31.MESSAGES, new JSONArray()
                         .put(new JSONObject()
@@ -43,11 +42,11 @@ public class MailJetTemplate {
         System.out.println(response.getData());
     }
 
-    public static void mailVertifizierung(String email, String name, String apikey, String apiSecret) throws MailjetException, MailjetSocketTimeoutException {
+    public static void mailVertifizierung(String email, String name, String apikey, String apiSecret) throws MailjetException {
         MailjetClient client;
         MailjetRequest request;
         MailjetResponse response;
-        client = new MailjetClient(apikey, apiSecret, new ClientOptions("v3"));
+        client = new MailjetClient(ClientOptions.builder().apiKey(apikey).apiSecretKey(apiSecret).build());
         request = new MailjetRequest(Listrecipient.resource)
                 .property(Listrecipient.ISUNSUBSCRIBED, "true")
                 .property(Listrecipient.CONTACTEMAIL, email)

@@ -5,7 +5,6 @@ import com.mailjet.client.MailjetClient;
 import com.mailjet.client.MailjetRequest;
 import com.mailjet.client.MailjetResponse;
 import com.mailjet.client.errors.MailjetException;
-import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import com.mailjet.client.resource.Emailv31;
 import freemarker.core.Environment;
 
@@ -136,7 +135,7 @@ public class MainController {
     }
 
     @PostMapping("/process_register")
-    public String processRegister(User user) throws MailjetSocketTimeoutException, MailjetException {
+    public String processRegister(User user) throws MailjetException {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         user.setRoles("USER");
@@ -168,12 +167,12 @@ public class MainController {
     }
 
     @GetMapping("/send")
-    public String sendEmail(Mail mail) throws MailjetException, MailjetSocketTimeoutException {
+    public String sendEmail(Mail mail) throws MailjetException {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         MailjetClient client;
         MailjetRequest request;
         MailjetResponse response;
-        client = new MailjetClient(apiKey, apiSecret, new ClientOptions("v3.1"));
+        client = new MailjetClient(ClientOptions.builder().apiKey(apiKey).apiSecretKey(apiSecret).build());
         request = new MailjetRequest(Emailv31.resource)
                 .property(Emailv31.MESSAGES, new JSONArray()
                         .put(new JSONObject()
@@ -456,7 +455,7 @@ public class MainController {
     }
 
     @GetMapping("/bestellen")
-    String bestellen() throws MailjetException, MailjetSocketTimeoutException {
+    String bestellen() throws MailjetException {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String workingUser = authentication.getName();
         System.out.println(workingUser);
