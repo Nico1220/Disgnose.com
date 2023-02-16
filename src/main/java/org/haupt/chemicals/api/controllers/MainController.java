@@ -6,7 +6,6 @@ import com.mailjet.client.MailjetRequest;
 import com.mailjet.client.MailjetResponse;
 import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.resource.Emailv31;
-import freemarker.core.Environment;
 
 import org.haupt.chemicals.api.model.*;
 import org.haupt.chemicals.api.repository.CartRepository;
@@ -96,14 +95,6 @@ public class MainController {
         model.addAttribute("authentication", authentication.getName());
         return "no-sidebar";
     }
-
-//    @RequestMapping("/login")
-//    public String login() {
-//        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
-//        String workingUser = authentication.getName();
-//        System.out.println(workingUser);
-//        return "login";
-//    }
 
     @GetMapping("/impressum.html")
     public String impressum(Model model)
@@ -372,28 +363,28 @@ public class MainController {
         return "addUserForm";
     }
 
-    @GetMapping({"/deleteUser", "deleteUser{email}"})
-    String deleteUser(@RequestParam String email, Model model){
-        if(email.equals(SecurityContextHolder.getContext().getAuthentication().getName())){
-            return "redirect:/users.html";
-        }
-        else{
-            Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
-            String workingUser = authentication.getName();
-            System.out.println(workingUser);
-            if(authentication.getName()!="anonymousUser"){
-                User user = userRepo.findByMail(authentication.getName());
-                System.out.println(user.getRoles());
-                model.addAttribute("role", user.getRoles());
-            }
-            model.addAttribute("authentication", authentication.getName());
-            Cart cart = cartRepository.findByUser(authentication.getName());
-            cartRepository.delete(cart);
-            userRepo.deleteById(email);
-            return  "redirect:/users.html";
-        }
-
-    }
+//    @GetMapping({"/deleteUser", "deleteUser{email}"})
+//    String deleteUser(@RequestParam String email, Model model){
+//        if(email.equals(SecurityContextHolder.getContext().getAuthentication().getName())){
+//            return "redirect:/users.html";
+//        }
+//        else{
+//            Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+//            String workingUser = authentication.getName();
+//            System.out.println(workingUser);
+//            if(authentication.getName()!="anonymousUser"){
+//                User user = userRepo.findByMail(authentication.getName());
+//                System.out.println(user.getRoles());
+//                model.addAttribute("role", user.getRoles());
+//            }
+//            model.addAttribute("authentication", authentication.getName());
+//            Cart cart = cartRepository.findByUser(authentication.getName());
+//            cartRepository.delete(cart);
+//            userRepo.deleteById(email);
+//            return  "redirect:/users.html";
+//        }
+//
+//    }
 
     @GetMapping("/warenkorb")
     public String warenkorb(Model model) {
