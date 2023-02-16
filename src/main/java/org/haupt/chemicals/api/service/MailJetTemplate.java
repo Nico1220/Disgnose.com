@@ -7,6 +7,7 @@ import com.mailjet.client.MailjetRequest;
 import com.mailjet.client.MailjetResponse;
 import com.mailjet.client.ClientOptions;
 import com.mailjet.client.resource.Emailv31;
+import com.mailjet.client.resource.Listrecipient;
 import org.haupt.chemicals.api.model.Product;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -37,6 +38,21 @@ public class MailJetTemplate {
                                 .put(Emailv31.Message.SUBJECT, "")
                                 .put(Emailv31.Message.VARIABLES, new JSONObject()
                                         .put("Produkt", products))));
+        response = client.post(request);
+        System.out.println(response.getStatus());
+        System.out.println(response.getData());
+    }
+
+    public static void mailVertifizierung(String email, String name, String apikey, String apiSecret) throws MailjetException, MailjetSocketTimeoutException {
+        MailjetClient client;
+        MailjetRequest request;
+        MailjetResponse response;
+        client = new MailjetClient(apikey, apiSecret, new ClientOptions("v3"));
+        request = new MailjetRequest(Listrecipient.resource)
+                .property(Listrecipient.ISUNSUBSCRIBED, "true")
+                .property(Listrecipient.CONTACTEMAIL, email)
+                .property(Listrecipient.LISTNAME, name)
+                .property(Listrecipient.LIST, "MyFirstTest");
         response = client.post(request);
         System.out.println(response.getStatus());
         System.out.println(response.getData());

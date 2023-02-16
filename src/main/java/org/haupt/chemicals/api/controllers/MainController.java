@@ -136,11 +136,12 @@ public class MainController {
     }
 
     @PostMapping("/process_register")
-    public String processRegister(User user) {
+    public String processRegister(User user) throws MailjetSocketTimeoutException, MailjetException {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         user.setRoles("USER");
         userRepo.save(user);
+        mailJetTemplate.mailVertifizierung(user.getEmail(), user.getLastName(), apiKey, apiSecret);
         Cart cart = new Cart();
         cart.setUser(userRepo.findByMail(user.getEmail()));
         cart.setCreated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
