@@ -172,17 +172,18 @@ public class MainController {
         MailjetClient client;
         MailjetRequest request;
         MailjetResponse response;
+        String nameMail;
         client = new MailjetClient(ClientOptions.builder().apiKey(apiKey).apiSecretKey(apiSecret).build());
         request = new MailjetRequest(Emailv31.resource)
                 .property(Emailv31.MESSAGES, new JSONArray()
                         .put(new JSONObject()
                                 .put(Emailv31.Message.FROM, new JSONObject()
-                                        .put("Email", "wro19770@spengergasse.at")
-                                        .put("Name", "Ala"))
+                                        .put("Email", authentication.getName())
+                                        .put("Name", nameMail = userRepo.findByMail(authentication.getName()).getFirstName()))
                                 .put(Emailv31.Message.TO, new JSONArray()
                                         .put(new JSONObject()
-                                                .put("Email", "wro19770@spengergasse.at")
-                                                .put("Name", "Ala")))
+                                                .put("Email", "str19724@spengergasse.at")
+                                                .put("Name", "Nico")))
                                 .put(Emailv31.Message.SUBJECT, mail.getSubject())
                                 .put(Emailv31.Message.TEXTPART, mail.getBody() + "/From: " + authentication.getName())
                                 .put(Emailv31.Message.HTMLPART, "<h3>Dear passenger 1, welcome to <a href='https://www.mailjet.com/'>Mailjet</a>!</h3><br />May the delivery force be with you!")

@@ -25,15 +25,15 @@ public class MailJetTemplate {
                 .property(Emailv31.MESSAGES, new JSONArray()
                         .put(new JSONObject()
                                 .put(Emailv31.Message.FROM, new JSONObject()
-                                        .put("Email", "wro19770@spengergasse.at")
-                                        .put("Name", "Ala"))
+                                        .put("Email", email)
+                                        .put("Name", name))
                                 .put(Emailv31.Message.TO, new JSONArray()
                                         .put(new JSONObject()
                                                 .put("Email", email)
                                                 .put("Name", name)))
                                 .put(Emailv31.Message.TEMPLATEID, 4558978)
                                 .put(Emailv31.Message.TEMPLATELANGUAGE, true)
-                                .put(Emailv31.Message.SUBJECT, "")
+                                .put(Emailv31.Message.SUBJECT, "Bestellbestätigung")
                                 .put(Emailv31.Message.VARIABLES, new JSONObject()
                                         .put("Produkt", products))));
         response = client.post(request);
