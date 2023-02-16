@@ -50,7 +50,7 @@ public class MailJetTemplate {
         request = new MailjetRequest(Listrecipient.resource)
                 .property(Listrecipient.ISUNSUBSCRIBED, "true")
                 .property(Listrecipient.CONTACTEMAIL, email)
-                .property(Listrecipient.LISTNAME, name)
+                .property(Listrecipient.CONTACT, name)
                 .property(Listrecipient.LIST, "MyFirstTest");
         response = client.post(request);
         System.out.println(response.getStatus());
