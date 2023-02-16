@@ -44,13 +44,29 @@ public class MailJetTemplate {
     public static void mailVertifizierung(String email, String name, String apikey, String apiSecret) throws MailjetException {
         MailjetClient client;
         MailjetRequest request;
+        MailjetRequest request1;
         MailjetResponse response;
         client = new MailjetClient(ClientOptions.builder().apiKey(apikey).apiSecretKey(apiSecret).build());
         request = new MailjetRequest(Contact.resource)
                 .property(Contact.EMAIL, email)
-                .property(Contact.NAME, name)
-                .property(Contact.CONTACTSLIST, "MyFirstTest");
+                .property(Contact.NAME, name);
         response = client.post(request);
+        System.out.println(response.getStatus());
+        System.out.println(response.getData());
+        request1 = new MailjetRequest(ContactManagemanycontacts.resource)
+                .property(ContactManagemanycontacts.CONTACTS, new JSONArray()
+                        .put(new JSONObject()
+                                .put("Email", email)
+                                .put("Name", name)
+                        )
+                )
+                .property(ContactManagemanycontacts.CONTACTSLISTS, new JSONArray()
+                        .put(new JSONObject()
+                                .put("Action", "addforce")
+                                .put("ListID", "32233")
+                        )
+                );
+        response = client.post(request1);
         System.out.println(response.getStatus());
         System.out.println(response.getData());
     }
