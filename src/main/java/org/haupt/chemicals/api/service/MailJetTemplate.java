@@ -5,8 +5,7 @@ import com.mailjet.client.MailjetClient;
 import com.mailjet.client.MailjetRequest;
 import com.mailjet.client.MailjetResponse;
 import com.mailjet.client.ClientOptions;
-import com.mailjet.client.resource.Emailv31;
-import com.mailjet.client.resource.Listrecipient;
+import com.mailjet.client.resource.*;
 import org.haupt.chemicals.api.model.Product;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -47,11 +46,10 @@ public class MailJetTemplate {
         MailjetRequest request;
         MailjetResponse response;
         client = new MailjetClient(ClientOptions.builder().apiKey(apikey).apiSecretKey(apiSecret).build());
-        request = new MailjetRequest(Listrecipient.resource)
-                .property(Listrecipient.ISUNSUBSCRIBED, "true")
-                .property(Listrecipient.CONTACTEMAIL, email)
-                .property(Listrecipient.CONTACT, name)
-                .property(Listrecipient.LIST, "MyFirstTest");
+        request = new MailjetRequest(Contact.resource)
+                .property(Contact.EMAIL, email)
+                .property(Contact.NAME, name)
+                .property(Contact.CONTACTSLIST, "MyFirstTest");
         response = client.post(request);
         System.out.println(response.getStatus());
         System.out.println(response.getData());
