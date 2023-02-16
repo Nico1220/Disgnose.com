@@ -5,7 +5,7 @@ services:
     build: .
     restart: always
     environment:
-      DB_CONN: "jdbc:mariadb://193.170.108.17:3306/hauptchemicals"
+      DB_CONN: "jdbc:mariadb://mariadb:3306/hauptchemicals"
       DB_USER: "hauptchemicals"
       DB_PSWD: "hauptchemicals"
       CWDB: "create-drop"
