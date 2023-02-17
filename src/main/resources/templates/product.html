@@ -102,7 +102,7 @@
             </div>
 
             <div class="content" th:if="${#lists.isEmpty(productAll) and #lists.isEmpty(product2)}">
-                <a th:href="@{/addProduct}" class="btn btn-primary">Produkt hinzufügen</a>
+                <a th:if="${(role == 'ADMIN') or (role =='MITARBEITER')}" th:href="@{/addProduct}" class="btn btn-primary">Produkt hinzufügen</a>
             </div>
         </section>
     </article>
