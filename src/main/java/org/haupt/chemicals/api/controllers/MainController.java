@@ -66,7 +66,7 @@ public class MainController {
 
     Properties properties = new Properties();
 
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withLocale(Locale.GERMAN);
 
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -458,8 +458,8 @@ public class MainController {
         order.setUser(userRepo.findByMail(authentication.getName()));
         order.setStatus("BESTELLT");
         order.setCreated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
-        orderRepository.save(order);
         mailJetTemplate.mailTemplate(authentication.getName(), authentication.getName(), cart.getProducts(), apiKey, apiSecret);
+        orderRepository.save(order);
         cartRepository.delete(cart);
         Cart cartNew = new Cart();
         cartNew.setUser(userRepo.findByMail(authentication.getName()));

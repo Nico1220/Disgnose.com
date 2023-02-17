@@ -10,7 +10,7 @@ services:
       DB_PSWD: "hauptchemicals"
       CWDB: "create-drop"
       API_KEY: "8fd19615d4fb53ac63307f16e7472de8"
-      API_SECRET: "601cde2dbd0aeb64db9250e0d47ed55d"
+      API_SECRET: "2514c2276ec1a3e9d64655aa9813bd89"
     ports:
         - "8080:8080"
 
