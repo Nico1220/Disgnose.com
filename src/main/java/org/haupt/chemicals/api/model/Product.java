@@ -2,12 +2,9 @@ package org.haupt.chemicals.api.model;
 
 import com.sun.istack.NotNull;
 import lombok.*;
-import org.hibernate.annotations.SQLInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -37,10 +34,6 @@ public class Product {
     @NotNull
     @Column(name = "pr_updatedAt", nullable = false, length = 20)
     private LocalDateTime updated;
-
-//    @NotNull
-//    @Column(name = "first_name", nullable = false, length = 20)
-//    private Date published;
 
     @NotNull
     @Column(name = "pr_content",length = 64)
