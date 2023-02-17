@@ -114,10 +114,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>3.0.0</version>
-                <configuration>
-
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -125,7 +121,7 @@
                 <version>2.22.2</version>
                 <configuration>
                     <argLine>--add-opens</argLine>
-                    <argLine> java.base/java.time=ALL-UNNAMED</argLine>
+                    <argLine>java.base/java.time=ALL-UNNAMED</argLine>
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
