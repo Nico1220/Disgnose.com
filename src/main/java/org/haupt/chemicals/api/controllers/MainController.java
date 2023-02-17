@@ -127,7 +127,6 @@ public class MainController {
 
     @PostMapping("/process_register")
     public String processRegister(User user) throws MailjetException {
-        try{
             String encodedPassword = passwordEncoder.encode(user.getPassword());
             user.setPassword(encodedPassword);
             user.setRoles("USER");
@@ -136,14 +135,10 @@ public class MainController {
             cart.setUser(userRepo.findByMail(user.getEmail()));
             cart.setCreated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
             cart.setUpdated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
-            cartRepository.save(cart);
             mailJetTemplate.mailVertifizierung(user.getEmail(), user.getLastName(), apiKey, apiSecret);
+            cartRepository.save(cart);
+            userRepo.save(user);
             return "redirect:/login";
-        }
-        catch (MailjetException e){
-            return "redirect:/login";
-        }
-
     }
 
 
