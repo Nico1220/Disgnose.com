@@ -70,7 +70,7 @@
                                     <td th:text="${carte.titel}">title</td>
                                     <td th:text="${carte.content}">content</td>
                                     <td>
-                                        <input type="text" th:field="*{productmange}" placeholder="Name" required minlength="2">
+                                        <input id="productmange" name="productmange" type="text" th:text="${productmange}" placeholder="Mänge" required minlength="2">
                                     </td>
                                     <td>
                                         <a th:if="${(authentication != 'anonymousUser') and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/showUpdateProduct(productId=${carte.id})}" class="btn btn-info">Update</a>
