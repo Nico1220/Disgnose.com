@@ -82,20 +82,6 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/no-sidebar.html")
-    public String erklärung(Model model) {
-        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
-        String workingUser = authentication.getName();
-        System.out.println(workingUser);
-        if(authentication.getName()!="anonymousUser"){
-            User user = userRepo.findByMail(authentication.getName());
-            System.out.println(user.getRoles());
-            model.addAttribute("role", user.getRoles());
-        }
-        model.addAttribute("authentication", authentication.getName());
-        return "no-sidebar";
-    }
-
     @GetMapping("/impressum.html")
     public String impressum(Model model)
     {
