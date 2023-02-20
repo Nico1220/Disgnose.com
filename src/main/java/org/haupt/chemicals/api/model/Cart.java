@@ -5,8 +5,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Setter
@@ -40,7 +40,11 @@ public class Cart {
     @Column(name = "ca_products", nullable = false)
     private List<Product> products;
 
-
+    @ElementCollection
+    @MapKeyJoinColumn(name="pr_id")
+    @Column(name="ca_maenge")
+    @CollectionTable(name="product_maengen", joinColumns=@JoinColumn(name="ca_products"))
+    private Map<Product, String> productMaengen;
 
 
 }

@@ -186,6 +186,7 @@ public class MainController {
         }
         product.addAttribute("authentication", authentication.getName());
         product.addAttribute("product", new Product());
+        product.addAttribute("productmange", new String());
         return "product";}
 
     @GetMapping({"/product.html", "/product.html{titel}" })
@@ -350,29 +351,6 @@ public class MainController {
         return "addUserForm";
     }
 
-//    @GetMapping({"/deleteUser", "deleteUser{email}"})
-//    String deleteUser(@RequestParam String email, Model model){
-//        if(email.equals(SecurityContextHolder.getContext().getAuthentication().getName())){
-//            return "redirect:/users.html";
-//        }
-//        else{
-//            Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
-//            String workingUser = authentication.getName();
-//            System.out.println(workingUser);
-//            if(authentication.getName()!="anonymousUser"){
-//                User user = userRepo.findByMail(authentication.getName());
-//                System.out.println(user.getRoles());
-//                model.addAttribute("role", user.getRoles());
-//            }
-//            model.addAttribute("authentication", authentication.getName());
-//            Cart cart = cartRepository.findByUser(authentication.getName());
-//            cartRepository.delete(cart);
-//            userRepo.deleteById(email);
-//            return  "redirect:/users.html";
-//        }
-//
-//    }
-
     @GetMapping("/warenkorb")
     public String warenkorb(Model model) {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
@@ -398,7 +376,7 @@ public class MainController {
     }
 
     @GetMapping("/addWarenkorb")
-    String addWarenkorb(@RequestParam long productId, Model model){
+    String addWarenkorb(@RequestParam long productId, @RequestParam String productmange, Model model){
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String workingUser = authentication.getName();
         System.out.println(workingUser);
@@ -415,6 +393,9 @@ public class MainController {
             Cart cart = cartRepository.findByUser(authentication.getName());
             Product products = productRepository.findById(productId);
             cart.getProducts().add(products);
+            Map<Product, String> productWithMaengen = new HashMap<>();
+            productWithMaengen.put(products, productmange);
+            cart.setProductMaengen(productWithMaengen);
             cart.setUpdated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
             cartRepository.save(cart);
             return  "redirect:/warenkorb";
@@ -443,8 +424,9 @@ public class MainController {
         order.setProducts(List.copyOf(cart.getProducts()));
         order.setUser(userRepo.findByMail(authentication.getName()));
         order.setStatus("BESTELLT");
+        order.setMaenge(cart.getProductMaengen());
         mailJetTemplate.mailTemplate(authentication.getName(), authentication.getName(), cart.getProducts(), apiKey, apiSecret);
-        order.setCreated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
+//        order.setCreated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
         orderRepository.save(order);
         cartRepository.delete(cart);
         Cart cartNew = new Cart();

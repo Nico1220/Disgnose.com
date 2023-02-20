@@ -1,6 +1,5 @@
 package org.haupt.chemicals.api.controllers;
 
-import org.haupt.chemicals.api.model.Category;
 import org.haupt.chemicals.api.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

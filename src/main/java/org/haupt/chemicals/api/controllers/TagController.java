@@ -1,7 +1,5 @@
 package org.haupt.chemicals.api.controllers;
 
-import org.haupt.chemicals.api.model.Order;
-import org.haupt.chemicals.api.model.Tag;
 import org.haupt.chemicals.api.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

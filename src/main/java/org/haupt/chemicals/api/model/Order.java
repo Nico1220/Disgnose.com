@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Setter
@@ -30,11 +31,6 @@ public class Order {
     @Column(name = "or_status", nullable = false, length = 20)
     private String status;
 
-//    Wozu ist der Content?
-//    @NotNull
-//    @Column(name = "or_content", nullable = false, length = 20)
-//    private String content;
-
     @NotNull
     @Column(name = "or_createdAt", nullable = false, length = 20)
     private LocalDateTime created;
@@ -43,4 +39,10 @@ public class Order {
     @ManyToMany(cascade = CascadeType.ALL)
     @Column(name = "or_pr_id",nullable = false)
     private List<Product> products;
+
+    @ElementCollection
+    @MapKeyJoinColumn(name="pr_id")
+    @Column(name="or_maenge")
+    @CollectionTable(name="product_maengen", joinColumns=@JoinColumn(name="product_list_id"))
+    private Map<Product, String> maenge;
 }

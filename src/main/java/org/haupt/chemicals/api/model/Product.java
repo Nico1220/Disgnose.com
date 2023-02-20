@@ -5,7 +5,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Setter
@@ -39,12 +38,7 @@ public class Product {
     @Column(name = "pr_content",length = 64)
     private String content;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "pr_ca_id",nullable = true)
-    private List<Category> categories;
-
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "pr_t_id",nullable = true)
-    private Tag tag;
+    @NotNull
+    @Column(name = "pr_maenge",length = 64)
+    private String maenge;
 }

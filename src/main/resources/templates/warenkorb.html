@@ -55,13 +55,14 @@
                             th:classappend="${state.odd}?'odd-row':'even-row'">
                             <td th:text="${carte.titel}">title</td>
                             <td th:text="${carte.content}">content</td>
+                            <td th:text="*{cart.maenge}">maenge</td>
                             <td>
                                 <a th:href="@{/deleteWarenkorb(productId=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
                             </td>
                     </table>
                 </div>
                 <div class="col-12" th:unless="${#lists.isEmpty(products)}">
-                    <input th:if="${role!='USER'}" type="submit" value="Bestellen"/>
+                    <input th:if="${role!='USER'}" type="submit" class="special" value="Bestellen"/>
                     <a th:unless="${role!='USER'}">Sie sind noch kein zertifizierter Kunde</a>
                 </div>
             </form>
