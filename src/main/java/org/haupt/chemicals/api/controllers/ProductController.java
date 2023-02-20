@@ -50,8 +50,6 @@ public class ProductController {
                     product.setCreated(productDetails.getCreated());
                     product.setUpdated(productDetails.getUpdated());
                     product.setContent(productDetails.getContent());
-                    product.setCategories(productDetails.getCategories());
-                    product.setTag(productDetails.getTag());
                     Product updatedProduct = productRepository.save(product);
                     return ResponseEntity.ok(updatedProduct);
                 }

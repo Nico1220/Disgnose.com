@@ -150,14 +150,13 @@ public class MainController {
         MailjetClient client;
         MailjetRequest request;
         MailjetResponse response;
-        String nameMail;
         client = new MailjetClient(ClientOptions.builder().apiKey(apiKey).apiSecretKey(apiSecret).build());
         request = new MailjetRequest(Emailv31.resource)
                 .property(Emailv31.MESSAGES, new JSONArray()
                         .put(new JSONObject()
                                 .put(Emailv31.Message.FROM, new JSONObject()
                                         .put("Email", authentication.getName())
-                                        .put("Name", nameMail = userRepo.findByMail(authentication.getName()).getFirstName()))
+                                        .put("Name", userRepo.findByMail(authentication.getName()).getFirstName()))
                                 .put(Emailv31.Message.TO, new JSONArray()
                                         .put(new JSONObject()
                                                 .put("Email", "str19724@spengergasse.at")
@@ -186,7 +185,6 @@ public class MainController {
         }
         product.addAttribute("authentication", authentication.getName());
         product.addAttribute("product", new Product());
-        product.addAttribute("productmange", new String());
         return "product";}
 
     @GetMapping({"/product.html", "/product.html{titel}" })
@@ -366,6 +364,7 @@ public class MainController {
             Cart cart = cartRepository.findByUser(authentication.getName());
             List<Product> products = cart.getProducts();
             model.addAttribute("cart", cart);
+            model.addAttribute("meange", cart.getProductMaengen());
             model.addAttribute("products", products);
             return "warenkorb";
         }
@@ -424,9 +423,8 @@ public class MainController {
         order.setProducts(List.copyOf(cart.getProducts()));
         order.setUser(userRepo.findByMail(authentication.getName()));
         order.setStatus("BESTELLT");
-        order.setMaenge(cart.getProductMaengen());
+//        order.setMaenge(cart.getProductMaengen());
         mailJetTemplate.mailTemplate(authentication.getName(), authentication.getName(), cart.getProducts(), apiKey, apiSecret);
-//        order.setCreated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
         orderRepository.save(order);
         cartRepository.delete(cart);
         Cart cartNew = new Cart();
