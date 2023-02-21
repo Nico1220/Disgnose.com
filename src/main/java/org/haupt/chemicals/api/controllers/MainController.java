@@ -428,7 +428,7 @@ public class MainController {
         order.setProducts(List.copyOf(cart.getProducts()));
         order.setUser(userRepo.findByMail(authentication.getName()));
         order.setStatus("BESTELLT");
-        order.setMaenge(cart.getProductMaengen());
+//        order.setMaenge(cart.getProductMaengen());
         order.setCreated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
         orderRepository.save(order);
         cartRepository.delete(cart);
