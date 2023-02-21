@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Setter
@@ -39,9 +40,9 @@ public class Order {
     @Column(name = "or_pr_id",nullable = false)
     private List<Product> products;
 
-//    @ElementCollection
-//    @MapKeyJoinColumn(name="pr_id")
-//    @Column(name="or_maenge")
-//    @CollectionTable(name="product_maengen", joinColumns=@JoinColumn(name="or_pr_id"))
-//    private Map<Product, String> maenge;
+    @ElementCollection
+    @MapKeyJoinColumn(name="pr_id")
+    @Column(name="or_maenge")
+    @CollectionTable(name="product_maengen", joinColumns=@JoinColumn(name="or_pr_id"))
+    private Map<Product, String> maenge;
 }

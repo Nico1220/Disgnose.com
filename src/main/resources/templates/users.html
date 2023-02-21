@@ -6,6 +6,10 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
     <link rel="stylesheet" href="/css/main.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <noscript>
         <link rel="stylesheet" href="/css/noscript.css"/>
     </noscript>
@@ -54,12 +58,13 @@
                             <label for="email">Suche User</label>
                         </div>
                         <div class="col-12">
-                            <input type="text" id="email" name="email" th:value="${email}"
-                                   placeholder="E-Mail Adresse"/>
+                            <div class="relative" style="border-right: 25px;">
+                                <i class="absolute fa fa-search text-gray-400 top-5 right-4" type="submit"></i>
+                                <input class="bg-white h-14 w-full px-12 rounded-lg focus:outline-none hover:cursor-pointer" type="text" id="email" name="email" th:value="${email}"
+                                       placeholder="E-Mail Adresse" required/>
+                            </div>
                         </div>
-                        <div class="col-12">
-                            <input type="submit" value="Search"/>
-                        </div>
+                        <p></p>
                         <table id="table1" th:object="${userx}" th:unless="${#lists.isEmpty(userx)}">
                             <tr>
                                 <th>Email</th>

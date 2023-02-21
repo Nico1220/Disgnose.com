@@ -56,17 +56,13 @@ public class MainController {
     @Autowired
     private OrderService orderService;
 
-    MailJetTemplate mailJetTemplate = new MailJetTemplate();
-
     @Value("${app.apiKey}")
     private String apiKey;
 
     @Value("${app.apiSecret}")
     private String apiSecret;
 
-    Properties properties = new Properties();
-
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withLocale(Locale.GERMAN);
+    public DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withLocale(Locale.GERMAN);
 
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -121,9 +117,9 @@ public class MainController {
             cart.setUser(userRepo.findByMail(user.getEmail()));
             cart.setCreated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
             cart.setUpdated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
-            mailJetTemplate.mailVertifizierung(user.getEmail(), user.getLastName(), apiKey, apiSecret);
             cartRepository.save(cart);
             userRepo.save(user);
+            MailJetTemplate.mailVertifizierung(user.getEmail(), user.getLastName(), apiKey, apiSecret);
             return "redirect:/login";
     }
 
@@ -144,6 +140,7 @@ public class MainController {
         return "contact";
     }
 
+    @PreAuthorize("hasAnyRole('USER' ,'ADMIN', 'MITARBEITER', 'CUSTOMER')")
     @GetMapping("/send")
     public String sendEmail(Mail mail) throws MailjetException {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
@@ -163,12 +160,10 @@ public class MainController {
                                                 .put("Name", "Nico")))
                                 .put(Emailv31.Message.SUBJECT, mail.getSubject())
                                 .put(Emailv31.Message.TEXTPART, mail.getBody() + "/From: " + authentication.getName())
-                                .put(Emailv31.Message.HTMLPART, "<h3>Dear passenger 1, welcome to <a href='https://www.mailjet.com/'>Mailjet</a>!</h3><br />May the delivery force be with you!")
                                 .put(Emailv31.Message.CUSTOMID, "AppGettingStartedTest")));
         response = client.post(request);
         System.out.println(response.getStatus());
         System.out.println(response.getData());
-//
         return "redirect:/";
     }
 
@@ -221,6 +216,7 @@ public class MainController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('MITARBEITER', 'ADMIN')")
     @GetMapping("/addProduct")
     public String addProduct(Model model) {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
@@ -236,6 +232,7 @@ public class MainController {
         return "addProductForm";
     }
 
+    @PreAuthorize("hasAnyRole('MITARBEITER', 'ADMIN')")
     @PostMapping("/saveProduct")
     public String saveProduct(@ModelAttribute Product product, Model model) {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
@@ -253,6 +250,7 @@ public class MainController {
         return "redirect:/product.html";
     }
 
+    @PreAuthorize("hasAnyRole('MITARBEITER', 'ADMIN')")
     @GetMapping({"/showUpdateProduct", "/showUpdateProduct{productId}"})
     public String showUpdateProduct(@RequestParam Long productId, Model model) {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
@@ -270,6 +268,7 @@ public class MainController {
         return "addProductForm";
     }
 
+    @PreAuthorize("hasAnyRole('MITARBEITER', 'ADMIN')")
     @GetMapping("/deleteProduct")
     String deleteProduct(@RequestParam Long productId, Model model){
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
@@ -316,6 +315,8 @@ public class MainController {
             return "users";
         }
     }
+
+    @PreAuthorize("hasAnyRole('MITARBEITER', 'ADMIN')")
     @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute User user, Model model) {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
@@ -334,6 +335,7 @@ public class MainController {
         return "redirect:/users.html";
     }
 
+    @PreAuthorize("hasAnyRole('MITARBEITER', 'ADMIN')")
     @GetMapping({"/showUpdateUser", "/showUpdateUser{email}"})
     public String showUpdateUser(@RequestParam String email, Model model) {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
@@ -349,6 +351,7 @@ public class MainController {
         return "addUserForm";
     }
 
+    @PreAuthorize("hasAnyRole('USER' ,'ADMIN', 'MITARBEITER', 'CUSTOMER')")
     @GetMapping("/warenkorb")
     public String warenkorb(Model model) {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
@@ -373,7 +376,7 @@ public class MainController {
             return "redirect:/login";
         }
     }
-
+    @PreAuthorize("hasAnyRole('USER' ,'ADMIN', 'MITARBEITER', 'CUSTOMER')")
     @GetMapping("/addWarenkorb")
     String addWarenkorb(@RequestParam long productId, @RequestParam String productmange, Model model){
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
@@ -401,6 +404,7 @@ public class MainController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('USER' ,'ADMIN', 'MITARBEITER', 'CUSTOMER')")
     @GetMapping("/deleteWarenkorb")
     String deleteWarenkorb(@RequestParam long productId, Model model){
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
@@ -413,8 +417,9 @@ public class MainController {
         return  "redirect:/warenkorb";
     }
 
-    @GetMapping("/bestellen")
-    String bestellen() throws MailjetException {
+    @PreAuthorize("hasAnyRole('ADMIN', 'MITARBEITER', 'CUSTOMER')")
+    @PostMapping("/bestellen")
+    public String bestellen() throws MailjetException {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String workingUser = authentication.getName();
         System.out.println(workingUser);
@@ -423,8 +428,8 @@ public class MainController {
         order.setProducts(List.copyOf(cart.getProducts()));
         order.setUser(userRepo.findByMail(authentication.getName()));
         order.setStatus("BESTELLT");
-//        order.setMaenge(cart.getProductMaengen());
-        mailJetTemplate.mailTemplate(authentication.getName(), authentication.getName(), cart.getProducts(), apiKey, apiSecret);
+        order.setMaenge(cart.getProductMaengen());
+        order.setCreated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
         orderRepository.save(order);
         cartRepository.delete(cart);
         Cart cartNew = new Cart();
@@ -432,9 +437,11 @@ public class MainController {
         cartNew.setCreated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
         cartNew.setUpdated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
         cartRepository.save(cartNew);
+        MailJetTemplate.mailTemplate(authentication.getName(), authentication.getName(), cart.getProducts(), apiKey, apiSecret);
         return  "redirect:/";
     }
 
+    @PreAuthorize("hasAnyRole('MITARBEITER', 'ADMIN')")
     @GetMapping({"/bestellungen", "bestellungen{email}"})
     public String bestellungen(@ModelAttribute("email") @RequestParam("email") Optional<String> email, User user, Model model){
         if(email.isPresent() && email.get() != ""){
@@ -467,6 +474,7 @@ public class MainController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('MITARBEITER', 'ADMIN')")
     @PostMapping("/saveOrder")
     public String saveOrder(@RequestParam Long id, @ModelAttribute Order order, Model model) {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
@@ -486,6 +494,7 @@ public class MainController {
         return "redirect:/bestellungen";
     }
 
+    @PreAuthorize("hasAnyRole('MITARBEITER', 'ADMIN')")
     @GetMapping("/showSpecificOrder{id}")
     public String showSpecificOrder(@RequestParam Long id, Model model) {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
@@ -502,21 +511,5 @@ public class MainController {
         model.addAttribute("products", products);
         model.addAttribute("order", order);
         return "addOrderForm";
-    }
-
-    @GetMapping("/deleteOrder")
-    String deleteOrder(@RequestParam Long id, Model model){
-        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
-        String workingUser = authentication.getName();
-        System.out.println(workingUser);
-        if(authentication.getName()!="anonymousUser"){
-            User user = userRepo.findByMail(authentication.getName());
-            System.out.println(user.getRoles());
-            model.addAttribute("role", user.getRoles());
-        }
-        model.addAttribute("authentication", authentication.getName());
-        orderRepository.deleteById(id);
-        return  "redirect:/bestellungen";
-
     }
 }

@@ -23,9 +23,6 @@ public class Product {
     @Column(name = "pr_titel", nullable = false, length = 64)
     private String titel;
 
-    @Column(name = "pr_quantity", nullable = true, length = 64)
-    private int quantity;
-
     @NotNull
     @Column(name = "pr_createdAt", nullable = false, length = 20)
     private LocalDateTime created;
