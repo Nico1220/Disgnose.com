@@ -75,11 +75,13 @@
                                     <td th:text="${carte.titel}">title</td>
                                     <td th:text="${carte.content}">content</td>
                                     <td>
-                                        <label for="productmange"></label>
-                                        <input style="border-right: 25px" id="productmange" name="productmange" type="text" th:text="${productmange}" placeholder="Mänge" required minlength="2">
-                                        <a th:if="${(authentication != 'anonymousUser') and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/showUpdateProduct(productId=${carte.id})}" class="btn btn-info">Update</a>
-                                        <a th:if="${authentication != 'anonymousUser' and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/deleteProduct(productId=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
-                                        <a type="submit" th:action="@{/addWarenkorb(productId=${carte.id},productmange=${productmange})}" class="icon solid fa-shopping-cart"></a>
+                                        <form th:action="@{/addWarenkorb(productId=${carte.id},productmange=${productmange})}">
+                                            <label for="productmange"></label>
+                                            <input style="border-right: 25px" id="productmange" name="productmange" type="text" th:text="${productmange}" placeholder="Mänge" required minlength="2">
+                                            <a th:if="${(authentication != 'anonymousUser') and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/showUpdateProduct(productId=${carte.id})}" class="btn btn-info">Update</a>
+                                            <a th:if="${authentication != 'anonymousUser' and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/deleteProduct(productId=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
+                                            <a type="submit" class="icon solid fa-shopping-cart"></a>
+                                        </form>
                                     </td>
                                 </tr>
                             </table>
@@ -94,15 +96,18 @@
                         <td>Titel</td>
                         <td>Content</td>
                     </tr>
-                    <tr th:each="carte, state :${productAll}" id="tr1"
+                    <tr th:each="carte, state :${product2}" id="tr1"
                         th:classappend="${state.odd}?'odd-row':'even-row'">
                         <td th:text="${carte.titel}">title</td>
                         <td th:text="${carte.content}">content</td>
                         <td>
-                            <input name="productmange" type="text" th:text="${productmange}" placeholder="Mänge" required minlength="2">
-                            <a th:if="${(authentication != 'anonymousUser') and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/showUpdateProduct(productId=${carte.id})}" class="btn btn-info">Update</a>
-                            <a th:if="${authentication != 'anonymousUser' and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/deleteProduct(productId=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
-                            <a th:href="@{/addWarenkorb(productId=${carte.id},productmange=${productmange})}" class="icon solid fa-shopping-cart"></a>
+                            <form th:action="@{/addWarenkorb(productId=${carte.id},productmange=${productmange})}">
+                                <label for="productmange"></label>
+                                <input style="border-right: 25px" id="productmange" name="productmange" type="text" th:text="${productmange}" placeholder="Mänge" required minlength="2">
+                                <a th:if="${(authentication != 'anonymousUser') and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/showUpdateProduct(productId=${carte.id})}" class="btn btn-info">Update</a>
+                                <a th:if="${authentication != 'anonymousUser' and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/deleteProduct(productId=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
+                                <a type="submit" class="icon solid fa-shopping-cart"></a>
+                            </form>
                         </td>
                     </tr>
                 </table>

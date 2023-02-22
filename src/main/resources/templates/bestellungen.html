@@ -100,8 +100,6 @@
                         <td th:text="${#temporals.format(carte.created, 'dd-MM-yyyy HH:mm')}">created</td>
                         <td>
                             <a th:href="@{/showSpecificOrder(id=${carte.id})}" class="btn btn-info">Show</a>
-
-                            <a th:href="@{/deleteOrder(id=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
                         </td>
                     </tr>
                 </table>

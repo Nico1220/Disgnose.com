@@ -41,7 +41,6 @@ public class Order {
     private List<Product> products;
 
     @ElementCollection
-    @MapKeyJoinColumn(name="pr_id")
     @Column(name="or_maenge")
     private Map<Product, String> menge;
 }

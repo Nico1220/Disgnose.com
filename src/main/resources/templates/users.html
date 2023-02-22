@@ -81,9 +81,6 @@
                                 <td>
                                     <a th:href="@{/showUpdateUser(email=${carte.email})}"
                                        class="btn btn-info">Update</a>
-
-<!--                                    <a th:href="@{/deleteUser(email=${carte.email})}"-->
-<!--                                       class="btn btn-danger ml-2">Delete</a>-->
                                 </td>
                             </tr>
                         </table>
@@ -107,8 +104,6 @@
                         <td th:text="${carte.roles}">roles</td>
                         <td>
                             <a th:href="@{/showUpdateUser(email=${carte.email})}" class="btn btn-info">Update</a>
-
-                            <a th:href="@{/deleteUser(email=${carte.email})}" class="btn btn-danger ml-2">Delete</a>
                         </td>
                     </tr>
                 </table>
