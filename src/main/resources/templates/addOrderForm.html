@@ -69,11 +69,13 @@
                                 <tr>
                                     <td>Titel</td>
                                     <td>Content</td>
+                                    <td>Menge</td>
                                 </tr>
                                 <tr th:each="carte, state :${products}" id="tr1"
                                     th:classappend="${state.odd}?'odd-row':'even-row'">
                                     <td th:text="${carte.titel}">title</td>
                                     <td th:text="${carte.content}">content</td>
+                                    <td th:text="${menge.get(carte)}">menge</td>
                                 </tr>
                             </table>
                         </div>

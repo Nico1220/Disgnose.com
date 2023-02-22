@@ -25,7 +25,6 @@
                         <li th:if="${(role == 'ADMIN') or (role =='MITARBEITER')}"><a href="bestellungen">Bestellungen</a></li>
                         <li th:if="${(role == 'ADMIN') or (role =='MITARBEITER')}"><a href="users">Users</a></li>
                         <li><a href="contact.html" >Contact</a></li>
-                        <!--									<li><a href="#FAQ">FAQ</a></li>-->
                         <li><a href="impressum.html">Impressum</a></li>
                     </ul>
                 </li>
@@ -50,17 +49,13 @@
                         <tr>
                             <td>Titel</td>
                             <td>Content</td>
+                            <td>Menge</td>
                         </tr>
                         <tr th:each="carte, state :${products}" id="tr1"
                             th:classappend="${state.odd}?'odd-row':'even-row'">
                             <td th:text="${carte.titel}">title</td>
                             <td th:text="${carte.content}">content</td>
-<!--                            <td th:text="${carte.meange}>maenge-->
-<!--                                <tr th:each="mange, state :${meange}" id="tr1"-->
-<!--                                    th:classappend="${state.odd}?'odd-row':'even-row'">-->
-<!--                                    <td th:text="${mange.get(carte.id)}"></td>-->
-<!--                                </tr>-->
-<!--                            </td>-->
+                            <td th:text="${menge.get(carte)}">menge</td>
                             <td>
                                 <a th:href="@{/deleteWarenkorb(productId=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
                             </td>

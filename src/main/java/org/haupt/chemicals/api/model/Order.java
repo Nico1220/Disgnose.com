@@ -43,6 +43,5 @@ public class Order {
     @ElementCollection
     @MapKeyJoinColumn(name="pr_id")
     @Column(name="or_maenge")
-    @CollectionTable(name="product_maengen", joinColumns=@JoinColumn(name="or_pr_id"))
-    private Map<Product, String> maenge;
+    private Map<Product, String> menge;
 }

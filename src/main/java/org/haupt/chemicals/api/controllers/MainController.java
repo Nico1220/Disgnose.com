@@ -367,7 +367,7 @@ public class MainController {
             Cart cart = cartRepository.findByUser(authentication.getName());
             List<Product> products = cart.getProducts();
             model.addAttribute("cart", cart);
-            model.addAttribute("meange", cart.getProductMaengen());
+            model.addAttribute("menge", cart.getMengen());
             model.addAttribute("products", products);
             return "warenkorb";
         }
@@ -397,7 +397,7 @@ public class MainController {
             cart.getProducts().add(products);
             Map<Product, String> productWithMaengen = new HashMap<>();
             productWithMaengen.put(products, productmange);
-            cart.setProductMaengen(productWithMaengen);
+            cart.setMengen(productWithMaengen);
             cart.setUpdated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
             cartRepository.save(cart);
             return  "redirect:/warenkorb";
@@ -428,7 +428,7 @@ public class MainController {
         order.setProducts(List.copyOf(cart.getProducts()));
         order.setUser(userRepo.findByMail(authentication.getName()));
         order.setStatus("BESTELLT");
-//        order.setMaenge(cart.getProductMaengen());
+        order.setMenge(cart.getMengen());
         order.setCreated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
         orderRepository.save(order);
         cartRepository.delete(cart);
@@ -507,8 +507,9 @@ public class MainController {
         }
         model.addAttribute("authentication", authentication.getName());
         Order order = orderRepository.findById(id).get();
-        List products = order.getProducts();
+        List<Product> products = order.getProducts();
         model.addAttribute("products", products);
+        model.addAttribute("menge", order.getMenge());
         model.addAttribute("order", order);
         return "addOrderForm";
     }

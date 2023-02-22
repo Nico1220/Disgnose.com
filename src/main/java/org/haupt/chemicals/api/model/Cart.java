@@ -37,14 +37,13 @@ public class Cart {
 
     @NotNull
     @ManyToMany(cascade = CascadeType.ALL)
-    @Column(name = "ca_products", nullable = false)
+    @Column(name = "ca_products", nullable = false, unique = true)
     private List<Product> products;
 
     @ElementCollection
     @MapKeyJoinColumn(name="pr_id")
     @Column(name="ca_maenge")
     @CollectionTable(name="product_maengen", joinColumns=@JoinColumn(name="ca_products"))
-    private Map<Product, String> productMaengen;
-
+    private Map<Product, String> mengen;
 
 }
