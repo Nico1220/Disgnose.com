@@ -106,7 +106,7 @@
                                 <input style="border-right: 25px" name="productmange" type="text" th:text="${productmange}" placeholder="Mänge" required minlength="2">
                                 <a th:if="${(authentication != 'anonymousUser') and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/showUpdateProduct(productId=${carte.id})}" class="btn btn-info">Update</a>
                                 <a th:if="${authentication != 'anonymousUser' and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/deleteProduct(productId=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
-                                <input type="submit" class="icon solid fa-shopping-cart">
+                                <button type="submit"><a class="icon solid fa-shopping-cart"></a></button>
                             </form>
                         </td>
                     </tr>
