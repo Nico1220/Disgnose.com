@@ -26,9 +26,9 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .antMatchers("/contact.html", "/bestellen", "/addWarenkorb", "/deleteWarenkorb").hasAnyRole("USER" ,"ADMIN", "MITARBEITER", "CUSTOMER")
                         .antMatchers("/","/register","process_register").permitAll()
-                        .antMatchers("/bestellen").hasAnyRole("ADMIN", "MITARBEITER", "CUSTOMER")
                         .antMatchers("/users", "/bestellungen", "/deleteProduct", "/addProduct", "/saveProduct", "/saveOrder", "/showUpdateUser", "/saveUser", "/showSpecificOrder").hasAnyRole("MITARBEITER","ADMIN")
                         .antMatchers("/api/**", "/users").hasRole("ADMIN")
+                        .antMatchers("/bestellen").hasAnyRole("ADMIN", "MITARBEITER", "CUSTOMER")
 //                        .and()
 
                 )

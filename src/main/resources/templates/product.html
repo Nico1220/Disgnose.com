@@ -63,31 +63,38 @@
                                            placeholder="Name des Produktes" required/>
                                 </div>
                             </div>
-                            <p></p>
-                            <table id="table1" th:object="${product2}" th:unless="${#lists.isEmpty(product2)}">
-                                <tr>
-                                    <th>Titel</th>
-                                    <th>Content</th>
-<!--                                    <th>Updated</th>-->
-                                </tr>
-                                <tr th:each="carte, state :${product2}" id="tr1"
-                                    th:classappend="${state.odd}?'odd-row':'even-row'">
-                                    <td th:text="${carte.titel}">title</td>
-                                    <td th:text="${carte.content}">content</td>
-                                    <td style="height: 40px">
-                                        <form th:action="@{/addWarenkorb(productId=${carte.id},productmange=${productmange})}">
-                                            <label for="productmange"></label>
-                                            <input type="hidden" th:text="${carte.id}">
-                                            <input style="border-right: 25px" id="productmange" name="productmange" type="text" th:text="${productmange}" placeholder="Mänge" required minlength="2">
-                                            <a th:if="${(authentication != 'anonymousUser') and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/showUpdateProduct(productId=${carte.id})}" class="btn btn-info">Update</a>
-                                            <a th:if="${authentication != 'anonymousUser' and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/deleteProduct(productId=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
-                                            <button type="submit"><a class="icon solid fa-shopping-cart"></a></button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            </table>
                         </div>
                     </form>
+                    <div class="row gtr-50">
+                        <p></p>
+                        <table id="table1" th:object="${product2}" th:unless="${#lists.isEmpty(product2)}">
+                            <tr>
+                                <th>Titel</th>
+                                <th>Content</th>
+                                <!--                                    <th>Updated</th>-->
+                            </tr>
+                            <tr th:each="carte, state :${product2}" id="tr1"
+                                th:classappend="${state.odd}?'odd-row':'even-row'">
+                                <td th:text="${carte.titel}">title</td>
+                                <td th:text="${carte.content}">content</td>
+                                <td style="height: 40px">
+                                    <form th:action="@{/addWarenkorb(productId=${carte.id},productmange=${productmange})}">
+                                        <label for="productmange"></label>
+                                        <input type="hidden" th:value="${carte.id}" id="productId">
+                                        <input style="border-right: 25px" id="productmange" name="productmange"
+                                               type="text" th:text="${productmange}" placeholder="Mänge" required
+                                               minlength="2">
+                                        <a th:if="${(authentication != 'anonymousUser') and ((role == 'ADMIN') or (role =='MITARBEITER'))}"
+                                           th:href="@{/showUpdateProduct(productId=${carte.id})}" class="btn btn-info">Update</a>
+                                        <a th:if="${authentication != 'anonymousUser' and ((role == 'ADMIN') or (role =='MITARBEITER'))}"
+                                           th:href="@{/deleteProduct(productId=${carte.id})}"
+                                           class="btn btn-danger ml-2">Delete</a>
+                                        <button type="submit"><a class="icon solid fa-shopping-cart"></a></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
             <p></p>
@@ -104,6 +111,7 @@
                         <td>
                             <form th:action="@{/addWarenkorb(productId=${carte.id},productmange=${productmange})}">
                                 <label for="productmange"></label>
+                                <input type="hidden" th:value="${carte.id}" id="prodctId">
                                 <input style="border-right: 25px" name="productmange" type="text" th:text="${productmange}" placeholder="Mänge" required minlength="2">
                                 <a th:if="${(authentication != 'anonymousUser') and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/showUpdateProduct(productId=${carte.id})}" class="btn btn-info">Update</a>
                                 <a th:if="${authentication != 'anonymousUser' and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/deleteProduct(productId=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
