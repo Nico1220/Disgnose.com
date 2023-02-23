@@ -24,7 +24,7 @@ public class WebSecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
-                        .antMatchers("/contact.html", "/bestellen", "/addWarenkorb", "/deleteWarenkorb").hasAnyRole("USER" ,"ADMIN", "MITARBEITER", "CUSTOMER")
+                        .antMatchers("/contact.html", "/addWarenkorb", "/deleteWarenkorb").hasAnyRole("USER" ,"ADMIN", "MITARBEITER", "CUSTOMER")
                         .antMatchers("/","/register","process_register").permitAll()
                         .antMatchers("/users", "/bestellungen", "/deleteProduct", "/addProduct", "/saveProduct", "/saveOrder", "/showUpdateUser", "/saveUser", "/showSpecificOrder").hasAnyRole("MITARBEITER","ADMIN")
                         .antMatchers("/api/**", "/users").hasRole("ADMIN")
