@@ -377,7 +377,7 @@ public class MainController {
         }
     }
     @PreAuthorize("hasAnyRole('USER' ,'ADMIN', 'MITARBEITER', 'CUSTOMER')")
-    @GetMapping("/addWarenkorb")
+    @GetMapping("/addWarenkorb{productId}{productmange}")
     String addWarenkorb(@RequestParam long productId, @RequestParam String productmange, Model model){
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String workingUser = authentication.getName();
@@ -418,7 +418,7 @@ public class MainController {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MITARBEITER', 'CUSTOMER')")
-    @PostMapping("/bestellen")
+    @GetMapping("/bestellen")
     public String bestellen() throws MailjetException {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String workingUser = authentication.getName();
@@ -428,7 +428,7 @@ public class MainController {
         order.setProducts(List.copyOf(cart.getProducts()));
         order.setUser(userRepo.findByMail(authentication.getName()));
         order.setStatus("BESTELLT");
-        order.setMenge(cart.getMengen());
+        order.setMenge(Map.copyOf(cart.getMengen()));
         order.setCreated(LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter));
         orderRepository.save(order);
         cartRepository.delete(cart);

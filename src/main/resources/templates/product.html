@@ -78,17 +78,18 @@
                                 <td th:text="${carte.titel}">title</td>
                                 <td th:text="${carte.content}">content</td>
                                 <td style="height: 40px">
-                                    <form th:action="@{/addWarenkorb(productId=${carte.id},productmange=${productmange})}">
+                                    <form th:action="@{/addWarenkorb{productId}{productmange}(productId=${carte.id},productmange=${productmange})}">
                                         <label for="productmange"></label>
-                                        <input type="hidden" th:value="${carte.id}" id="productId">
+                                        <label for="productId"></label>
+                                        <input type="hidden" th:value="${carte.id}" id="productId" name="productId">
                                         <input style="border-right: 25px" id="productmange" name="productmange"
                                                type="text" th:text="${productmange}" placeholder="Mänge" required
                                                minlength="2">
                                         <a th:if="${(authentication != 'anonymousUser') and ((role == 'ADMIN') or (role =='MITARBEITER'))}"
                                            th:href="@{/showUpdateProduct(productId=${carte.id})}" class="btn btn-info">Update</a>
-                                        <a th:if="${authentication != 'anonymousUser' and ((role == 'ADMIN') or (role =='MITARBEITER'))}"
-                                           th:href="@{/deleteProduct(productId=${carte.id})}"
-                                           class="btn btn-danger ml-2">Delete</a>
+<!--                                        <a th:if="${authentication != 'anonymousUser' and ((role == 'ADMIN') or (role =='MITARBEITER'))}"-->
+<!--                                           th:href="@{/deleteProduct(productId=${carte.id})}"-->
+<!--                                           class="btn btn-danger ml-2">Delete</a>-->
                                         <button type="submit"><a class="icon solid fa-shopping-cart"></a></button>
                                     </form>
                                 </td>
@@ -109,12 +110,13 @@
                         <td th:text="${carte.titel}">title</td>
                         <td th:text="${carte.content}">content</td>
                         <td>
-                            <form th:action="@{/addWarenkorb(productId=${carte.id},productmange=${productmange})}">
+                            <form th:action="@{/addWarenkorb{productId}{productmange}(productId=${carte.id},productmange=${productmange})}">
                                 <label for="productmange"></label>
-                                <input type="hidden" th:value="${carte.id}" id="prodctId">
+                                <label for="productId"></label>
+                                <input type="hidden" th:value="${carte.id}" id="productId" name="productId">
                                 <input style="border-right: 25px" name="productmange" type="text" th:text="${productmange}" placeholder="Mänge" required minlength="2">
                                 <a th:if="${(authentication != 'anonymousUser') and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/showUpdateProduct(productId=${carte.id})}" class="btn btn-info">Update</a>
-                                <a th:if="${authentication != 'anonymousUser' and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/deleteProduct(productId=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
+<!--                                <a th:if="${authentication != 'anonymousUser' and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/deleteProduct(productId=${carte.id})}" class="btn btn-danger ml-2">Delete</a>-->
                                 <button type="submit"><a class="icon solid fa-shopping-cart"></a></button>
                             </form>
                         </td>

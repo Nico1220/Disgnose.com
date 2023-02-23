@@ -43,7 +43,7 @@
         </header>
 
         <section class="wrapper style4 special container medium">
-            <form action="#" th:action="@{/bestellen}" method="POST">
+            <form action="#" th:action="@{/bestellen}">
                 <div class="content" >
                     <table class="table table-hover" th:object="${products}" th:unless="${#lists.isEmpty(products)}">
                         <tr>
