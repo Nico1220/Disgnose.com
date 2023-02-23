@@ -77,6 +77,7 @@
                                     <td style="height: 40px">
                                         <form th:action="@{/addWarenkorb(productId=${carte.id},productmange=${productmange})}">
                                             <label for="productmange"></label>
+                                            <input type="hidden" th:text="${carte.id}">
                                             <input style="border-right: 25px" id="productmange" name="productmange" type="text" th:text="${productmange}" placeholder="Mänge" required minlength="2">
                                             <a th:if="${(authentication != 'anonymousUser') and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/showUpdateProduct(productId=${carte.id})}" class="btn btn-info">Update</a>
                                             <a th:if="${authentication != 'anonymousUser' and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/deleteProduct(productId=${carte.id})}" class="btn btn-danger ml-2">Delete</a>
