@@ -4,4 +4,4 @@ Anweisungen:
     Neuen Branch erstellen vor der veränderung von Files
 Arbeitsumgebung:
     erstellen eines branches 
-    Benennung: feature/*
+    Benennung: feature/*# Disgnose.com

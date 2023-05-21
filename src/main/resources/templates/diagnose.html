@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <link rel="icon" href="images/H-ICON.jpg">
-    <title>HAUPT-Chemicals.COM</title>
+    <title>Diagnose.COM</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="/css/main.css" />
@@ -17,20 +17,15 @@
 
     <!-- Header -->
     <header id="header">
-        <h1 id="logo"><a href="/">HAUPT-Chemicals.COM</a></h1>
+        <h1 id="logo"><a href="/">Diagnose.COM</a></h1>
         <nav id="nav">
             <ul>
                 <li class="current"><a href="/">Home</a></li>
                 <li class="submenu">
                     <a href="#">Menu</a>
                     <ul>
-                        <li><a href="product.html">Produkte</a></li>
-                        <li><a href="warenkorb">Warenkorb</a></li>
-                        <li th:if="${(role == 'ADMIN') or (role =='MITARBEITER')}"><a href="bestellungen">Bestellungen</a></li>
+                        <li><a href="diagnose.html">Diagnosen</a></li>
                         <li th:if="${(role == 'ADMIN') or (role =='MITARBEITER')}"><a href="users">Users</a></li>
-                        <li><a href="contact.html" >Contact</a></li>
-                        <!--									<li><a href="#FAQ">FAQ</a></li>-->
-                        <li><a href="impressum.html">Impressum</a></li>
                     </ul>
                 </li>
                 <li th:unless="${authentication != 'anonymousUser'}"><a href="/register" class="button primary">Sign Up</a></li>
@@ -44,17 +39,17 @@
 
         <header class="special container">
             <span class="icon solid fa-flask"></span>
-            <h2>PRODUKTPROGRAMM</h2>
-            <p>Hier können Sie all unsere Produkte finden</p>
+            <h2>Diagnosen</h2>
+            <p>Hier können Sie all Diagnosen finden</p>
         </header>
 
         <section class="wrapper style4 special container medium">
             <div class="content">
                 <div class="col-12">
-                    <form action="#" th:action="@{/product.html{titel}(titel=${titel})}" th:object="${product}">
+                    <form action="#" th:action="@{/diagnose.html{titel}(titel=${titel})}" th:object="${diagnose}">
                         <div class="row gtr-50">
                             <div class="col-12">
-                                <label for="titel">Suche Produkte</label>
+                                <label for="titel">Suche Diagnosen</label>
                             </div>
                             <div class="col-12">
                                 <div class="relative" style="border-right: 25px;">
