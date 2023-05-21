@@ -1,0 +1,147 @@
+<!DOCTYPE HTML>
+<html lang="de" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+	<head>
+		<link rel="icon" href="images/H-ICON.jpg">
+		<title>Diagnose.COM</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="/css/main.css" />
+		<noscript><link rel="stylesheet" href="/css/noscript.css" /></noscript>
+	</head>
+	<body class="index is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<header id="header" class="alt">
+					<h1 id="logo"><a href="/">Diagnose.COM</a></h1>
+					<nav id="nav">
+						<ul>
+							<li class="current"><a href="/">Home</a></li>
+							<li class="submenu">
+								<a href="#">Menu</a>
+								<ul>
+									<li><a href="diagnose.html">Diagnosen</a></li>
+									<li th:if="${(role == 'ADMIN') or (role =='MITARBEITER')}"><a href="users">Users</a></li>
+								</ul>
+							</li>
+							<li th:unless="${authentication != 'anonymousUser'}"><a href="/register" class="button primary">Sign Up</a></li>
+							<li th:unless="${authentication == 'anonymousUser'}"><a href="/logout" class="button primary">Logout</a></li>
+						</ul>
+					</nav>
+				</header>
+
+			<!-- Banner -->
+				<section id="banner">
+
+					<div class="inner">
+
+						<header>
+							<h2>Diagnose.COM</h2>
+						</header>
+						<p>Ihr vertrauenswürdiger Partner für Diagnosen Erstellung und Verwaltung</p>
+						<footer>
+							<ul class="buttons stacked">
+								<li><a href="#main" class="button fit scrolly">Mehr Erfahren</a></li>
+							</ul>
+						</footer>
+
+					</div>
+
+				</section>
+
+			<!-- Main -->
+				<article id="main">
+
+					<header class="special container">
+						<span class="icon solid fa-chart-bar"></span>
+						<h2>Blabla</h2>
+						<h1>Blabla</h1>
+							<p>Blabla</p>
+					</header>
+
+					<!-- One -->
+<!--						<section class="wrapper style2 container special-alt">-->
+<!--							<div class="row gtr-50">-->
+<!--								<section class="wrapper style1 container special">-->
+<!--									<div class="row">-->
+<!--										<div class="col-6 col-12-narrower">-->
+
+<!--											<section>-->
+<!--												<span class="icon solid featured fa-clinic-medical"></span>-->
+<!--												<header>-->
+<!--													<h3>GROSSE PRODUKTPALETTE</h3>-->
+<!--												</header>-->
+<!--												<p>Wir bieten unseren Kunden in den verschiedensten Branchen ein breites Spektrum an unterschiedlichen Grund- chemikalien und Spezialitäten. </p>-->
+<!--											</section>-->
+
+<!--										</div>-->
+<!--										<div class="col-6 col-12-narrower">-->
+
+<!--											<section>-->
+<!--												<span class="icon solid featured fa-hand-holding-medical"></span>-->
+<!--												<header>-->
+<!--													<h3>VERLÄSSLICHE PRODUZENTEN </h3>-->
+<!--												</header>-->
+<!--												<p>Wie beziehen unsere Produkte von sorgfältig ausgewählten Produzenten weltweit und versorgen unsere Kunden europaweit. </p>-->
+<!--											</section>-->
+
+<!--										</div>-->
+<!--									</div>-->
+<!--								</section>-->
+<!--								<section class="wrapper style1 container special">-->
+<!--									<div class="row">-->
+<!--										<div class="col-6 col-12-narrower">-->
+<!--											<section>-->
+<!--												<span class="icon solid featured fa-shield-alt"></span>-->
+<!--												<header>-->
+<!--													<h3>HOHE SICHERHEIT</h3>-->
+<!--												</header>-->
+<!--												<p>Sichere Versorgung durch langjährige Partnerschaften mit unseren professionellen Lager- und Speditionspartnern. </p>-->
+<!--											</section>-->
+
+<!--										</div>-->
+<!--										<div class="col-6 col-12-narrower">-->
+
+<!--											<section>-->
+<!--												<span class="icon solid featured fa-rocket"></span>-->
+<!--												<header>-->
+<!--													<h3>HOHE GESCHWINDIGKEIT</h3>-->
+<!--												</header>-->
+<!--												<p>Um Sie rasch und kostengünstig versorgen zu können, betreiben wir mehrere Lager in Österreich, Deutschland und in den Niederlanden. </p>-->
+<!--											</section>-->
+<!--										</div>-->
+<!--									</div>-->
+<!--								</section>-->
+<!--							</div>-->
+<!--						</section>-->
+				</article>
+
+			<!-- CTA -->
+				<section id="cta">
+
+					<header>
+						<h2>Bereit loszulegen</h2>
+						<p>Dann registrieren sie sich jetzt.</p>
+					</header>
+					<footer>
+						<ul class="buttons">
+							<li><a href="register" class="button primary">Sign Up</a></li>
+						</ul>
+					</footer>
+
+				</section>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="/js/jquery.min.js"></script>
+			<script src="/js/jquery.dropotron.min.js"></script>
+			<script src="/js/jquery.scrolly.min.js"></script>
+			<script src="/js/jquery.scrollex.min.js"></script>
+			<script src="/js/browser.min.js"></script>
+			<script src="/js/breakpoints.min.js"></script>
+			<script src="/js/util.js"></script>
+			<script src="/js/main.js"></script>
+
+	</body>
+</html>

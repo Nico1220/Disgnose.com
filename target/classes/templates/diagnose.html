@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="images/H-ICON.jpg">
+    <title>Diagnose.COM</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <noscript><link rel="stylesheet" href="/css/noscript.css" /></noscript>
+</head>
+<body>
+<div id="page-wrapper">
+
+    <!-- Header -->
+    <header id="header">
+        <h1 id="logo"><a href="/">Diagnose.COM</a></h1>
+        <nav id="nav">
+            <ul>
+                <li class="current"><a href="/">Home</a></li>
+                <li class="submenu">
+                    <a href="#">Menu</a>
+                    <ul>
+                        <li><a href="diagnose.html">Diagnosen</a></li>
+                        <li th:if="${(role == 'ADMIN') or (role =='MITARBEITER')}"><a href="users">Users</a></li>
+                    </ul>
+                </li>
+                <li th:unless="${authentication != 'anonymousUser'}"><a href="/register" class="button primary">Sign Up</a></li>
+                <li th:unless="${authentication == 'anonymousUser'}"><a href="/logout" class="button primary">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main -->
+    <article id="main">
+
+        <header class="special container">
+            <span class="icon solid fa-flask"></span>
+            <h2>Diagnosen</h2>
+            <p>Hier können Sie all Diagnosen finden</p>
+        </header>
+
+        <section class="wrapper style4 special container medium">
+            <div class="content">
+                <div class="col-12">
+                    <form action="#" th:action="@{/diagnose.html{titel}(titel=${titel})}" th:object="${diagnose}">
+                        <div class="row gtr-50">
+                            <div class="col-12">
+                                <label for="titel">Suche Diagnosen</label>
+                            </div>
+                            <div class="col-12">
+                                <div class="relative" style="border-right: 25px;">
+                                    <i class="absolute fa fa-search text-gray-400 top-5 right-4" type="submit"></i>
+                                    <input class="bg-white h-14 w-full px-12 rounded-lg focus:outline-none hover:cursor-pointer" type="text" id="titel" name="titel" th:value="${titel}"
+                                           placeholder="Name des Patienten" required/>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row gtr-50">
+                        <p></p>
+                        <table id="table1" th:object="${product2}" th:unless="${#lists.isEmpty(product2)}">
+                            <tr>
+                                <th>Titel</th>
+                                <th>Diagnose</th>
+                            </tr>
+                            <tr th:each="carte, state :${product2}" id="tr1"
+                                th:classappend="${state.odd}?'odd-row':'even-row'">
+                                <td th:text="${carte.titel}">title</td>
+                                <td th:text="${carte.diagnoses}">diagnose</td>
+                                <td>
+                                    <form th:action="@{/addWarenkorb{productId}{productmange}(productId=${carte.id},productmange=${productmange})}">
+                                        <label for="productId"></label>
+                                        <input type="hidden" th:value="${carte.id}" id="productId" name="productId">
+                                        <a th:if="${(authentication != 'anonymousUser') and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/showUpdateDiagnose(productId=${carte.id})}" class="btn btn-info">Update</a>
+                                    </form>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <p></p>
+            <div class="content" >
+                <table class="table table-hover" th:object="${productAll}" th:unless="${#lists.isEmpty(productAll)}">
+                    <tr>
+                        <td>Titel</td>
+                        <td>Diagnose</td>
+                    </tr>
+                    <tr th:each="carte, state :${productAll}" id="tr1"
+                        th:classappend="${state.odd}?'odd-row':'even-row'">
+                        <td th:text="${carte.titel}">title</td>
+                        <td th:text="${carte.diagnoses}">diagnose</td>
+                        <td>
+                            <form th:action="@{/addWarenkorb{productId}{productmange}(productId=${carte.id},productmange=${productmange})}">
+                                <label for="productId"></label>
+                                <input type="hidden" th:value="${carte.id}" id="productId" name="productId">
+                                <a th:if="${(authentication != 'anonymousUser') and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/showUpdateDiagnose(productId=${carte.id})}" class="btn btn-info">Update</a>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="content">
+                <a th:if="${(role == 'ADMIN') or (role =='MITARBEITER')}" th:href="@{/addDiagnose}" class="btn btn-primary">Diagnose hinzufügen</a>
+                <a th:if="${#lists.isEmpty(productAll) and #lists.isEmpty(product2)}">Keine Diagnose gefunden</a>
+            </div>
+        </section>
+    </article>
+
+</div>
+
+<!-- Scripts -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.dropotron.min.js"></script>
+<script src="/js/jquery.scrolly.min.js"></script>
+<script src="/js/jquery.scrollgress.min.js"></script>
+<script src="/js/jquery.scrollex.min.js"></script>
+<script src="/js/browser.min.js"></script>
+<script src="/js/breakpoints.min.js"></script>
+<script src="/js/util.js"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>

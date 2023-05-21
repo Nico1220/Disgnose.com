@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html lang="de">
+<head>
+  <link rel="icon" href="images/H-ICON.jpg">
+  <title>Diagnose.COM</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <noscript><link rel="stylesheet" href="/css/noscript.css" /></noscript>
+</head>
+<body class="no-sidebar is-preload">
+<div id="page-wrapper">
+
+  <!-- Header -->
+  <header id="header">
+    <h1 id="logo"><a href="/">Diagnose.COM</a></h1>
+    <nav id="nav">
+      <ul>
+        <li class="current"><a href="/">Home</a></li>
+        <li class="submenu">
+          <a href="#">Menu</a>
+          <ul>
+            <li><a href="diagnose.html">Diagnosen</a></li>
+            <li th:if="${(role == 'ADMIN') or (role =='MITARBEITER')}"><a href="users">Users</a></li>
+          </ul>
+        </li>
+        <li th:unless="${authentication != 'anonymousUser'}"><a href="/register" class="button primary">Sign Up</a></li>
+        <li th:unless="${authentication == 'anonymousUser'}"><a href="/logout" class="button primary">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main -->
+  <article id="main">
+
+    <header class="special container">
+    <span class="icon solid fa-user"></span>
+    <h2>PRODUKTPROGRAMM</h2>
+    <p>Hier können Sie all unsere Produkte finden</p>
+  </header>
+
+    <section class="wrapper style4 special container medium">
+
+      <!-- Content -->
+      <div class="content">
+        <form th:action="@{login}" method="post">
+          <div class="row gtr-50">
+            <div class="col-12">
+              <label for="email">
+                <input type="email" name="username" id="email" placeholder="E-Mail" required minlength="5"/>
+              </label>
+            </div>
+            <div class="col-12">
+              <label for="password">
+                <input type="password" name="password" id="password" placeholder="Password" required minlength="8"/>
+              </label>
+            </div>
+            <div class="col-12">
+              <ul class="buttons">
+                <li><input type="submit" class="special" value="SIGN IN" /></li>
+              </ul>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </section>
+  </article>
+
+  <!-- Footer -->
+  <footer id="footer">
+
+    <ul class="icons">
+      <li><a href="#" class="icon brands circle fa-twitter"><span class="label">Twitter</span></a></li>
+      <li><a href="#" class="icon brands circle fa-facebook-f"><span class="label">Facebook</span></a></li>
+      <li><a href="#" class="icon brands circle fa-instagram"><span class="label">Instagram</span></a></li>
+    </ul>
+
+    <ul class="copyright">
+      <li>&copy;<a href="https://www.haupt-chemicals.com/">HAUPT Chemicals GmbH </a></li>
+    </ul>
+
+  </footer>
+
+</div>
+
+<!-- Scripts -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.dropotron.min.js"></script>
+<script src="/js/jquery.scrolly.min.js"></script>
+<script src="/js/jquery.scrollgress.min.js"></script>
+<script src="/js/jquery.scrollex.min.js"></script>
+<script src="/js/browser.min.js"></script>
+<script src="/js/breakpoints.min.js"></script>
+<script src="/js/util.js"></script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>
