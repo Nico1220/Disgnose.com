@@ -55,7 +55,7 @@
                                 <div class="relative" style="border-right: 25px;">
                                     <i class="absolute fa fa-search text-gray-400 top-5 right-4" type="submit"></i>
                                     <input class="bg-white h-14 w-full px-12 rounded-lg focus:outline-none hover:cursor-pointer" type="text" id="titel" name="titel" th:value="${titel}"
-                                           placeholder="Name des Produktes" required/>
+                                           placeholder="Name des Patienten" required/>
                                 </div>
                             </div>
                         </div>
@@ -65,27 +65,17 @@
                         <table id="table1" th:object="${product2}" th:unless="${#lists.isEmpty(product2)}">
                             <tr>
                                 <th>Titel</th>
-                                <th>Content</th>
-                                <!--                                    <th>Updated</th>-->
+                                <th>Diagnose</th>
                             </tr>
                             <tr th:each="carte, state :${product2}" id="tr1"
                                 th:classappend="${state.odd}?'odd-row':'even-row'">
                                 <td th:text="${carte.titel}">title</td>
-                                <td th:text="${carte.content}">content</td>
-                                <td style="height: 40px">
+                                <td th:text="${carte.diagnoses}">diagnose</td>
+                                <td>
                                     <form th:action="@{/addWarenkorb{productId}{productmange}(productId=${carte.id},productmange=${productmange})}">
-                                        <label for="productmange"></label>
                                         <label for="productId"></label>
                                         <input type="hidden" th:value="${carte.id}" id="productId" name="productId">
-                                        <input style="border-right: 25px" id="productmange" name="productmange"
-                                               type="text" th:text="${productmange}" placeholder="Menge" required
-                                               minlength="2">
-                                        <a th:if="${(authentication != 'anonymousUser') and ((role == 'ADMIN') or (role =='MITARBEITER'))}"
-                                           th:href="@{/showUpdateProduct(productId=${carte.id})}" class="btn btn-info">Update</a>
-<!--                                        <a th:if="${authentication != 'anonymousUser' and ((role == 'ADMIN') or (role =='MITARBEITER'))}"-->
-<!--                                           th:href="@{/deleteProduct(productId=${carte.id})}"-->
-<!--                                           class="btn btn-danger ml-2">Delete</a>-->
-                                        <button type="submit"><a class="icon solid fa-shopping-cart"></a></button>
+                                        <a th:if="${(authentication != 'anonymousUser') and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/showUpdateDiagnose(productId=${carte.id})}" class="btn btn-info">Update</a>
                                     </form>
                                 </td>
                             </tr>
@@ -98,48 +88,29 @@
                 <table class="table table-hover" th:object="${productAll}" th:unless="${#lists.isEmpty(productAll)}">
                     <tr>
                         <td>Titel</td>
-                        <td>Content</td>
+                        <td>Diagnose</td>
                     </tr>
                     <tr th:each="carte, state :${productAll}" id="tr1"
                         th:classappend="${state.odd}?'odd-row':'even-row'">
                         <td th:text="${carte.titel}">title</td>
-                        <td th:text="${carte.content}">content</td>
+                        <td th:text="${carte.diagnoses}">diagnose</td>
                         <td>
                             <form th:action="@{/addWarenkorb{productId}{productmange}(productId=${carte.id},productmange=${productmange})}">
-                                <label for="productmange"></label>
                                 <label for="productId"></label>
                                 <input type="hidden" th:value="${carte.id}" id="productId" name="productId">
-                                <input style="border-right: 25px" name="productmange" type="text" th:text="${productmange}" placeholder="Menge" required minlength="2">
-                                <a th:if="${(authentication != 'anonymousUser') and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/showUpdateProduct(productId=${carte.id})}" class="btn btn-info">Update</a>
-<!--                                <a th:if="${authentication != 'anonymousUser' and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/deleteProduct(productId=${carte.id})}" class="btn btn-danger ml-2">Delete</a>-->
-                                <button type="submit"><a class="icon solid fa-shopping-cart"></a></button>
+                                <a th:if="${(authentication != 'anonymousUser') and ((role == 'ADMIN') or (role =='MITARBEITER'))}" th:href="@{/showUpdateDiagnose(productId=${carte.id})}" class="btn btn-info">Update</a>
                             </form>
                         </td>
                     </tr>
                 </table>
             </div>
 
-            <div class="content" th:if="${#lists.isEmpty(productAll) and #lists.isEmpty(product2)}">
-                <a th:if="${(role == 'ADMIN') or (role =='MITARBEITER')}" th:href="@{/addProduct}" class="btn btn-primary">Produkt hinzufügen</a>
-                <a>Keine produkte gefunden</a>
+            <div class="content">
+                <a th:if="${(role == 'ADMIN') or (role =='MITARBEITER')}" th:href="@{/addDiagnose}" class="btn btn-primary">Diagnose hinzufügen</a>
+                <a th:if="${#lists.isEmpty(productAll) and #lists.isEmpty(product2)}">Keine Diagnose gefunden</a>
             </div>
         </section>
     </article>
-
-    <!-- Footer -->
-    <footer id="footer">
-
-        <ul class="icons">
-            <li><a href="#" class="icon brands circle fa-twitter"><span class="label">Twitter</span></a></li>
-            <li><a href="#" class="icon brands circle fa-facebook-f"><span class="label">Facebook</span></a></li>
-            <li><a href="#" class="icon brands circle fa-instagram"><span class="label">Instagram</span></a></li>
-        </ul>
-
-        <ul class="copyright">
-            <li>&copy;<a href="https://www.haupt-chemicals.com/">HAUPT Chemicals GmbH </a></li>
-        </ul>
-
-    </footer>
 
 </div>
 

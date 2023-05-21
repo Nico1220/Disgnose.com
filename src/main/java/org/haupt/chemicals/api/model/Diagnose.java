@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="pr_product")
-public class Product {
+public class Diagnose {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pr_id", nullable = false, unique = true, length = 45)
@@ -24,18 +24,15 @@ public class Product {
     private String titel;
 
     @NotNull
-    @Column(name = "pr_createdAt", nullable = false, length = 20)
+    @Column(name = "pr_diagnose", nullable = false, length = 64)
+    private String diagnoses;
+
+    @NotNull
+    @Column(name = "pr_createdAt", length = 20)
     private LocalDateTime created;
 
     @NotNull
-    @Column(name = "pr_updatedAt", nullable = false, length = 20)
+    @Column(name = "pr_updatedAt",  length = 20)
     private LocalDateTime updated;
 
-    @NotNull
-    @Column(name = "pr_content",length = 64)
-    private String content;
-
-    @NotNull
-    @Column(name = "pr_maenge",length = 64)
-    private String maenge;
 }

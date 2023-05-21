@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <link rel="icon" href="images/H-ICON.jpg">
-    <title>HAUPT Chemicals - Sign Up Success</title>
+    <title>Diagnose.COM</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="/css/main.css" />
@@ -13,19 +13,15 @@
 
     <!-- Header -->
     <header id="header">
-        <h1 id="logo"><a href="/">HAUPT-Chemicals.COM</a></h1>
+        <h1 id="logo"><a href="/">Diagnose.COM</a></h1>
         <nav id="nav">
             <ul>
                 <li class="current"><a href="/">Home</a></li>
                 <li class="submenu">
                     <a href="#">Menu</a>
                     <ul>
-                        <li><a href="product.html">Produkte</a></li>
-                        <li><a href="warenkorb">Warenkorb</a></li>
-                        <li th:if="${(role == 'ADMIN') or (role =='MITARBEITER')}"><a href="bestellungen">Bestellungen</a></li>
+                        <li><a href="diagnose.html">Diagnosen</a></li>
                         <li th:if="${(role == 'ADMIN') or (role =='MITARBEITER')}"><a href="users">Users</a></li>
-                        <li><a href="contact.html">Kontakt</a></li>
-                        <li><a href="impressum.html">Impressum</a></li>
                     </ul>
                 </li>
                 <li th:unless="${authentication != 'anonymousUser'}"><a href="/register" class="button primary">Sign Up</a></li>
@@ -72,20 +68,6 @@
         </section>
     </article>
 
-    <!-- Footer -->
-    <footer id="footer">
-
-        <ul class="icons">
-            <li><a href="#" class="icon brands circle fa-twitter"><span class="label">Twitter</span></a></li>
-            <li><a href="#" class="icon brands circle fa-facebook-f"><span class="label">Facebook</span></a></li>
-            <li><a href="#" class="icon brands circle fa-instagram"><span class="label">Instagram</span></a></li>
-        </ul>
-
-        <ul class="copyright">
-            <li>&copy;<a href="https://www.haupt-chemicals.com/">HAUPT Chemicals GmbH </a></li>
-        </ul>
-
-    </footer>
 
 </div>
 

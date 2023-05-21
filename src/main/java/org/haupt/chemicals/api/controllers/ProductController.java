@@ -1,6 +1,6 @@
 package org.haupt.chemicals.api.controllers;
 
-import org.haupt.chemicals.api.model.Product;
+import org.haupt.chemicals.api.model.Diagnose;
 import org.haupt.chemicals.api.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,45 +25,44 @@ public class ProductController {
 
     @GetMapping
     public @ResponseBody
-    Iterable<Product> getAllProduct() {
+    Iterable<Diagnose> getAllProduct() {
         return productRepository.findAll();
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable Long id) {
+    public ResponseEntity<Diagnose> getProduct(@PathVariable Long id) {
         return productRepository
                 .findById(id)
-                .map(product -> ResponseEntity.ok().body(product))
+                .map(diagnose -> ResponseEntity.ok().body(diagnose))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping()
-    public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product) {
-        product.setId(null);
-        Product saved = productRepository.save(product);
+    public ResponseEntity<Diagnose> createProduct(@Valid @RequestBody Diagnose diagnose) {
+        diagnose.setId(null);
+        Diagnose saved = productRepository.save(diagnose);
         return ResponseEntity.created(URI.create("/api/product/" + saved.getId())).body(saved);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable(value = "id") Long productId, @RequestBody Product productDetails) {
-        return productRepository.findById(productId).map(product -> {
-                    product.setTitel(productDetails.getTitel());
-                    product.setCreated(productDetails.getCreated());
-                    product.setUpdated(productDetails.getUpdated());
-                    product.setContent(productDetails.getContent());
-                    Product updatedProduct = productRepository.save(product);
-                    return ResponseEntity.ok(updatedProduct);
+    public ResponseEntity<Diagnose> updateProduct(@PathVariable(value = "id") Long productId, @RequestBody Diagnose diagnoseDetails) {
+        return productRepository.findById(productId).map(diagnose -> {
+                    diagnose.setTitel(diagnoseDetails.getTitel());
+                    diagnose.setCreated(diagnoseDetails.getCreated());
+                    diagnose.setUpdated(diagnoseDetails.getUpdated());
+                    Diagnose updatedDiagnose = productRepository.save(diagnose);
+                    return ResponseEntity.ok(updatedDiagnose);
                 }
-        ).orElseGet(() -> createProduct(productDetails));
+        ).orElseGet(() -> createProduct(diagnoseDetails));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Product> deleteProduct(@PathVariable(value =
+    public ResponseEntity<Diagnose> deleteProduct(@PathVariable(value =
             "id") Long productId) {
         return productRepository
                 .findById(productId)
                 .map(
-                        product -> {
-                            productRepository.delete(product);
-                            return ResponseEntity.ok().<Product>build();
+                        diagnose -> {
+                            productRepository.delete(diagnose);
+                            return ResponseEntity.ok().<Diagnose>build();
                         })
                 .orElse(ResponseEntity.notFound().build());
     }
